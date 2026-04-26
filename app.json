@@ -1,0 +1,7 @@
+{
+    "name": "BMenu App",
+    "version": "1.0.0",
+    "main": "index.html",
+    "display": "standalone",
+    "orientation": "portrait"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "bmenu",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npx @antigravity/core serve"
+  },
+  "dependencies": {
+    "@antigravity/core": "latest"
+  }
+}

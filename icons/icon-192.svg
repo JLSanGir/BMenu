@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <rect width="192" height="192" rx="40" fill="#FAF9F6"/>
+  <rect x="8" y="8" width="176" height="176" rx="34" fill="#F26B1D" opacity="0.1"/>
+  <!-- Plate -->
+  <circle cx="96" cy="100" r="52" fill="none" stroke="#F26B1D" stroke-width="3" opacity="0.3"/>
+  <circle cx="96" cy="100" r="40" fill="none" stroke="#F26B1D" stroke-width="2" opacity="0.15"/>
+  <!-- Fork -->
+  <g transform="translate(72, 58) rotate(0)">
+    <line x1="0" y1="0" x2="0" y2="80" stroke="#F26B1D" stroke-width="4" stroke-linecap="round"/>
+    <line x1="-8" y1="0" x2="-8" y2="24" stroke="#F26B1D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="8" y1="0" x2="8" y2="24" stroke="#F26B1D" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <!-- Knife -->
+  <g transform="translate(120, 58) rotate(0)">
+    <line x1="0" y1="6" x2="0" y2="80" stroke="#A14000" stroke-width="4" stroke-linecap="round"/>
+    <path d="M0,0 Q8,12 0,28" fill="none" stroke="#A14000" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+  <!-- Calendar dots -->
+  <g fill="#F26B1D" opacity="0.5">
+    <circle cx="58" cy="160" r="3"/><circle cx="72" cy="160" r="3"/>
+    <circle cx="86" cy="160" r="3"/><circle cx="100" cy="160" r="3"/>
+    <circle cx="114" cy="160" r="3"/><circle cx="128" cy="160" r="3"/>
+    <circle cx="142" cy="160" r="3"/>
+  </g>
+  <!-- B letter -->
+  <text x="96" y="46" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="28" fill="#A14000" opacity="0.85">B</text>
+</svg>
