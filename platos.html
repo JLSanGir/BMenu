@@ -1,352 +1,259 @@
 <!DOCTYPE html>
 
-<html lang="es">
-
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport" />
-    <title>BMenu — Mis Platos</title>
-    <meta name="description" content="Explora y selecciona platos para tu menú semanal." />
-    <meta name="theme-color" content="#F26B1D" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="BMenu" />
-    <link rel="apple-touch-icon" href="icons/icon-192.svg" />
-    <link rel="manifest" href="manifest.json" />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-bright": "#faf9f6",
-                        "on-tertiary-fixed-variant": "#274e3d",
-                        "on-error-container": "#93000a",
-                        "surface-container": "#efeeeb",
-                        "on-secondary-fixed-variant": "#5b4300",
-                        "tertiary-container": "#749d87",
-                        "primary-fixed-dim": "#ffb694",
-                        "on-surface-variant": "#594237",
-                        "tertiary": "#3f6653",
-                        "tertiary-fixed-dim": "#a5d0b9",
-                        "on-tertiary": "#ffffff",
-                        "error": "#ba1a1a",
-                        "on-secondary-fixed": "#261a00",
-                        "outline": "#8c7166",
-                        "surface": "#faf9f6",
-                        "surface-dim": "#dbdad7",
-                        "surface-container-low": "#f4f3f1",
-                        "primary-container": "#f26b1d",
-                        "primary": "#a14000",
-                        "secondary": "#785900",
-                        "background": "#faf9f6",
-                        "on-primary-fixed-variant": "#7b2f00",
-                        "secondary-fixed-dim": "#fabd00",
-                        "on-primary-fixed": "#351000",
-                        "on-background": "#1a1c1a",
-                        "on-primary-container": "#511c00",
-                        "tertiary-fixed": "#c1ecd4",
-                        "on-primary": "#ffffff",
-                        "surface-variant": "#e3e2e0",
-                        "inverse-primary": "#ffb694",
-                        "surface-container-high": "#e9e8e5",
-                        "inverse-surface": "#2f312f",
-                        "outline-variant": "#e0c0b2",
-                        "on-surface": "#1a1c1a",
-                        "on-error": "#ffffff",
-                        "surface-container-lowest": "#ffffff",
-                        "primary-fixed": "#ffdbcc",
-                        "inverse-on-surface": "#f2f1ee",
-                        "secondary-container": "#fdc003",
-                        "surface-tint": "#a14000",
-                        "on-tertiary-fixed": "#002114",
-                        "on-tertiary-container": "#083323",
-                        "error-container": "#ffdad6",
-                        "on-secondary-container": "#6c5000",
-                        "surface-container-highest": "#e3e2e0",
-                        "secondary-fixed": "#ffdf9e",
-                        "on-secondary": "#ffffff"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "unit": "4px",
-                        "xs": "4px",
-                        "xl": "40px",
-                        "sm": "8px",
-                        "gutter": "16px",
-                        "margin-desktop": "64px",
-                        "md": "16px",
-                        "margin-mobile": "20px",
-                        "lg": "24px"
-                    },
-                    "fontFamily": {
-                        "headline-lg": ["Plus Jakarta Sans"],
-                        "body-md": ["Be Vietnam Pro"],
-                        "headline-md": ["Plus Jakarta Sans"],
-                        "label-md": ["Be Vietnam Pro"],
-                        "display-xl": ["Plus Jakarta Sans"],
-                        "body-lg": ["Be Vietnam Pro"]
-                    },
-                    "fontSize": {
-                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
-                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
-                        "display-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
-                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
-                    }
-                },
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#a5d0b9",
+                    "surface-bright": "#faf9f6",
+                    "primary-fixed": "#ffdbcc",
+                    "secondary-container": "#fdc003",
+                    "primary-container": "#f26b1d",
+                    "surface-container-highest": "#e3e2e0",
+                    "primary": "#a14000",
+                    "primary-fixed-dim": "#ffb694",
+                    "on-primary-fixed": "#351000",
+                    "secondary-fixed": "#ffdf9e",
+                    "tertiary": "#3f6653",
+                    "outline": "#8c7166",
+                    "outline-variant": "#e0c0b2",
+                    "surface-tint": "#a14000",
+                    "on-primary-fixed-variant": "#7b2f00",
+                    "secondary-fixed-dim": "#fabd00",
+                    "on-surface": "#1a1c1a",
+                    "surface-container-high": "#e9e8e5",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed": "#002114",
+                    "on-surface-variant": "#594237",
+                    "surface-container-low": "#f4f3f1",
+                    "on-secondary-fixed": "#261a00",
+                    "inverse-surface": "#2f312f",
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#274e3d",
+                    "on-background": "#1a1c1a",
+                    "secondary": "#785900",
+                    "inverse-primary": "#ffb694",
+                    "inverse-on-surface": "#f2f1ee",
+                    "surface-container": "#efeeeb",
+                    "on-tertiary-container": "#083323",
+                    "on-secondary-fixed-variant": "#5b4300",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#749d87",
+                    "surface-variant": "#e3e2e0",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#c1ecd4",
+                    "on-secondary-container": "#6c5000",
+                    "background": "#faf9f6",
+                    "surface-dim": "#dbdad7",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#faf9f6",
+                    "on-primary-container": "#511c00",
+                    "on-error-container": "#93000a",
+                    "error-container": "#ffdad6"
             },
-        }
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "xs": "4px",
+                    "gutter": "16px",
+                    "lg": "24px",
+                    "unit": "4px",
+                    "sm": "8px",
+                    "margin-desktop": "64px",
+                    "xl": "40px",
+                    "margin-mobile": "20px"
+            },
+            "fontFamily": {
+                    "display-xl": ["Plus Jakarta Sans"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "label-md": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "display-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
     </script>
-    <style>
-        .sun-shadow {
-            box-shadow: 0 10px 30px -10px rgba(242, 107, 29, 0.12);
-        }
-
-        .plato-container {
-            border-radius: 100% 100% 100% 100% / 100% 100% 100% 100%;
-        }
-
+<style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-    </style>
-    <style>
         body {
-            min-height: 100dvh;
+            background-color: #faf9f6;
+            font-family: 'Be Vietnam Pro', sans-serif;
         }
     </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
 </head>
-
-<body class="bg-surface-bright text-on-surface font-body-md min-h-screen pb-24">
-    <!-- TopAppBar -->
-    <header
-        class="bg-white/90 dark:bg-stone-950/90 backdrop-blur-md border-b border-orange-50/50 dark:border-stone-800 shadow-[0_4px_20px_-4px_rgba(242,107,29,0.08)] top-0 sticky z-50 flex items-center justify-between px-4 h-16 w-full">
-        <div class="flex items-center gap-4">
-            <span class="material-symbols-outlined text-orange-600 dark:text-orange-400" data-icon="restaurant_menu"
-                style="">restaurant_menu</span>
-            <h1 class="font-headline-lg text-[20px] text-orange-600 dark:text-orange-500 font-black tracking-tight"
-                style="">Mis Platos</h1>
-        </div>
-        <div class="flex items-center gap-2">
-            <button class="p-2 rounded-full hover:bg-orange-50 transition-colors active:scale-95 duration-200" style="">
-                <span class="material-symbols-outlined text-stone-500" data-icon="search" style="">search</span>
+<body class="bg-background text-on-background min-h-screen">
+<header class="fixed top-0 w-full z-50 px-4 h-16 flex items-center justify-between bg-white dark:bg-stone-950 border-b border-stone-100 dark:border-stone-900 shadow-[0_4px_20px_-5px_rgba(242,107,29,0.05)]">
+<div class="flex items-center gap-3">
+<span id="back-btn" class="material-symbols-outlined text-orange-600 dark:text-orange-400 transition-transform duration-200 active:scale-95 cursor-pointer">arrow_back</span>
+<h1 class="font-plus-jakarta-sans font-semibold text-lg text-stone-900 dark:text-stone-100">Seleccionar Platos</h1>
+</div>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-orange-600 dark:text-orange-400">restaurant</span>
+</div>
+</header>
+<main class="pt-20 pb-32 px-4 max-w-2xl mx-auto">
+<section class="flex gap-2 overflow-x-auto pb-6 scrollbar-hide">
+<button class="flex-shrink-0 px-6 py-2 rounded-full bg-primary-container text-white font-label-md text-label-md transition-all duration-300">
+                Todos
             </button>
-            <button class="p-2 rounded-full hover:bg-orange-50 transition-colors active:scale-95 duration-200" style="">
-                <span class="material-symbols-outlined text-stone-500" data-icon="shopping_basket"
-                    style="">shopping_basket</span>
+<button class="flex-shrink-0 px-6 py-2 rounded-full bg-white border border-stone-200 text-stone-600 font-label-md text-label-md hover:bg-stone-50 transition-all duration-300">
+                Pasta
             </button>
-        </div>
-    </header>
-    <main class="max-w-7xl mx-auto px-5 md:px-margin-desktop py-8">
-        <!-- Hero Selection Intro -->
-        <section class="mb-6">
-            <p class="text-on-surface-variant font-body-lg max-w-2xl">Toca un plato para añadirlo a tu menú semanal.</p>
-        </section>
-        <!-- Category Chips -->
-        <div class="flex gap-3 mb-8 overflow-x-auto pb-4 no-scrollbar">
-            <button
-                class="px-6 py-2 rounded-full bg-primary-container text-white font-label-md transition-transform active:scale-95"
-                style="">Todos</button>
-            <button
-                class="px-6 py-2 rounded-full bg-secondary-container/10 text-secondary font-label-md hover:bg-secondary-container/20 transition-all"
-                style="">Pasta</button>
-            <button
-                class="px-6 py-2 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-md hover:bg-tertiary-fixed/80 transition-all"
-                style="">Ensaladas</button>
-            <button
-                class="px-6 py-2 rounded-full bg-primary-fixed text-on-primary-fixed-variant font-label-md hover:bg-primary-fixed/80 transition-all"
-                style="">Carnes</button>
-            <button
-                class="px-6 py-2 rounded-full bg-surface-container-high text-on-surface-variant font-label-md hover:bg-surface-variant transition-all"
-                style="">Postres</button>
-        </div>
-        <!-- Dishes Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Dish Card 1 (Selected State Example) -->
-            <div
-                class="group relative bg-surface-container-lowest rounded-[24px] sun-shadow border-2 border-primary-container transition-all hover:-translate-y-1 py-8 px-6">
-                <div class="absolute top-4 right-4 z-10 bg-primary-container text-white p-1 rounded-full shadow-lg">
-                    <span class="material-symbols-outlined text-[20px]" data-icon="check"
-                        style='font-variation-settings: "wght" 700;'>check</span>
-                </div>
-                <div class="space-y-2">
-                    <div class="flex justify-between items-start">
-                        <h3 class="font-headline-md text-on-surface" style="">Bowl Mediterráneo</h3>
-                        <span class="font-headline-md text-primary" style="">450 kcal</span>
-                    </div>
-                    <p class="text-on-surface-variant font-body-md line-clamp-2" style="">Quinoa orgánica, garbanzos
-                        crujientes, aguacate fresco y un toque de tahini cítrico.</p>
-                    <div class="flex gap-2 pt-2">
-                        <span
-                            class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant text-[10px] uppercase font-bold rounded-md"
-                            style="">Vegano</span>
-                        <span
-                            class="px-2 py-1 bg-secondary-container/20 text-on-secondary-fixed-variant text-[10px] uppercase font-bold rounded-md"
-                            style="">Nutritivo</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Dish Card 2 -->
-            <div
-                class="group relative bg-surface-container-lowest rounded-[24px] sun-shadow border-2 border-transparent hover:border-orange-100 transition-all hover:-translate-y-1 py-8 px-6">
-                <button
-                    class="absolute inset-0 z-0 w-full h-full text-left focus:outline-none focus:ring-2 focus:ring-primary-container rounded-[24px]"
-                    style=""></button>
-                <div class="space-y-2 relative z-10 pointer-events-none">
-                    <div class="flex justify-between items-start">
-                        <h3 class="font-headline-md text-on-surface" style="">Pasta de la Huerta</h3>
-                        <span class="font-headline-md text-primary" style="">620 kcal</span>
-                    </div>
-                    <p class="text-on-surface-variant font-body-md line-clamp-2" style="">Pesto artesanal de albahaca
-                        fresca, piñones tostados y auténtico Parmigiano Reggiano.</p>
-                    <div class="flex gap-2 pt-2">
-                        <span
-                            class="px-2 py-1 bg-surface-variant text-on-surface-variant text-[10px] uppercase font-bold rounded-md"
-                            style="">Vegetariano</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Dish Card 3 -->
-            <div
-                class="group relative bg-surface-container-lowest rounded-[24px] sun-shadow border-2 border-transparent hover:border-orange-100 transition-all hover:-translate-y-1 py-8 px-6">
-                <button
-                    class="absolute inset-0 z-0 w-full h-full text-left focus:outline-none focus:ring-2 focus:ring-primary-container rounded-[24px]"
-                    style=""></button>
-                <div class="space-y-2 relative z-10 pointer-events-none">
-                    <div class="flex justify-between items-start">
-                        <h3 class="font-headline-md text-on-surface" style="">Pizza Margarita</h3>
-                        <span class="font-headline-md text-primary" style="">580 kcal</span>
-                    </div>
-                    <p class="text-on-surface-variant font-body-md line-clamp-2" style="">Masa madre de 48h, tomate San
-                        Marzano y mozzarella di bufala fundida.</p>
-                    <div class="flex gap-2 pt-2">
-                        <span
-                            class="px-2 py-1 bg-primary-fixed text-on-primary-fixed-variant text-[10px] uppercase font-bold rounded-md"
-                            style="">Popular</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Dish Card 4 -->
-            <div
-                class="group relative bg-surface-container-lowest rounded-[24px] sun-shadow border-2 border-transparent hover:border-orange-100 transition-all hover:-translate-y-1 py-8 px-6">
-                <button
-                    class="absolute inset-0 z-0 w-full h-full text-left focus:outline-none focus:ring-2 focus:ring-primary-container rounded-[24px]"
-                    style=""></button>
-                <div class="space-y-2 relative z-10 pointer-events-none">
-                    <div class="flex justify-between items-start">
-                        <h3 class="font-headline-md text-on-surface" style="">Salmón Silvestre</h3>
-                        <span class="font-headline-md text-primary" style="">710 kcal</span>
-                    </div>
-                    <p class="text-on-surface-variant font-body-md line-clamp-2" style="">Acompañado de espárragos
-                        trigueros y una suave emulsión de limón y eneldo.</p>
-                    <div class="flex gap-2 pt-2">
-                        <span
-                            class="px-2 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant text-[10px] uppercase font-bold rounded-md"
-                            style="">Proteína</span>
-                        <span
-                            class="px-2 py-1 bg-secondary-container/20 text-on-secondary-fixed-variant text-[10px] uppercase font-bold rounded-md"
-                            style="">Sin Gluten</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Dish Card 5 -->
-            <div
-                class="group relative bg-surface-container-lowest rounded-[24px] sun-shadow border-2 border-transparent hover:border-orange-100 transition-all hover:-translate-y-1 py-8 px-6">
-                <button
-                    class="absolute inset-0 z-0 w-full h-full text-left focus:outline-none focus:ring-2 focus:ring-primary-container rounded-[24px]"
-                    style=""></button>
-                <div class="space-y-2 relative z-10 pointer-events-none">
-                    <div class="flex justify-between items-start">
-                        <h3 class="font-headline-md text-on-surface" style="">Caesar de Pollo</h3>
-                        <span class="font-headline-md text-primary" style="">540 kcal</span>
-                    </div>
-                    <p class="text-on-surface-variant font-body-md line-clamp-2" style="">Pollo de corral a la parrilla,
-                        picatostes de masa madre y nuestra salsa secreta.</p>
-                </div>
-            </div>
-            <!-- Dish Card 6 -->
-            <div
-                class="group relative bg-surface-container-lowest rounded-[24px] sun-shadow border-2 border-transparent hover:border-orange-100 transition-all hover:-translate-y-1 py-8 px-6">
-                <button
-                    class="absolute inset-0 z-0 w-full h-full text-left focus:outline-none focus:ring-2 focus:ring-primary-container rounded-[24px]"
-                    style=""></button>
-                <div class="space-y-2 relative z-10 pointer-events-none">
-                    <div class="flex justify-between items-start">
-                        <h3 class="font-headline-md text-on-surface" style="">Solomillo Angus</h3>
-                        <span class="font-headline-md text-primary" style="">680 kcal</span>
-                    </div>
-                    <p class="text-on-surface-variant font-body-md line-clamp-2" style="">Corte premium con reducción de
-                        vino tinto y puré de patata trufado.</p>
-                </div>
-            </div>
-        </div>
-
-    </main>
-    <!-- BottomNavBar -->
-    <nav
-        class="fixed bottom-0 left-0 right-0 z-50 flex justify-around items-center h-20 px-8 pb-4 bg-white dark:bg-stone-900 border-t border-stone-100 dark:border-stone-800 shadow-[0_-4px_20px_-4px_rgba(242,107,29,0.05)] rounded-t-2xl">
-        <a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 px-4 py-1 hover:text-orange-500 transition-transform active:scale-90 duration-300"
-            href="index.html">
-            <span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
-            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Menú</span>
-        </a>
-        <a class="flex flex-col items-center justify-center text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 rounded-xl px-4 py-1 transition-transform active:scale-90 duration-300"
-            href="platos.html">
-            <span class="material-symbols-outlined" data-icon="restaurant"
-                style='font-variation-settings: "FILL" 1;'>restaurant</span>
-            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Platos</span>
-        </a>
-        <a class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 px-4 py-1 hover:text-orange-500 transition-transform active:scale-90 duration-300"
-            href="Almacen.html">
-            <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Almacén</span>
-        </a>
-    </nav>
+<button class="flex-shrink-0 px-6 py-2 rounded-full bg-white border border-stone-200 text-stone-600 font-label-md text-label-md hover:bg-stone-50 transition-all duration-300">
+                Ensaladas
+            </button>
+<button class="flex-shrink-0 px-6 py-2 rounded-full bg-white border border-stone-200 text-stone-600 font-label-md text-label-md hover:bg-stone-50 transition-all duration-300">
+                Verduras
+            </button>
+<button class="flex-shrink-0 px-6 py-2 rounded-full bg-white border border-stone-200 text-stone-600 font-label-md text-label-md hover:bg-stone-50 transition-all duration-300">
+                Carnes
+            </button>
+</section>
+<section class="space-y-4">
+<div class="dish-card bg-white p-5 rounded-xl cursor-pointer" data-dish-name="Wok verduras" shadow-[0_4px_20px_-5px_rgba(242,107,29,0.03)] border border-transparent hover:border-orange-100 transition-all duration-200 flex flex-col gap-1">
+<div class="flex justify-between items-baseline"><span class="font-headline-md text-stone-900 text-body-lg font-bold">Wok verduras</span>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-stone-500 text-label-md">350 kCal</span>
+<span class="material-symbols-outlined text-stone-400 hover:text-red-500 cursor-pointer text-[20px] transition-colors duration-200">delete</span>
+</div></div>
+<span class="text-tertiary font-label-md text-label-md bg-tertiary-fixed-dim/10 self-start px-2 py-0.5 rounded">Verduras</span>
+</div>
+<div class="dish-card bg-white p-5 rounded-xl cursor-pointer" data-dish-name="Pasta Bolognesa" shadow-[0_4px_20px_-5px_rgba(242,107,29,0.03)] border border-transparent hover:border-orange-100 transition-all duration-200 flex flex-col gap-1">
+<div class="flex justify-between items-baseline"><span class="font-headline-md text-stone-900 text-body-lg font-bold">Pasta Bolognesa</span>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-stone-500 text-label-md">520 kCal</span>
+<span class="material-symbols-outlined text-stone-400 hover:text-red-500 cursor-pointer text-[20px] transition-colors duration-200">delete</span>
+</div></div>
+<span class="text-tertiary font-label-md text-label-md bg-tertiary-fixed-dim/10 self-start px-2 py-0.5 rounded">Pasta</span>
+</div>
+<div class="dish-card bg-white p-5 rounded-xl cursor-pointer" data-dish-name="Ensalada César" shadow-[0_4px_20px_-5px_rgba(242,107,29,0.03)] border border-transparent hover:border-orange-100 transition-all duration-200 flex flex-col gap-1">
+<div class="flex justify-between items-baseline"><span class="font-headline-md text-stone-900 text-body-lg font-bold">Ensalada César</span>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-stone-500 text-label-md">280 kCal</span>
+<span class="material-symbols-outlined text-stone-400 hover:text-red-500 cursor-pointer text-[20px] transition-colors duration-200">delete</span>
+</div></div>
+<span class="text-tertiary font-label-md text-label-md bg-tertiary-fixed-dim/10 self-start px-2 py-0.5 rounded">Ensaladas</span>
+</div>
+<div class="dish-card bg-white p-5 rounded-xl cursor-pointer" data-dish-name="Lentejas con chorizo" shadow-[0_4px_20px_-5px_rgba(242,107,29,0.03)] border border-transparent hover:border-orange-100 transition-all duration-200 flex flex-col gap-1">
+<div class="flex justify-between items-baseline"><span class="font-headline-md text-stone-900 text-body-lg font-bold">Lentejas con chorizo</span>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-stone-500 text-label-md">450 kCal</span>
+<span class="material-symbols-outlined text-stone-400 hover:text-red-500 cursor-pointer text-[20px] transition-colors duration-200">delete</span>
+</div></div>
+<span class="text-tertiary font-label-md text-label-md bg-tertiary-fixed-dim/10 self-start px-2 py-0.5 rounded">Legumbres</span>
+</div>
+<div class="dish-card bg-white p-5 rounded-xl cursor-pointer" data-dish-name="Salmón al horno" shadow-[0_4px_20px_-5px_rgba(242,107,29,0.03)] border border-transparent hover:border-orange-100 transition-all duration-200 flex flex-col gap-1">
+<div class="flex justify-between items-baseline"><span class="font-headline-md text-stone-900 text-body-lg font-bold">Salmón al horno</span>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-stone-500 text-label-md">310 kCal</span>
+<span class="material-symbols-outlined text-stone-400 hover:text-red-500 cursor-pointer text-[20px] transition-colors duration-200">delete</span>
+</div></div>
+<span class="text-tertiary font-label-md text-label-md bg-tertiary-fixed-dim/10 self-start px-2 py-0.5 rounded">Pescado</span>
+</div>
+<div class="dish-card bg-white p-5 rounded-xl cursor-pointer" data-dish-name="Risotto de setas" shadow-[0_4px_20px_-5px_rgba(242,107,29,0.03)] border border-transparent hover:border-orange-100 transition-all duration-200 flex flex-col gap-1">
+<div class="flex justify-between items-baseline"><span class="font-headline-md text-stone-900 text-body-lg font-bold">Risotto de setas</span>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-stone-500 text-label-md">380 kCal</span>
+<span class="material-symbols-outlined text-stone-400 hover:text-red-500 cursor-pointer text-[20px] transition-colors duration-200">delete</span>
+</div></div>
+<span class="text-tertiary font-label-md text-label-md bg-tertiary-fixed-dim/10 self-start px-2 py-0.5 rounded">Arroz</span>
+</div>
+<div class="dish-card bg-white p-5 rounded-xl cursor-pointer" data-dish-name="Pechuga de pollo a la plancha" shadow-[0_4px_20px_-5px_rgba(242,107,29,0.03)] border border-transparent hover:border-orange-100 transition-all duration-200 flex flex-col gap-1">
+<div class="flex justify-between items-baseline"><span class="font-headline-md text-stone-900 text-body-lg font-bold">Pechuga de pollo a la plancha</span>
+<div class="flex items-center gap-3">
+<span class="font-label-md text-stone-500 text-label-md">220 kCal</span>
+<span class="material-symbols-outlined text-stone-400 hover:text-red-500 cursor-pointer text-[20px] transition-colors duration-200">delete</span>
+</div></div>
+<span class="text-tertiary font-label-md text-label-md bg-tertiary-fixed-dim/10 self-start px-2 py-0.5 rounded">Carnes</span>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-6 py-3 pb-safe bg-white/90 dark:bg-stone-950/90 backdrop-blur-md border-t border-stone-100 dark:border-stone-900 shadow-[0_-4px_20px_-5px_rgba(242,107,29,0.05)] rounded-t-2xl">
+<div class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 transition-all duration-300 ease-out active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">home</span>
+<span class="font-plus-jakarta-sans text-[10px] font-medium">Inicio</span>
+</div>
+<div class="flex flex-col items-center justify-center text-orange-600 dark:text-orange-400 font-bold scale-110 transition-all duration-300 ease-out active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">search</span>
+<span class="font-plus-jakarta-sans text-[10px] font-medium">Buscar</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 transition-all duration-300 ease-out active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-plus-jakarta-sans text-[10px] font-medium">Pedidos</span>
+</div>
+<div class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 transition-all duration-300 ease-out active:scale-90 cursor-pointer">
+<span class="material-symbols-outlined">person</span>
+<span class="font-plus-jakarta-sans text-[10px] font-medium">Perfil</span>
+</div>
+</nav>
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200 z-50">
+<span class="material-symbols-outlined">add</span>
+</button>
 <script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
-}
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.sun-shadow').forEach(card => {
-    card.style.cursor = 'pointer';
-    card.addEventListener('click', () => {
-      const name = card.querySelector('h3')?.textContent?.trim();
-      if (!name) return;
+    const backBtn = document.getElementById('back-btn');
+    if (backBtn) {
+        backBtn.addEventListener('click', () => {
+            localStorage.removeItem('pending_slot');
+            window.location.href = 'index.html';
+        });
+    }
 
-      const ultimoClick = localStorage.getItem('ultimo_click');
-      if (ultimoClick) {
-        // Save dish to the specific slot: menu_lunes_1, menu_martes_2, etc.
-        localStorage.setItem(`menu_${ultimoClick}`, name);
-        localStorage.removeItem('ultimo_click');
-        localStorage.setItem('lastAddedDish', name);
-      }
-      window.location.href = 'index.html';
+    const dishCards = document.querySelectorAll('.dish-card');
+    dishCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const dishName = card.getAttribute('data-dish-name');
+            const pendingSlot = localStorage.getItem('pending_slot');
+            
+            if (pendingSlot && dishName) {
+                const menuData = JSON.parse(localStorage.getItem('bmenu_data') || '{}');
+                menuData[pendingSlot] = dishName;
+                localStorage.setItem('bmenu_data', JSON.stringify(menuData));
+                localStorage.removeItem('pending_slot');
+                window.location.href = 'index.html';
+            }
+        });
+        
+        // Prevent delete button from triggering selection
+        const deleteBtns = card.querySelectorAll('.text-red-500');
+        deleteBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        });
     });
-  });
 });
 </script>
-</body>
-
-</html>
+</body></html>
