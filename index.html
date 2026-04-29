@@ -1,261 +1,295 @@
 <!DOCTYPE html>
-
-<html class="light" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "surface-bright": "#faf9f6",
-                    "on-tertiary-fixed": "#002114",
-                    "surface": "#faf9f6",
-                    "on-tertiary-container": "#083323",
-                    "on-secondary-fixed-variant": "#5b4300",
-                    "inverse-primary": "#ffb694",
-                    "tertiary-fixed": "#c1ecd4",
-                    "on-tertiary-fixed-variant": "#274e3d",
-                    "primary": "#a14000",
-                    "secondary": "#785900",
-                    "on-secondary-container": "#6c5000",
-                    "surface-container-lowest": "#ffffff",
-                    "surface-variant": "#e3e2e0",
-                    "surface-container-high": "#e9e8e5",
-                    "on-tertiary": "#ffffff",
-                    "error-container": "#ffdad6",
-                    "outline": "#8c7166",
-                    "background": "#faf9f6",
-                    "secondary-container": "#fdc003",
-                    "surface-container-low": "#f4f3f1",
-                    "on-primary": "#ffffff",
-                    "surface-container-highest": "#e3e2e0",
-                    "on-secondary-fixed": "#261a00",
-                    "on-primary-fixed-variant": "#7b2f00",
-                    "on-primary-container": "#511c00",
-                    "on-background": "#1a1c1a",
-                    "primary-fixed-dim": "#ffb694",
-                    "on-error": "#ffffff",
-                    "surface-dim": "#dbdad7",
-                    "surface-container": "#efeeeb",
-                    "secondary-fixed": "#ffdf9e",
-                    "tertiary": "#3f6653",
-                    "secondary-fixed-dim": "#fabd00",
-                    "primary-fixed": "#ffdbcc",
-                    "surface-tint": "#a14000",
-                    "on-surface-variant": "#594237",
-                    "primary-container": "#f26b1d",
-                    "tertiary-fixed-dim": "#a5d0b9",
-                    "tertiary-container": "#749d87",
-                    "on-primary-fixed": "#351000",
-                    "error": "#ba1a1a",
-                    "on-surface": "#1a1c1a",
-                    "inverse-on-surface": "#f2f1ee",
-                    "on-error-container": "#93000a",
-                    "inverse-surface": "#2f312f",
-                    "outline-variant": "#e0c0b2",
-                    "on-secondary": "#ffffff"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "fontFamily": {
-                    "body-md": ["Be Vietnam Pro"],
-                    "body-lg": ["Be Vietnam Pro"],
-                    "headline-md": ["Plus Jakarta Sans"],
-                    "display-xl": ["Plus Jakarta Sans"],
-                    "label-md": ["Be Vietnam Pro"],
-                    "headline-lg": ["Plus Jakarta Sans"]
-            },
-            "fontSize": {
-                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
-                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
-                    "display-xl": ["32px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
-                    "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
-                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
-            }
-          },
-        },
-      }
-    </script>
-<style>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>BMenu — Menú Semanal</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
         .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
-        }
-        .filled-icon {
-            font-variation-settings: 'FILL' 1;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         body {
-            background-color: #faf9f6;
-        }
-        /* Fix for mobile screen height density */
-        @media (max-width: 640px) {
-            .compact-row { min-height: 28px; }
+            font-family: 'Be Vietnam Pro', sans-serif;
+            min-height: max(884px, 100dvh);
         }
     </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#a5d0b9",
+                      "tertiary-container": "#749d87",
+                      "on-primary-fixed": "#351000",
+                      "secondary-fixed-dim": "#fabd00",
+                      "primary-fixed-dim": "#ffb694",
+                      "surface-container-high": "#e9e8e5",
+                      "on-surface": "#1a1c1a",
+                      "secondary": "#785900",
+                      "on-secondary": "#ffffff",
+                      "surface-variant": "#e3e2e0",
+                      "secondary-fixed": "#ffdf9e",
+                      "on-tertiary-container": "#083323",
+                      "on-primary-container": "#511c00",
+                      "background": "#faf9f6",
+                      "on-secondary-container": "#6c5000",
+                      "tertiary-fixed": "#c1ecd4",
+                      "error": "#ba1a1a",
+                      "primary": "#a14000",
+                      "on-tertiary-fixed": "#002114",
+                      "on-primary-fixed-variant": "#7b2f00",
+                      "on-error": "#ffffff",
+                      "surface-tint": "#a14000",
+                      "on-primary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#efeeeb",
+                      "surface-container-low": "#f4f3f1",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#dbdad7",
+                      "on-secondary-fixed-variant": "#5b4300",
+                      "surface": "#faf9f6",
+                      "primary-container": "#f26b1d",
+                      "secondary-container": "#fdc003",
+                      "on-tertiary-fixed-variant": "#274e3d",
+                      "inverse-surface": "#2f312f",
+                      "tertiary": "#3f6653",
+                      "outline-variant": "#e0c0b2",
+                      "primary-fixed": "#ffdbcc",
+                      "on-secondary-fixed": "#261a00",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface-variant": "#594237",
+                      "on-background": "#1a1c1a",
+                      "outline": "#8c7166",
+                      "inverse-on-surface": "#f2f1ee",
+                      "inverse-primary": "#ffb694",
+                      "surface-container-highest": "#e3e2e0",
+                      "on-tertiary": "#ffffff",
+                      "surface-bright": "#faf9f6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "md": "16px",
+                      "margin-desktop": "64px",
+                      "sm": "8px",
+                      "margin-mobile": "20px",
+                      "xl": "40px",
+                      "unit": "4px",
+                      "xs": "4px",
+                      "gutter": "16px",
+                      "lg": "24px"
+              },
+              "fontFamily": {
+                      "body-md": ["Be Vietnam Pro"],
+                      "body-lg": ["Be Vietnam Pro"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "label-md": ["Be Vietnam Pro"],
+                      "display-xl": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "display-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+    </script>
 </head>
-<body class="font-body-md text-on-background min-h-screen pb-20">
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-12 bg-white dark:bg-stone-900 border-b border-stone-100 dark:border-stone-800 shadow-sm">
-<div class="flex items-center gap-2">
-<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-orange-50 active:scale-95 duration-200">
-<span class="material-symbols-outlined text-stone-900 dark:text-stone-100" style="font-size: 20px;">menu</span>
-</button>
-<h1 class="font-headline-md text-stone-900 dark:text-stone-100 text-sm uppercase tracking-tight">MENÚ SEMANAL</h1>
-</div>
-<div class="flex items-center gap-2">
-<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-orange-50">
-<span class="material-symbols-outlined text-primary" style="font-size: 20px;">save</span>
-</button>
-<div class="w-6 h-6 rounded-full bg-orange-100 border border-orange-200 overflow-hidden"></div>
-</div>
-</header>
-<main class="pt-14 px-4 max-w-xl mx-auto">
-<!-- Date Header -->
-<div class="mb-4 flex items-center justify-between">
-<p class="font-label-md text-on-surface-variant text-[10px] uppercase tracking-widest">SEMANA 20 - 26 ABRIL</p>
-<button class="text-primary text-[10px] font-bold uppercase">Compartir</button>
-</div>
-<!-- Weekly List (Vertical Density) -->
-<div class="space-y-1" id="weekly-menu-container">
-<section class="border-b border-stone-100 pb-2">
-<h3 class="font-headline-lg text-red-600 text-lg uppercase mb-1">LUNES</h3>
-<div class="space-y-0.5">
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="lunes-1" data-title="1º plato">
-<span class="text-xs font-medium text-stone-400 flex-1">1º plato: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="lunes-2" data-title="2º plato">
-<span class="text-xs font-medium text-stone-400 flex-1">2º plato: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="lunes-3" data-title="Cena">
-<span class="text-xs font-medium text-stone-400 flex-1">Cena: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-</div>
-</section>
-<section class="border-b border-stone-100 pb-2">
-<h3 class="font-headline-lg text-red-600 text-lg uppercase mb-1">MARTES</h3>
-<div class="space-y-0.5">
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="martes-1" data-title="1º plato">
-<span class="text-xs font-medium text-stone-400 flex-1">1º plato: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="martes-2" data-title="2º plato">
-<span class="text-xs font-medium text-stone-400 flex-1">2º plato: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="martes-3" data-title="Cena">
-<span class="text-xs font-medium text-stone-400 flex-1">Cena: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-</div>
-</section>
-<section class="border-b border-stone-100 pb-2">
-<h3 class="font-headline-lg text-red-600 text-lg uppercase mb-1">MIÉRCOLES</h3>
-<div class="space-y-0.5">
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="miercoles-1" data-title="1º plato">
-<span class="text-xs font-medium text-stone-400 flex-1">1º plato: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="miercoles-2" data-title="2º plato">
-<span class="text-xs font-medium text-stone-400 flex-1">2º plato: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="miercoles-3" data-title="Cena">
-<span class="text-xs font-medium text-stone-400 flex-1">Cena: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-</div>
-</section>
-<section class="border-b border-stone-100 pb-2">
-<h3 class="font-headline-lg text-red-600 text-lg uppercase mb-1">JUEVES</h3>
-<div class="space-y-0.5">
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="jueves-1" data-title="1º plato">
-<span class="text-xs font-medium text-stone-400 flex-1">1º plato: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="jueves-2" data-title="2º plato">
-<span class="text-xs font-medium text-stone-400 flex-1">2º plato: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="jueves-3" data-title="Cena">
-<span class="text-xs font-medium text-stone-400 flex-1">Cena: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-</div>
-</section>
-<section class="border-b border-stone-100 pb-2">
-<h3 class="font-headline-lg text-red-600 text-lg uppercase mb-1">VIERNES</h3>
-<div class="space-y-0.5">
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="viernes-1" data-title="1º plato">
-<span class="text-xs font-medium text-stone-400 flex-1">1º plato: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="viernes-2" data-title="2º plato">
-<span class="text-xs font-medium text-stone-400 flex-1">2º plato: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-<div class="meal-slot flex items-center py-0.5 px-2 bg-stone-50 border border-dashed border-stone-200 rounded-lg group cursor-pointer hover:bg-orange-50 hover:border-orange-200" data-slot="viernes-3" data-title="Cena">
-<span class="text-xs font-medium text-stone-400 flex-1">Cena: <span class="text-primary font-bold">SELECCIONAR</span></span>
-<span class="material-symbols-outlined text-primary text-xs ml-auto" data-icon="add_circle">add_circle</span>
-</div>
-</div>
-</section>
-</div>
-</main>
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 w-full z-50 flex justify-center items-center px-2 pb-safe h-14 bg-white/90 backdrop-blur-md border-t border-stone-100 shadow-[0_-2px_10px_rgba(0,0,0,0.02)]">
-<a class="flex flex-col items-center justify-center text-stone-500 hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined text-xl" data-icon="search">search</span>
-<span class="font-plus-jakarta-sans text-[10px] font-bold">Anteriores</span>
-</a>
-</nav>
+<body class="bg-surface text-on-surface antialiased min-h-screen pb-32">
+    <!-- TopAppBar -->
+    <header class="bg-white/90 dark:bg-gray-950/90 backdrop-blur-md docked full-width top-0 z-50 border-b border-orange-100/50 dark:border-gray-800 shadow-[0_4px_20px_-4px_rgba(242,107,29,0.05)] flex items-center justify-between px-6 py-4 w-full sticky">
+        <div class="flex items-center gap-4">
+            <h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-orange-600 dark:text-orange-400">Menú Semanal</h1>
+        </div>
+        <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-primary-container active:scale-95 transition-transform duration-200 ease-out">
+            <img alt="Usuario" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaPBYv0WQ-z_JYvPEMuieGwZT26ZVMvOIaQMtwGNz1f7Chn18328KYWrjEGeKXTINzNZqGnX0vGhJm_fjNjlFUtgRWU8mzVuJnDh4ysBOQPav3B_zRAKVM02AMvxXIFD7HmB47h8O8s04JMQB4Wi_txVhoycAiDuyzfMsyF3_qdvC4YG8oneo4Psowsbtol6uR8qnYx39UiEOOOatpHHOHnW3kfBI7_qiT8MJHr4052jjmRwBUnaa92RvF4PZQjxNH0Eqo4uBm6zWY"/>
+        </div>
+    </header>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const slots = document.querySelectorAll('.meal-slot');
-    const menuData = JSON.parse(localStorage.getItem('bmenu_data') || '{}');
+    <main class="px-margin-mobile pt-lg max-w-md mx-auto">
+        <!-- Navegación de Semanas -->
+        <div class="flex items-center justify-between mb-lg bg-surface-container-low rounded-2xl p-2 shadow-sm border border-outline-variant/30">
+            <button id="prevWeekBtn" class="p-2 text-primary hover:bg-primary/10 rounded-full transition-colors active:scale-90">
+                <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <div class="text-center flex-1">
+                <h2 id="weekLabel" class="font-headline-md text-primary text-base m-0 leading-tight">Semana Actual</h2>
+                <span id="dateRangeLabel" class="font-label-md text-on-surface-variant text-[11px] uppercase tracking-wider"></span>
+            </div>
+            <button id="nextWeekBtn" class="p-2 text-primary hover:bg-primary/10 rounded-full transition-colors active:scale-90">
+                <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+        </div>
 
-    slots.forEach(slot => {
-        const slotId = slot.getAttribute('data-slot');
-        const title = slot.getAttribute('data-title');
-        
-        if (menuData[slotId]) {
-            // Transform slot to show selected dish
-            slot.className = 'meal-slot flex items-center justify-between py-0.5 px-2 bg-white rounded-lg group';
-            slot.innerHTML = `
-                <span class="text-xs font-medium text-stone-900 flex-1">${title}: <span class="font-normal text-stone-600">${menuData[slotId]}</span></span>
-                <button class="ml-2 text-error hover:scale-110 transition-transform delete-btn">
-                    <span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
-                </button>
-            `;
+        <div id="weeklyContainer" class="flex flex-col gap-lg">
+            <!-- Renderizado dinámicamente -->
+        </div>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/95 dark:bg-gray-950/95 backdrop-blur-lg rounded-t-[32px] border-t border-orange-50 dark:border-gray-800 shadow-[0_-10px_40px_-15px_rgba(242,107,29,0.08)]">
+        <a href="index.html" class="flex flex-col items-center justify-center text-orange-600 dark:text-orange-400 bg-orange-50/50 dark:bg-orange-950/20 rounded-2xl px-4 py-1 transition-colors active:scale-90 duration-300">
+            <span class="material-symbols-outlined" data-icon="calendar_month" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Menú</span>
+        </a>
+        <a href="platos.html" class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-300 transition-colors active:scale-90 duration-300">
+            <span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Platos</span>
+        </a>
+        <a href="Almacen.html" class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-300 transition-colors active:scale-90 duration-300">
+            <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Almacén</span>
+        </a>
+    </nav>
+
+    <script>
+        const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+        const tiposComida = ['Comida', 'Cena'];
+        let weekOffset = 0; // 0 = actual, -1 = anterior, 1 = siguiente
+
+        function getWeekInfo(offset) {
+            const today = new Date();
+            // Ir al lunes de la semana actual
+            const day = today.getDay();
+            const diffToMonday = today.getDate() - day + (day === 0 ? -6 : 1);
+            let monday = new Date(today.setDate(diffToMonday));
+            monday.setDate(monday.getDate() + (offset * 7));
             
-            // Delete logic
-            const deleteBtn = slot.querySelector('.delete-btn');
-            deleteBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                delete menuData[slotId];
-                localStorage.setItem('bmenu_data', JSON.stringify(menuData));
-                window.location.reload();
-            });
-        } else {
-            // Select logic
-            slot.addEventListener('click', () => {
-                localStorage.setItem('pending_slot', slotId);
-                window.location.href = 'platos.html';
+            let sunday = new Date(monday);
+            sunday.setDate(sunday.getDate() + 6);
+
+            const formatOpt = { day: 'numeric', month: 'short' };
+            const dateRange = `${monday.toLocaleDateString('es-ES', formatOpt)} - ${sunday.toLocaleDateString('es-ES', formatOpt)}`;
+            
+            // Ej: "Semana_18_2026"
+            // Get ISO week number
+            const target = new Date(monday.valueOf());
+            const dayNr = (monday.getDay() + 6) % 7;
+            target.setDate(target.getDate() - dayNr + 3);
+            const firstThursday = target.valueOf();
+            target.setMonth(0, 1);
+            if (target.getDay() !== 4) {
+                target.setMonth(0, 1 + ((4 - target.getDay()) + 7) % 7);
+            }
+            const weekNumber = 1 + Math.ceil((firstThursday - target) / 604800000);
+            
+            const weekId = `Semana_${weekNumber}_${monday.getFullYear()}`;
+            
+            return { weekId, dateRange };
+        }
+
+        function loadMenuSemanal() {
+            return JSON.parse(localStorage.getItem('menuSemanal')) || {};
+        }
+
+        function saveMenuSemanal(data) {
+            localStorage.setItem('menuSemanal', JSON.stringify(data));
+        }
+
+        function removePlato(weekId, slotId) {
+            const data = loadMenuSemanal();
+            if (data[weekId] && data[weekId][slotId]) {
+                delete data[weekId][slotId];
+                saveMenuSemanal(data);
+                renderWeek();
+            }
+        }
+
+        function handleSelectPlato(weekId, slotId) {
+            localStorage.setItem('slotSeleccionado', JSON.stringify({ weekId, slotId }));
+            window.location.href = 'platos.html';
+        }
+
+        function renderWeek() {
+            const { weekId, dateRange } = getWeekInfo(weekOffset);
+            
+            // Labels
+            let weekTitle = 'Semana Actual';
+            if (weekOffset === -1) weekTitle = 'Semana Anterior';
+            if (weekOffset === 1) weekTitle = 'Semana Siguiente';
+            if (weekOffset < -1 || weekOffset > 1) weekTitle = `Semana ${weekId.split('_')[1]}`;
+            
+            document.getElementById('weekLabel').textContent = weekTitle;
+            document.getElementById('dateRangeLabel').textContent = dateRange;
+
+            const container = document.getElementById('weeklyContainer');
+            container.innerHTML = '';
+
+            const data = loadMenuSemanal();
+            const weekData = data[weekId] || {};
+
+            dias.forEach(dia => {
+                const diaCard = document.createElement('div');
+                diaCard.className = 'bg-surface-container-lowest rounded-xl p-md border border-surface-variant shadow-sm';
+                
+                let html = `<h3 class="font-headline-md text-primary text-[16px] mb-3 border-b border-outline-variant/30 pb-2">${dia}</h3>`;
+                html += `<div class="flex flex-col gap-3">`;
+
+                tiposComida.forEach(tipo => {
+                    const slotId = `${dia}_${tipo}`;
+                    const plato = weekData[slotId];
+
+                    html += `<div class="flex items-center justify-between">`;
+                    html += `<div class="flex flex-col">
+                                <span class="text-[12px] font-semibold text-on-surface-variant uppercase">${tipo}</span>
+                             `;
+
+                    if (plato) {
+                        html += `
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="font-body-md text-on-surface font-medium">${plato.nombre}</span>
+                                    <span class="font-label-md text-secondary bg-secondary-container/20 px-1.5 py-0.5 rounded-full text-[10px] whitespace-nowrap">${plato.kCal} kCal</span>
+                                </div>
+                             </div>
+                             <button onclick="removePlato('${weekId}', '${slotId}')" class="text-error active:scale-90 transition-transform p-2 hover:bg-error/10 rounded-full">
+                                <span class="material-symbols-outlined" data-icon="delete">delete</span>
+                             </button>
+                        `;
+                    } else {
+                        html += `</div>`;
+                        html += `
+                             <button onclick="handleSelectPlato('${weekId}', '${slotId}')" class="text-primary-container font-label-md text-[13px] bg-primary/5 hover:bg-primary/10 px-3 py-1.5 rounded-lg active:scale-95 transition-all flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[16px]">add</span> SELECCIONAR
+                             </button>
+                        `;
+                    }
+                    html += `</div>`;
+                });
+
+                html += `</div>`;
+                diaCard.innerHTML = html;
+                container.appendChild(diaCard);
             });
         }
-    });
-});
-</script>
-</body></html>
+
+        document.getElementById('prevWeekBtn').addEventListener('click', () => {
+            weekOffset--;
+            renderWeek();
+        });
+
+        document.getElementById('nextWeekBtn').addEventListener('click', () => {
+            weekOffset++;
+            renderWeek();
+        });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWeek();
+        });
+
+    </script>
+</body>
+</html>
