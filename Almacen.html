@@ -1,406 +1,233 @@
 <!DOCTYPE html>
-<html class="light" lang="es">
 
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport" />
-    <title>BMenu — Almacén</title>
-    <meta name="theme-color" content="#F26B1D" />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container-lowest": "#ffffff",
-                        "surface-container-high": "#e9e8e5",
-                        "secondary": "#785900",
-                        "on-secondary": "#ffffff",
-                        "secondary-fixed": "#ffdf9e",
-                        "tertiary-fixed-dim": "#a5d0b9",
-                        "secondary-container": "#fdc003",
-                        "on-secondary-fixed": "#261a00",
-                        "background": "#faf9f6",
-                        "on-tertiary": "#ffffff",
-                        "surface-dim": "#dbdad7",
-                        "surface-variant": "#e3e2e0",
-                        "outline": "#8c7166",
-                        "error": "#ba1a1a",
-                        "primary": "#a14000",
-                        "on-error": "#ffffff",
-                        "inverse-primary": "#ffb694",
-                        "surface-container-low": "#f4f3f1",
-                        "surface-container": "#efeeeb",
-                        "surface-bright": "#faf9f6",
-                        "on-secondary-container": "#6c5000",
-                        "primary-fixed-dim": "#ffb694",
-                        "on-primary-fixed-variant": "#7b2f00",
-                        "surface": "#faf9f6",
-                        "on-tertiary-container": "#083323",
-                        "on-tertiary-fixed": "#002114",
-                        "on-primary": "#ffffff",
-                        "surface-container-highest": "#e3e2e0",
-                        "tertiary-fixed": "#c1ecd4",
-                        "error-container": "#ffdad6",
-                        "on-tertiary-fixed-variant": "#274e3d",
-                        "on-background": "#1a1c1a",
-                        "on-secondary-fixed-variant": "#5b4300",
-                        "tertiary-container": "#749d87",
-                        "tertiary": "#3f6653",
-                        "outline-variant": "#e0c0b2",
-                        "surface-tint": "#a14000",
-                        "primary-fixed": "#ffdbcc",
-                        "inverse-surface": "#2f312f",
-                        "on-surface-variant": "#594237",
-                        "secondary-fixed-dim": "#fabd00",
-                        "inverse-on-surface": "#f2f1ee",
-                        "primary-container": "#f26b1d",
-                        "on-error-container": "#93000a",
-                        "on-primary-fixed": "#351000",
-                        "on-primary-container": "#511c00",
-                        "on-surface": "#1a1c1a"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "margin-desktop": "64px",
-                        "margin-mobile": "20px",
-                        "unit": "4px",
-                        "xs": "4px",
-                        "lg": "24px",
-                        "xl": "40px",
-                        "sm": "8px",
-                        "gutter": "16px",
-                        "md": "16px"
-                    },
-                    "fontFamily": {
-                        "label-md": ["Be Vietnam Pro"],
-                        "body-lg": ["Be Vietnam Pro"],
-                        "headline-lg": ["Plus Jakarta Sans"],
-                        "headline-md": ["Plus Jakarta Sans"],
-                        "display-xl": ["Plus Jakarta Sans"],
-                        "body-md": ["Be Vietnam Pro"]
-                    },
-                    "fontSize": {
-                        "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "600" }],
-                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
-                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
-                        "display-xl": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
-                    }
-                },
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#e9e8e5",
+                    "secondary": "#785900",
+                    "on-secondary": "#ffffff",
+                    "secondary-fixed": "#ffdf9e",
+                    "tertiary-fixed-dim": "#a5d0b9",
+                    "secondary-container": "#fdc003",
+                    "on-secondary-fixed": "#261a00",
+                    "background": "#faf9f6",
+                    "on-tertiary": "#ffffff",
+                    "surface-dim": "#dbdad7",
+                    "surface-variant": "#e3e2e0",
+                    "outline": "#8c7166",
+                    "error": "#ba1a1a",
+                    "primary": "#a14000",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#ffb694",
+                    "surface-container-low": "#f4f3f1",
+                    "surface-container": "#efeeeb",
+                    "surface-bright": "#faf9f6",
+                    "on-secondary-container": "#6c5000",
+                    "primary-fixed-dim": "#ffb694",
+                    "on-primary-fixed-variant": "#7b2f00",
+                    "surface": "#faf9f6",
+                    "on-tertiary-container": "#083323",
+                    "on-tertiary-fixed": "#002114",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e3e2e0",
+                    "tertiary-fixed": "#c1ecd4",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#274e3d",
+                    "on-background": "#1a1c1a",
+                    "on-secondary-fixed-variant": "#5b4300",
+                    "tertiary-container": "#749d87",
+                    "tertiary": "#3f6653",
+                    "outline-variant": "#e0c0b2",
+                    "surface-tint": "#a14000",
+                    "primary-fixed": "#ffdbcc",
+                    "inverse-surface": "#2f312f",
+                    "on-surface-variant": "#594237",
+                    "secondary-fixed-dim": "#fabd00",
+                    "inverse-on-surface": "#f2f1ee",
+                    "primary-container": "#f26b1d",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed": "#351000",
+                    "on-primary-container": "#511c00",
+                    "on-surface": "#1a1c1a"
             },
-        }
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "margin-mobile": "20px",
+                    "unit": "4px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "xl": "40px",
+                    "sm": "8px",
+                    "gutter": "16px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "label-md": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "display-xl": ["Plus Jakarta Sans"],
+                    "body-md": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
     </script>
-    <style>
+<style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         body {
-            min-height: 100dvh;
+          min-height: 100dvh;
         }
     </style>
 </head>
-
-<body class="bg-surface font-body-md text-on-surface min-h-screen pb-32">
-    <!-- TopAppBar -->
-    <header class="bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md font-['Plus_Jakarta_Sans'] font-bold text-zinc-900 dark:text-zinc-50 top-0 sticky border-b border-zinc-100 dark:border-zinc-800 shadow-[0_4px_20px_-4px_rgba(242,107,29,0.08)] flex items-center justify-between px-4 h-16 w-full z-50">
-        <div class="flex items-center gap-3">
-            <h1 class="text-lg font-extrabold tracking-tight text-orange-600">Ingredientes y Almacén</h1>
-        </div>
-    </header>
-
-    <main class="max-w-2xl mx-auto px-margin-mobile pt-lg">
-        <!-- Hero Section -->
-        <div class="mb-xl relative rounded-xl overflow-hidden h-32 bg-primary/5 flex items-end p-lg border border-primary/10">
-            <div>
-                <span class="bg-secondary-container text-on-secondary-container text-label-md px-3 py-1 rounded-full mb-2 inline-block shadow-sm">Despensa al día</span>
-                <h2 class="text-on-surface font-headline-md">Gestión de Stock</h2>
-            </div>
-        </div>
-
-        <!-- Section: Materias Primas -->
-        <section class="mb-xl">
-            <div class="flex items-center justify-between mb-md">
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-primary" data-icon="inventory_2">inventory_2</span>
-                    <h3 class="font-headline-md text-on-surface">Materias Primas</h3>
-                </div>
-            </div>
-            <div id="materiasPrimasContainer" class="space-y-sm">
-                <!-- Rendered dynamically -->
-            </div>
-        </section>
-
-        <!-- Section: CONGELADOR -->
-        <section>
-            <div class="flex items-center justify-between mb-md">
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-secondary" data-icon="ac_unit">ac_unit</span>
-                    <h3 class="font-headline-md text-on-surface uppercase tracking-wide">Congelador</h3>
-                </div>
-                <span id="congeladorCount" class="text-secondary font-label-md bg-secondary-fixed/30 px-3 py-1 rounded-full">0 platos listos</span>
-            </div>
-            <div id="congeladorContainer" class="grid grid-cols-1 md:grid-cols-2 gap-md">
-                <!-- Rendered dynamically -->
-            </div>
-        </section>
-    </main>
-
-    <!-- BottomNavBar -->
-    <nav class="bg-white/95 dark:bg-zinc-950/95 backdrop-blur-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe border-t border-zinc-100 dark:border-zinc-800 shadow-[0_-4px_20px_-4px_rgba(242,107,29,0.12)] rounded-t-[16px]">
-        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 px-3 py-1 hover:text-orange-400 transition-all active:scale-90 duration-200" href="index.html">
-            <span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
-            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Menú</span>
-        </a>
-        <a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 px-3 py-1 hover:text-orange-400 transition-all active:scale-90 duration-200" href="platos.html">
-            <span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
-            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Platos</span>
-        </a>
-        <a class="flex flex-col items-center justify-center text-orange-600 bg-orange-50 dark:bg-orange-950/30 rounded-xl px-3 py-1 transition-all active:scale-90 duration-200" href="Almacen.html">
-            <span class="material-symbols-outlined" data-icon="inventory_2" style='font-variation-settings: "FILL" 1;'>inventory_2</span>
-            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Almacén</span>
-        </a>
-    </nav>
-
-    <!-- FAB -->
-    <button onclick="openModal()" class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform z-40 hover:bg-orange-600">
-        <span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'FILL' 1;">add</span>
-    </button>
-
-    <!-- Modal Add Item -->
-    <div id="addModal" class="hidden fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center px-4 transition-opacity">
-        <div class="bg-surface rounded-2xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col">
-            <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center">
-                <h3 class="font-headline-md text-primary text-lg">Añadir al Almacén</h3>
-                <button onclick="closeModal()" class="text-on-surface-variant hover:text-error transition-colors">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
-            </div>
-            <div class="p-6 flex flex-col gap-4">
-                <label class="flex flex-col gap-1">
-                    <span class="font-label-md text-sm text-on-surface-variant">Tipo de Elemento</span>
-                    <select id="itemType" onchange="toggleFormFields()" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary text-on-surface">
-                        <option value="materias">Materia Prima</option>
-                        <option value="congelador">Plato Congelado</option>
-                    </select>
-                </label>
-                
-                <label class="flex flex-col gap-1">
-                    <span class="font-label-md text-sm text-on-surface-variant">Nombre</span>
-                    <input type="text" id="itemName" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary text-on-surface" placeholder="Ej: Arroz">
-                </label>
-
-                <!-- Campos de Materia Prima -->
-                <div id="materiasFields" class="flex flex-col gap-4">
-                    <label class="flex flex-col gap-1">
-                        <span class="font-label-md text-sm text-on-surface-variant">Cantidad</span>
-                        <input type="text" id="itemQuantity" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary text-on-surface" placeholder="Ej: 2 paquetes">
-                    </label>
-                    <label class="flex flex-col gap-1">
-                        <span class="font-label-md text-sm text-on-surface-variant">Icono</span>
-                        <select id="itemIcon" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary text-on-surface">
-                            <option value="kitchen">General (Nevera)</option>
-                            <option value="nutrition">Fruta/Verdura</option>
-                            <option value="bakery_dining">Harinas/Pan</option>
-                            <option value="rice_bowl">Granos/Cereales</option>
-                            <option value="set_meal">Carnes/Pescados</option>
-                        </select>
-                    </label>
-                </div>
-
-                <!-- Campos de Congelador -->
-                <div id="congeladorFields" class="hidden flex flex-col gap-4">
-                    <label class="flex flex-col gap-1">
-                        <span class="font-label-md text-sm text-on-surface-variant">Raciones</span>
-                        <input type="number" id="itemRaciones" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary text-on-surface" placeholder="Ej: 2">
-                    </label>
-                    <label class="flex flex-col gap-1">
-                        <span class="font-label-md text-sm text-on-surface-variant">Fecha de elaboración</span>
-                        <input type="text" id="itemDate" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary text-on-surface" placeholder="Ej: 20 Oct">
-                    </label>
-                </div>
-            </div>
-            <div class="px-6 py-4 bg-surface-container-low flex justify-end gap-3">
-                <button onclick="closeModal()" class="px-4 py-2 text-on-surface-variant font-label-md hover:bg-surface-variant rounded-lg transition-colors">Cancelar</button>
-                <button onclick="saveItem()" class="px-4 py-2 bg-primary text-on-primary font-label-md rounded-lg shadow hover:bg-primary-container transition-colors active:scale-95">Guardar</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const defaultStock = {
-            materiasPrimas: [
-                { id: "m1", nombre: "Alubias blancas", cantidad: "2 tarros", icon: "kitchen" },
-                { id: "m2", nombre: "Aguacates", cantidad: "6 piezas", icon: "nutrition" },
-                { id: "m3", nombre: "Harina", cantidad: "2 paquetes", icon: "bakery_dining" },
-                { id: "m4", nombre: "Arroz", cantidad: "1 kg", icon: "rice_bowl" }
-            ],
-            congelador: [
-                { id: "c1", nombre: "Lentejas con chorizo", raciones: 2, fecha: "12 Oct", icon: "soup_kitchen", theme: "primary" },
-                { id: "c2", nombre: "Crema de calabaza", raciones: 1, fecha: "15 Oct", icon: "soup_kitchen", theme: "tertiary" },
-                { id: "c3", nombre: "Boloñesa casera", raciones: 3, fecha: "10 Oct", icon: "restaurant", theme: "secondary" }
-            ]
-        };
-
-        function getStock() {
-            let stock = localStorage.getItem('almacenStock');
-            if (!stock) {
-                localStorage.setItem('almacenStock', JSON.stringify(defaultStock));
-                return defaultStock;
-            }
-            return JSON.parse(stock);
-        }
-
-        function saveStock(data) {
-            localStorage.setItem('almacenStock', JSON.stringify(data));
-        }
-
-        function deleteItem(type, id) {
-            if(confirm('¿Seguro que deseas eliminar este elemento?')) {
-                const stock = getStock();
-                stock[type] = stock[type].filter(item => item.id !== id);
-                saveStock(stock);
-                renderAlmacen();
-            }
-        }
-
-        function renderAlmacen() {
-            const stock = getStock();
-            
-            // Render Materias Primas
-            const matContainer = document.getElementById('materiasPrimasContainer');
-            matContainer.innerHTML = '';
-            stock.materiasPrimas.forEach(m => {
-                const div = document.createElement('div');
-                div.className = 'flex items-center p-md bg-surface-container-lowest rounded-xl border border-surface-variant shadow-sm';
-                div.innerHTML = `
-                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-md flex-shrink-0">
-                        <span class="material-symbols-outlined text-primary" data-icon="${m.icon}">${m.icon}</span>
-                    </div>
-                    <div class="flex-1 overflow-hidden">
-                        <p class="font-label-md text-on-surface truncate">${m.nombre}</p>
-                        <p class="text-on-surface-variant text-sm">${m.cantidad}</p>
-                    </div>
-                    <button onclick="deleteItem('materiasPrimas', '${m.id}')" class="p-2 text-error/80 hover:bg-error/10 rounded-full transition-colors active:scale-90">
-                        <span class="material-symbols-outlined" data-icon="delete">delete</span>
-                    </button>
-                `;
-                matContainer.appendChild(div);
-            });
-
-            // Render Congelador
-            const congContainer = document.getElementById('congeladorContainer');
-            congContainer.innerHTML = '';
-            document.getElementById('congeladorCount').textContent = `${stock.congelador.length} platos listos`;
-
-            stock.congelador.forEach(c => {
-                // Apply a styling based on the theme (primary, secondary, tertiary)
-                // If not provided or new, pick one randomly or based on index.
-                let theme = c.theme || 'primary';
-                
-                let bgClass, borderClass, textClass, badgeBg;
-                if(theme === 'primary') {
-                    bgClass = 'bg-surface-container-low'; borderClass = 'border-outline-variant'; textClass = 'text-primary'; badgeBg = 'bg-white/60';
-                } else if(theme === 'secondary') {
-                    bgClass = 'bg-secondary-fixed/20'; borderClass = 'border-secondary-fixed-dim/50'; textClass = 'text-secondary'; badgeBg = 'bg-white/80';
-                } else {
-                    bgClass = 'bg-tertiary-container/10'; borderClass = 'border-tertiary-fixed-dim/30'; textClass = 'text-tertiary'; badgeBg = 'bg-white/60';
-                }
-
-                const div = document.createElement('div');
-                div.className = `${bgClass} rounded-xl p-md border ${borderClass} flex flex-col justify-between shadow-sm relative overflow-hidden`;
-                
-                div.innerHTML = `
-                    <div class="absolute top-0 right-0 p-3 opacity-10">
-                        <span class="material-symbols-outlined ${textClass} text-4xl">${c.icon || 'soup_kitchen'}</span>
-                    </div>
-                    <div class="flex justify-between items-start">
-                        <div class="z-10">
-                            <h4 class="font-headline-md text-on-surface mb-1">${c.nombre}</h4>
-                            <p class="text-on-surface-variant text-sm flex items-center gap-1 mb-2">
-                                <span class="material-symbols-outlined text-sm">group</span>
-                                ${c.raciones} ración/es
-                            </p>
-                            <div class="inline-flex items-center gap-1.5 px-2 py-0.5 ${badgeBg} rounded-md border ${borderClass}">
-                                <span class="material-symbols-outlined text-[14px] ${textClass}">calendar_today</span>
-                                <span class="text-[11px] font-medium ${textClass} uppercase tracking-wider">${c.fecha}</span>
-                            </div>
-                        </div>
-                        <button onclick="deleteItem('congelador', '${c.id}')" class="p-1 text-error/80 hover:bg-error/10 rounded-full transition-colors active:scale-90 z-10">
-                            <span class="material-symbols-outlined">delete</span>
-                        </button>
-                    </div>
-                `;
-                congContainer.appendChild(div);
-            });
-        }
-
-        // Modal logic
-        function openModal() {
-            document.getElementById('addModal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('addModal').classList.add('hidden');
-            document.getElementById('itemName').value = '';
-            document.getElementById('itemQuantity').value = '';
-            document.getElementById('itemRaciones').value = '';
-            document.getElementById('itemDate').value = '';
-        }
-
-        function toggleFormFields() {
-            const type = document.getElementById('itemType').value;
-            if (type === 'materias') {
-                document.getElementById('materiasFields').classList.remove('hidden');
-                document.getElementById('congeladorFields').classList.add('hidden');
-            } else {
-                document.getElementById('materiasFields').classList.add('hidden');
-                document.getElementById('congeladorFields').classList.remove('hidden');
-            }
-        }
-
-        function saveItem() {
-            const type = document.getElementById('itemType').value;
-            const name = document.getElementById('itemName').value.trim();
-            
-            if (!name) {
-                alert('Por favor, escribe un nombre.');
-                return;
-            }
-
-            const stock = getStock();
-            const id = type.charAt(0) + Date.now();
-
-            if (type === 'materias') {
-                const qty = document.getElementById('itemQuantity').value.trim() || '1 ud';
-                const icon = document.getElementById('itemIcon').value;
-                stock.materiasPrimas.push({ id, nombre: name, cantidad: qty, icon: icon });
-            } else {
-                const raciones = document.getElementById('itemRaciones').value.trim() || '1';
-                const date = document.getElementById('itemDate').value.trim() || 'Hoy';
-                const themes = ['primary', 'secondary', 'tertiary'];
-                const randTheme = themes[Math.floor(Math.random() * themes.length)];
-                
-                stock.congelador.push({ id, nombre: name, raciones: parseInt(raciones, 10), fecha: date, icon: 'soup_kitchen', theme: randTheme });
-            }
-
-            saveStock(stock);
-            closeModal();
-            renderAlmacen();
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderAlmacen();
-        });
-    </script>
-</body>
-</html>
+<body class="bg-surface font-body-md text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md docked full-width top-0 sticky border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-center px-4 h-16 w-full z-50">
+<h1 class="text-xl font-black tracking-widest text-orange-600 uppercase">DESPENSA</h1>
+</header>
+<main class="max-w-2xl mx-auto px-margin-mobile pt-md pb-32">
+<!-- Section: Materias Primas -->
+<section class="mb-lg">
+<div class="flex items-center justify-between mb-sm border-b border-surface-variant pb-xs">
+<h3 class="text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Materias Primas</h3>
+<button class="text-primary font-label-md text-sm hover:underline">Añadir</button>
+</div>
+<div class="divide-y divide-surface-variant/50">
+<!-- Ingredient Items: Compact List -->
+<div class="flex items-center justify-between py-2">
+<span class="font-body-md text-on-surface">Alubias blancas</span>
+<div class="flex items-center gap-4">
+<span class="text-on-surface-variant text-sm">2 tarros</span>
+<button class="text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between py-2">
+<span class="font-body-md text-on-surface">Aguacates</span>
+<div class="flex items-center gap-4">
+<span class="text-on-surface-variant text-sm">6 piezas</span>
+<button class="text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between py-2">
+<span class="font-body-md text-on-surface">Harina</span>
+<div class="flex items-center gap-4">
+<span class="text-on-surface-variant text-sm">2 paquetes</span>
+<button class="text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between py-2">
+<span class="font-body-md text-on-surface">Arroz</span>
+<div class="flex items-center gap-4">
+<span class="text-on-surface-variant text-sm">1 kg</span>
+<button class="text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between py-2">
+<span class="font-body-md text-on-surface">Tomates</span>
+<div class="flex items-center gap-4">
+<span class="text-on-surface-variant text-sm">8 unidades</span>
+<button class="text-outline hover:text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: CONGELADOR -->
+<section class="bg-blue-50/50 -mx-margin-mobile px-margin-mobile py-lg">
+<div class="flex items-center justify-between mb-sm border-b border-blue-200 pb-xs">
+<h3 class="text-label-md font-bold text-blue-800 uppercase tracking-wider">CONGELADOR</h3>
+</div>
+<div class="divide-y divide-blue-100">
+<!-- Freezer List: Compact -->
+<div class="flex items-center justify-between py-2">
+<span class="font-body-md text-on-surface flex-1">Lentejas con chorizo</span>
+<div class="flex items-center gap-6">
+<span class="text-on-surface-variant text-sm">2 rac.</span>
+<span class="text-on-surface-variant text-[11px] font-medium uppercase text-blue-600">12 Oct</span>
+<button class="text-outline hover:text-error">
+<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between py-2">
+<span class="font-body-md text-on-surface flex-1">Crema de calabaza</span>
+<div class="flex items-center gap-6">
+<span class="text-on-surface-variant text-sm">1 rac.</span>
+<span class="text-on-surface-variant text-[11px] font-medium uppercase text-blue-600">15 Oct</span>
+<button class="text-outline hover:text-error">
+<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between py-2">
+<span class="font-body-md text-on-surface flex-1">Boloñesa casera</span>
+<div class="flex items-center gap-6">
+<span class="text-on-surface-variant text-sm">3 rac.</span>
+<span class="text-on-surface-variant text-[11px] font-medium uppercase text-blue-600">10 Oct</span>
+<button class="text-outline hover:text-error">
+<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-white/95 dark:bg-zinc-950/95 backdrop-blur-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe border-t border-zinc-100 dark:border-zinc-800 shadow-sm rounded-t-[16px]">
+<a class="flex flex-col items-center justify-center text-zinc-400 px-3 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Inicio</span>
+</a>
+<a class="flex flex-col items-center justify-center text-orange-600 bg-orange-50 rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Buscar</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-400 px-3 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Pedidos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-400 px-3 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Perfil</span>
+</a>
+</nav>
+<!-- FAB -->
+<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform z-40">
+<span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</body></html>

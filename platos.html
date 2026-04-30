@@ -131,7 +131,6 @@
     <main class="px-margin-mobile pt-lg max-w-md mx-auto">
         <div class="flex flex-col gap-sm mb-lg">
             <h2 class="font-headline-lg text-primary text-headline-lg">Seleccionar Platos</h2>
-            <p class="font-body-md text-on-surface-variant text-body-md">Elige un plato para añadirlo a tu menú semanal.</p>
         </div>
         
         <div id="catalogContainer" class="flex flex-col gap-lg">
@@ -249,7 +248,7 @@
                 sec.className = 'flex flex-col';
                 
                 let html = `
-                    <h3 class="font-headline-md text-primary text-headline-md text-[20px] border-b border-outline-variant pb-xs mb-sm">${categoria}</h3>
+                    <h3 class="font-headline-md text-primary text-headline-md text-[18px] border-b border-outline-variant pb-xs mb-1">${categoria}</h3>
                     <div class="flex flex-col divide-y divide-surface-container-high">
                 `;
 
@@ -257,7 +256,7 @@
                     // Escape single quotes for the inline onclick handlers
                     const platoJSON = JSON.stringify(plato).replace(/'/g, "\\'");
                     html += `
-                        <div class="py-3 plato-grid gap-sm hover:bg-surface-container-low transition-colors cursor-pointer rounded-lg px-2 -mx-2" onclick='handlePlatoClick(${platoJSON})'>
+                        <div class="py-1.5 plato-grid gap-1 hover:bg-surface-container-low transition-colors cursor-pointer rounded-lg px-2 -mx-2" onclick='handlePlatoClick(${platoJSON})'>
                             <span class="font-body-md text-on-surface">${plato.nombre}</span>
                             <span class="font-label-md text-secondary bg-secondary-container/20 px-2 py-0.5 rounded-full whitespace-nowrap text-[12px]">${plato.kCal} kCal</span>
                             <button onclick="deletePlato(event, '${categoria}', '${plato.id}')" class="text-error active:scale-90 transition-transform p-1 hover:bg-error/10 rounded-full">
