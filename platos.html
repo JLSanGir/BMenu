@@ -17,7 +17,7 @@
         }
         .plato-grid {
             display: grid;
-            grid-template-columns: 1fr auto auto;
+            grid-template-columns: 1fr auto;
             align-items: center;
         }
     </style>
@@ -184,10 +184,6 @@
                         <option value="Otros">Otros</option>
                     </select>
                 </label>
-                <label class="flex flex-col gap-1">
-                    <span class="font-label-md text-sm text-on-surface-variant">Calorías (kCal)</span>
-                    <input type="number" id="platoKcal" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary transition-all text-on-surface" placeholder="Ej: 350">
-                </label>
             </div>
             <div class="px-6 py-4 bg-surface-container-low flex justify-end gap-3">
                 <button onclick="closeModal()" class="px-4 py-2 text-on-surface-variant font-label-md hover:bg-surface-variant rounded-lg transition-colors">Cancelar</button>
@@ -199,27 +195,27 @@
     <script>
         const defaultCatalogo = {
             "Carnes": [
-                { id: "c1", nombre: "Solomillo a la brasa", kCal: 450 },
-                { id: "c2", nombre: "Pollo al horno con hierbas", kCal: 320 }
+                { id: "c1", nombre: "Solomillo a la brasa" },
+                { id: "c2", nombre: "Pollo al horno con hierbas" }
             ],
             "Pescados": [
-                { id: "p1", nombre: "Salmón al vapor con eneldo", kCal: 380 },
-                { id: "p2", nombre: "Merluza a la plancha", kCal: 210 }
+                { id: "p1", nombre: "Salmón al vapor con eneldo" },
+                { id: "p2", nombre: "Merluza a la plancha" }
             ],
             "Legumbres": [
-                { id: "l1", nombre: "Lentejas estofadas", kCal: 350 },
-                { id: "l2", nombre: "Garbanzos con espinacas", kCal: 310 }
+                { id: "l1", nombre: "Lentejas estofadas" },
+                { id: "l2", nombre: "Garbanzos con espinacas" }
             ],
             "Pastas": [
-                { id: "pa1", nombre: "Espaguetis con tomate", kCal: 400 },
-                { id: "pa2", nombre: "Macarrones gratinados", kCal: 520 }
+                { id: "pa1", nombre: "Espaguetis con tomate" },
+                { id: "pa2", nombre: "Macarrones gratinados" }
             ],
             "Ensaladas": [
-                { id: "e1", nombre: "Ensalada César", kCal: 280 },
-                { id: "e2", nombre: "Ensalada mixta fresca", kCal: 120 }
+                { id: "e1", nombre: "Ensalada César" },
+                { id: "e2", nombre: "Ensalada mixta fresca" }
             ],
             "Otros": [
-                { id: "o1", nombre: "Tortilla de patatas", kCal: 450 }
+                { id: "o1", nombre: "Tortilla de patatas" }
             ]
         };
 
@@ -258,7 +254,6 @@
                     html += `
                         <div class="py-1.5 plato-grid gap-1 hover:bg-surface-container-low transition-colors cursor-pointer rounded-lg px-2 -mx-2" onclick='handlePlatoClick(${platoJSON})'>
                             <span class="font-body-md text-on-surface">${plato.nombre}</span>
-                            <span class="font-label-md text-secondary bg-secondary-container/20 px-2 py-0.5 rounded-full whitespace-nowrap text-[10px]">${plato.kCal} kCal</span>
                             <button onclick="deletePlato(event, '${categoria}', '${plato.id}')" class="text-error active:scale-90 transition-transform p-1 hover:bg-error/10 rounded-full">
                                 <span class="material-symbols-outlined" data-icon="delete">delete</span>
                             </button>
@@ -283,8 +278,7 @@
                 
                 // Assign dish
                 menu[weekId][slotId] = {
-                    nombre: plato.nombre,
-                    kCal: plato.kCal
+                    nombre: plato.nombre
                 };
                 
                 localStorage.setItem('menuSemanal', JSON.stringify(menu));
@@ -316,16 +310,14 @@
             // Reset fields
             document.getElementById('platoNombre').value = '';
             document.getElementById('platoCat').value = 'Carnes';
-            document.getElementById('platoKcal').value = '';
         }
 
         function saveNewPlato() {
             const nombre = document.getElementById('platoNombre').value.trim();
             const categoria = document.getElementById('platoCat').value;
-            const kCal = document.getElementById('platoKcal').value.trim();
 
-            if (!nombre || !kCal) {
-                alert('Por favor, rellena el nombre y las kilocalorías.');
+            if (!nombre) {
+                alert('Por favor, rellena el nombre del plato.');
                 return;
             }
 
@@ -334,8 +326,7 @@
             
             catalogo[categoria].push({
                 id: 'plato_' + Date.now(),
-                nombre: nombre,
-                kCal: parseInt(kCal, 10)
+                nombre: nombre
             });
 
             saveCatalogo(catalogo);

@@ -116,7 +116,7 @@
 <section class="mb-lg">
 <div class="flex items-center justify-between mb-sm border-b border-surface-variant pb-xs">
 <h3 class="text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Materias Primas</h3>
-<button onclick="prompt('Nombre de la nueva materia prima:')" class="text-primary font-label-md text-sm hover:underline">Añadir</button>
+<button onclick="openAddModal('materias')" class="text-primary font-label-md text-sm hover:underline">Añadir</button>
 </div>
 <div class="divide-y divide-surface-variant/50">
 <!-- Ingredient Items: Compact List -->
@@ -223,7 +223,88 @@
 </a>
 </nav>
 <!-- FAB -->
-<button onclick="prompt('Añadir nuevo elemento:')" class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform z-40">
+<button onclick="openAddModal()" class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform z-40">
 <span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'FILL' 1;">add</span>
 </button>
+<!-- Modal Añadir Almacén -->
+<div id="addAlmacenModal" class="hidden fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center px-4 transition-opacity">
+    <div class="bg-surface rounded-2xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col">
+        <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center">
+            <h3 class="font-headline-md text-primary text-lg">Añadir al Almacén</h3>
+            <button onclick="closeAddModal()" class="text-on-surface-variant hover:text-error transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-6 flex flex-col gap-4">
+            <label class="flex flex-col gap-1">
+                <span class="font-label-md text-sm text-on-surface-variant">Ubicación</span>
+                <select id="itemUbicacion" onchange="toggleFecha()" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary transition-all text-on-surface">
+                    <option value="materias">Materias primas</option>
+                    <option value="congelador">Congelador</option>
+                </select>
+            </label>
+            <label class="flex flex-col gap-1">
+                <span class="font-label-md text-sm text-on-surface-variant">Tipo (Producto)</span>
+                <input type="text" id="itemTipo" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary transition-all text-on-surface" placeholder="Ej: Lentejas">
+            </label>
+            <label class="flex flex-col gap-1">
+                <span class="font-label-md text-sm text-on-surface-variant">Cantidad</span>
+                <input type="text" id="itemCantidad" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary transition-all text-on-surface" placeholder="Ej: 2 rac. / 1 kg">
+            </label>
+            <label id="containerFecha" class="hidden flex flex-col gap-1">
+                <span class="font-label-md text-sm text-on-surface-variant">Fecha de congelado</span>
+                <input type="date" id="itemFecha" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary transition-all text-on-surface">
+            </label>
+        </div>
+        <div class="px-6 py-4 bg-surface-container-low flex justify-end gap-3">
+            <button onclick="closeAddModal()" class="px-4 py-2 text-on-surface-variant font-label-md hover:bg-surface-variant rounded-lg transition-colors">Cancelar</button>
+            <button onclick="saveNewItem()" class="px-4 py-2 bg-primary text-on-primary font-label-md rounded-lg shadow hover:bg-primary-container transition-colors active:scale-95">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openAddModal(defaultUbicacion = 'materias') {
+        document.getElementById('itemUbicacion').value = defaultUbicacion;
+        toggleFecha();
+        document.getElementById('addAlmacenModal').classList.remove('hidden');
+    }
+
+    function closeAddModal() {
+        document.getElementById('addAlmacenModal').classList.add('hidden');
+        document.getElementById('itemTipo').value = '';
+        document.getElementById('itemCantidad').value = '';
+        document.getElementById('itemFecha').value = '';
+    }
+
+    function toggleFecha() {
+        const ubicacion = document.getElementById('itemUbicacion').value;
+        const containerFecha = document.getElementById('containerFecha');
+        if (ubicacion === 'congelador') {
+            containerFecha.classList.remove('hidden');
+        } else {
+            containerFecha.classList.add('hidden');
+        }
+    }
+
+    function saveNewItem() {
+        const ubicacion = document.getElementById('itemUbicacion').value;
+        const tipo = document.getElementById('itemTipo').value.trim();
+        const cantidad = document.getElementById('itemCantidad').value.trim();
+        const fecha = document.getElementById('itemFecha').value;
+
+        if (!tipo || !cantidad) {
+            alert('Por favor, introduce el tipo y la cantidad.');
+            return;
+        }
+        if (ubicacion === 'congelador' && !fecha) {
+            alert('Por favor, introduce la fecha de congelado.');
+            return;
+        }
+
+        // Simulación de guardado
+        alert('Elemento añadido:\\n' + tipo + ' (' + cantidad + ')' + (ubicacion === 'congelador' ? ' - Fecha: ' + fecha : ''));
+        closeAddModal();
+    }
+</script>
 </body></html>
