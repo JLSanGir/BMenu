@@ -116,7 +116,7 @@
 <section class="mb-lg">
 <div class="flex items-center justify-between mb-sm border-b border-surface-variant pb-xs">
 <h3 class="text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Materias Primas</h3>
-<button class="text-primary font-label-md text-sm hover:underline">Añadir</button>
+<button onclick="prompt('Nombre de la nueva materia prima:')" class="text-primary font-label-md text-sm hover:underline">Añadir</button>
 </div>
 <div class="divide-y divide-surface-variant/50">
 <!-- Ingredient Items: Compact List -->
@@ -208,26 +208,22 @@
 </section>
 </main>
 <!-- BottomNavBar -->
-<nav class="bg-white/95 dark:bg-zinc-950/95 backdrop-blur-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe border-t border-zinc-100 dark:border-zinc-800 shadow-sm rounded-t-[16px]">
-<a class="flex flex-col items-center justify-center text-zinc-400 px-3 py-1" href="#">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Inicio</span>
+<nav class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-2 pb-safe-offset-2 h-20 border-t border-orange-50 dark:border-orange-900/20 shadow-[0_-4px_20px_rgba(242,107,29,0.05)] rounded-t-[16px]">
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:text-[#F26B1D] active:scale-90 transition-transform duration-200 ease-out" href="index.html">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-plus-jakarta-sans font-medium text-[11px]">Menú</span>
 </a>
-<a class="flex flex-col items-center justify-center text-orange-600 bg-orange-50 rounded-xl px-3 py-1" href="#">
-<span class="material-symbols-outlined" data-icon="search">search</span>
-<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Buscar</span>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:text-[#F26B1D] active:scale-90 transition-transform duration-200 ease-out" href="platos.html">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-plus-jakarta-sans font-medium text-[11px]">Platos</span>
 </a>
-<a class="flex flex-col items-center justify-center text-zinc-400 px-3 py-1" href="#">
-<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
-<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Pedidos</span>
-</a>
-<a class="flex flex-col items-center justify-center text-zinc-400 px-3 py-1" href="#">
-<span class="material-symbols-outlined" data-icon="person">person</span>
-<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-medium">Perfil</span>
+<a class="flex flex-col items-center justify-center text-[#F26B1D] bg-orange-50 dark:bg-orange-900/20 rounded-xl px-4 py-1.5 transition-all duration-300 active:scale-90" href="Almacen.html">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-plus-jakarta-sans font-medium text-[11px]">Almacén</span>
 </a>
 </nav>
 <!-- FAB -->
-<button class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform z-40">
+<button onclick="prompt('Añadir nuevo elemento:')" class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform z-40">
 <span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'FILL' 1;">add</span>
 </button>
 </body></html>

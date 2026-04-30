@@ -101,12 +101,12 @@
                       "display-xl": ["Plus Jakarta Sans"]
               },
               "fontSize": {
-                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
-                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
-                      "display-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                      "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                      "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-md": ["22px", {"lineHeight": "30px", "fontWeight": "700"}],
+                      "label-md": ["12px", {"lineHeight": "18px", "fontWeight": "600"}],
+                      "display-xl": ["46px", {"lineHeight": "54px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
               }
             },
           },
@@ -248,7 +248,7 @@
                 sec.className = 'flex flex-col';
                 
                 let html = `
-                    <h3 class="font-headline-md text-primary text-headline-md text-[18px] border-b border-outline-variant pb-xs mb-1">${categoria}</h3>
+                    <h3 class="font-headline-md text-primary text-headline-md text-[16px] border-b border-outline-variant pb-xs mb-1">${categoria}</h3>
                     <div class="flex flex-col divide-y divide-surface-container-high">
                 `;
 
@@ -258,7 +258,7 @@
                     html += `
                         <div class="py-1.5 plato-grid gap-1 hover:bg-surface-container-low transition-colors cursor-pointer rounded-lg px-2 -mx-2" onclick='handlePlatoClick(${platoJSON})'>
                             <span class="font-body-md text-on-surface">${plato.nombre}</span>
-                            <span class="font-label-md text-secondary bg-secondary-container/20 px-2 py-0.5 rounded-full whitespace-nowrap text-[12px]">${plato.kCal} kCal</span>
+                            <span class="font-label-md text-secondary bg-secondary-container/20 px-2 py-0.5 rounded-full whitespace-nowrap text-[10px]">${plato.kCal} kCal</span>
                             <button onclick="deletePlato(event, '${categoria}', '${plato.id}')" class="text-error active:scale-90 transition-transform p-1 hover:bg-error/10 rounded-full">
                                 <span class="material-symbols-outlined" data-icon="delete">delete</span>
                             </button>
