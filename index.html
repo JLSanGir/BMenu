@@ -114,8 +114,13 @@
         <div class="flex items-center gap-4">
             <h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-orange-600 dark:text-orange-400">Menú Semanal</h1>
         </div>
-        <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-primary-container active:scale-95 transition-transform duration-200 ease-out">
-            <img alt="Usuario" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaPBYv0WQ-z_JYvPEMuieGwZT26ZVMvOIaQMtwGNz1f7Chn18328KYWrjEGeKXTINzNZqGnX0vGhJm_fjNjlFUtgRWU8mzVuJnDh4ysBOQPav3B_zRAKVM02AMvxXIFD7HmB47h8O8s04JMQB4Wi_txVhoycAiDuyzfMsyF3_qdvC4YG8oneo4Psowsbtol6uR8qnYx39UiEOOOatpHHOHnW3kfBI7_qiT8MJHr4052jjmRwBUnaa92RvF4PZQjxNH0Eqo4uBm6zWY"/>
+        <div class="flex items-center gap-3">
+            <button onclick="shareMenuWhatsApp()" class="text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-950/30 p-2 rounded-full transition-colors active:scale-90 flex items-center justify-center" aria-label="Compartir menú por WhatsApp">
+                <span class="material-symbols-outlined" data-icon="share">share</span>
+            </button>
+            <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-primary-container active:scale-95 transition-transform duration-200 ease-out">
+                <img alt="Usuario" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaPBYv0WQ-z_JYvPEMuieGwZT26ZVMvOIaQMtwGNz1f7Chn18328KYWrjEGeKXTINzNZqGnX0vGhJm_fjNjlFUtgRWU8mzVuJnDh4ysBOQPav3B_zRAKVM02AMvxXIFD7HmB47h8O8s04JMQB4Wi_txVhoycAiDuyzfMsyF3_qdvC4YG8oneo4Psowsbtol6uR8qnYx39UiEOOOatpHHOHnW3kfBI7_qiT8MJHr4052jjmRwBUnaa92RvF4PZQjxNH0Eqo4uBm6zWY"/>
+            </div>
         </div>
     </header>
 
@@ -281,6 +286,41 @@
             weekOffset++;
             renderWeek();
         });
+
+        function shareMenuWhatsApp() {
+            const { weekId } = getWeekInfo(weekOffset);
+            const data = loadMenuSemanal();
+            const weekData = data[weekId] || {};
+            
+            const weekNumberStr = weekId.split('_')[1];
+            let mensaje = `📅 *MENÚ SEMANAL (Semana ${weekNumberStr})*\n\n`;
+            
+            let hasDishes = false;
+
+            dias.forEach(dia => {
+                let dayMeals = [];
+                tiposComida.forEach(tipo => {
+                    const slotId = `${dia}_${tipo}`;
+                    const plato = weekData[slotId];
+                    if (plato && plato.nombre) {
+                        dayMeals.push(`${tipo}: ${plato.nombre}`);
+                    }
+                });
+                
+                if (dayMeals.length > 0) {
+                    mensaje += `*${dia}:* ${dayMeals.join(', ')}\n`;
+                    hasDishes = true;
+                }
+            });
+
+            if (!hasDishes) {
+                alert('No hay platos seleccionados en esta semana para compartir.');
+                return;
+            }
+
+            const url = `https://wa.me/?text=${encodeURIComponent(mensaje.trim())}`;
+            window.open(url, '_blank');
+        }
 
         // Init
         document.addEventListener('DOMContentLoaded', () => {

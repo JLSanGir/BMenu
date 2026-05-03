@@ -252,7 +252,7 @@
                     // Escape single quotes for the inline onclick handlers
                     const platoJSON = JSON.stringify(plato).replace(/'/g, "\\'");
                     html += `
-                        <div class="py-1.5 plato-grid gap-1 hover:bg-surface-container-low transition-colors cursor-pointer rounded-lg px-2 -mx-2" onclick='handlePlatoClick(${platoJSON})'>
+                        <div class="py-0.5 plato-grid gap-1 hover:bg-surface-container-low transition-colors cursor-pointer rounded-lg px-2 -mx-2" onclick='handlePlatoClick(${platoJSON})'>
                             <span class="font-body-md text-on-surface">${plato.nombre}</span>
                             <button onclick="deletePlato(event, '${categoria}', '${plato.id}')" class="text-error active:scale-90 transition-transform p-1 hover:bg-error/10 rounded-full">
                                 <span class="material-symbols-outlined" data-icon="delete">delete</span>
