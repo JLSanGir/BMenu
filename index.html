@@ -209,11 +209,13 @@
             if (data[weekId] && data[weekId][slotId]) {
                 delete data[weekId][slotId];
                 saveMenuSemanal(data);
+                localStorage.setItem('semanaVisualizada', weekId);
                 renderWeek();
             }
         }
 
         function handleSelectPlato(weekId, slotId) {
+            localStorage.setItem('semanaVisualizada', weekId);
             localStorage.setItem('slotSeleccionado', JSON.stringify({ weekId, slotId }));
             window.location.href = 'platos.html';
         }
@@ -279,11 +281,13 @@
 
         document.getElementById('prevWeekBtn').addEventListener('click', () => {
             weekOffset--;
+            localStorage.setItem('semanaVisualizada', getWeekInfo(weekOffset).weekId);
             renderWeek();
         });
 
         document.getElementById('nextWeekBtn').addEventListener('click', () => {
             weekOffset++;
+            localStorage.setItem('semanaVisualizada', getWeekInfo(weekOffset).weekId);
             renderWeek();
         });
 
@@ -331,6 +335,15 @@
 
         // Init
         document.addEventListener('DOMContentLoaded', () => {
+            const savedWeekId = localStorage.getItem('semanaVisualizada');
+            if (savedWeekId) {
+                for (let i = -104; i <= 104; i++) {
+                    if (getWeekInfo(i).weekId === savedWeekId) {
+                        weekOffset = i;
+                        break;
+                    }
+                }
+            }
             renderWeek();
         });
 
