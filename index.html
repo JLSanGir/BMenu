@@ -297,18 +297,25 @@
             
             let hasDishes = false;
 
+            const labelMap = {
+                'COMIDA 1º': '1º',
+                'COMIDA 2º': '2º',
+                'CENA': 'Cena'
+            };
+
             dias.forEach(dia => {
                 let dayMeals = [];
                 tiposComida.forEach(tipo => {
                     const slotId = `${dia}_${tipo}`;
                     const plato = weekData[slotId];
                     if (plato && plato.nombre) {
-                        dayMeals.push(`${tipo}: ${plato.nombre}`);
+                        const label = labelMap[tipo] || tipo;
+                        dayMeals.push(`   ${label}: ${plato.nombre}`);
                     }
                 });
                 
                 if (dayMeals.length > 0) {
-                    mensaje += `*${dia}:* ${dayMeals.join(', ')}\n`;
+                    mensaje += `*${dia.toUpperCase()}:*\n${dayMeals.join('\n')}\n`;
                     hasDishes = true;
                 }
             });
