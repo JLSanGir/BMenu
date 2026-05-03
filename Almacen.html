@@ -4,6 +4,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
@@ -118,53 +120,7 @@
 <h3 class="text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Materias Primas</h3>
 <button onclick="openAddModal('materias')" class="text-primary font-label-md text-sm hover:underline">Añadir</button>
 </div>
-<div class="divide-y divide-surface-variant/50">
-<!-- Ingredient Items: Compact List -->
-<div class="flex items-center justify-between py-2">
-<span class="font-body-md text-on-surface">Alubias blancas</span>
-<div class="flex items-center gap-4">
-<span class="text-on-surface-variant text-sm">2 tarros</span>
-<button class="text-outline hover:text-primary">
-<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
-</button>
-</div>
-</div>
-<div class="flex items-center justify-between py-2">
-<span class="font-body-md text-on-surface">Aguacates</span>
-<div class="flex items-center gap-4">
-<span class="text-on-surface-variant text-sm">6 piezas</span>
-<button class="text-outline hover:text-primary">
-<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
-</button>
-</div>
-</div>
-<div class="flex items-center justify-between py-2">
-<span class="font-body-md text-on-surface">Harina</span>
-<div class="flex items-center gap-4">
-<span class="text-on-surface-variant text-sm">2 paquetes</span>
-<button class="text-outline hover:text-primary">
-<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
-</button>
-</div>
-</div>
-<div class="flex items-center justify-between py-2">
-<span class="font-body-md text-on-surface">Arroz</span>
-<div class="flex items-center gap-4">
-<span class="text-on-surface-variant text-sm">1 kg</span>
-<button class="text-outline hover:text-primary">
-<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
-</button>
-</div>
-</div>
-<div class="flex items-center justify-between py-2">
-<span class="font-body-md text-on-surface">Tomates</span>
-<div class="flex items-center gap-4">
-<span class="text-on-surface-variant text-sm">8 unidades</span>
-<button class="text-outline hover:text-primary">
-<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
-</button>
-</div>
-</div>
+<div id="materiasContainer" class="divide-y divide-surface-variant/50">
 </div>
 </section>
 <!-- Section: CONGELADOR -->
@@ -172,38 +128,7 @@
 <div class="flex items-center justify-between mb-sm border-b border-blue-200 pb-xs">
 <h3 class="text-label-md font-bold text-blue-800 uppercase tracking-wider">CONGELADOR</h3>
 </div>
-<div class="divide-y divide-blue-100">
-<!-- Freezer List: Compact -->
-<div class="flex items-center justify-between py-2">
-<span class="font-body-md text-on-surface flex-1">Lentejas con chorizo</span>
-<div class="flex items-center gap-6">
-<span class="text-on-surface-variant text-sm">2 rac.</span>
-<span class="text-on-surface-variant text-[11px] font-medium uppercase text-blue-600">12 Oct</span>
-<button class="text-outline hover:text-error">
-<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
-</button>
-</div>
-</div>
-<div class="flex items-center justify-between py-2">
-<span class="font-body-md text-on-surface flex-1">Crema de calabaza</span>
-<div class="flex items-center gap-6">
-<span class="text-on-surface-variant text-sm">1 rac.</span>
-<span class="text-on-surface-variant text-[11px] font-medium uppercase text-blue-600">15 Oct</span>
-<button class="text-outline hover:text-error">
-<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
-</button>
-</div>
-</div>
-<div class="flex items-center justify-between py-2">
-<span class="font-body-md text-on-surface flex-1">Boloñesa casera</span>
-<div class="flex items-center gap-6">
-<span class="text-on-surface-variant text-sm">3 rac.</span>
-<span class="text-on-surface-variant text-[11px] font-medium uppercase text-blue-600">10 Oct</span>
-<button class="text-outline hover:text-error">
-<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
-</button>
-</div>
-</div>
+<div id="congeladorContainer" class="divide-y divide-blue-100">
 </div>
 </section>
 </main>
@@ -287,7 +212,84 @@
         }
     }
 
-    function saveNewItem() {
+    async function fetchAlmacen() {
+        let { data, error } = await supabase.from('almacen').select('*');
+        
+        if (data && data.length === 0 && !error) {
+            const today = new Date().toISOString().split('T')[0];
+            const inserts = [
+                { id: 'alm_' + Date.now() + 1, ubicacion: 'materias', tipo: 'Arroz', cantidad: '1 kg', fecha: null },
+                { id: 'alm_' + Date.now() + 2, ubicacion: 'materias', tipo: 'Pasta', cantidad: '2 paquetes', fecha: null },
+                { id: 'alm_' + Date.now() + 3, ubicacion: 'materias', tipo: 'Huevos', cantidad: '1 docena', fecha: null },
+                { id: 'alm_' + Date.now() + 4, ubicacion: 'congelador', tipo: 'Legumbres', cantidad: '2 rac.', fecha: today }
+            ];
+            await supabase.from('almacen').insert(inserts);
+            const result = await supabase.from('almacen').select('*');
+            data = result.data || [];
+        }
+        
+        return data || [];
+    }
+
+    async function renderAlmacen() {
+        const materiasContainer = document.getElementById('materiasContainer');
+        const congeladorContainer = document.getElementById('congeladorContainer');
+        
+        materiasContainer.innerHTML = '<div class="text-center text-primary py-4"><span class="material-symbols-outlined animate-spin" style="font-variation-settings: \'FILL\' 0, \'wght\' 400, \'GRAD\' 0, \'opsz\' 24;">refresh</span></div>';
+        congeladorContainer.innerHTML = '';
+        
+        const data = await fetchAlmacen();
+        materiasContainer.innerHTML = '';
+        
+        let materiasHtml = '';
+        let congeladorHtml = '';
+        
+        data.forEach(item => {
+            if (item.ubicacion === 'materias') {
+                materiasHtml += `
+                    <div class="flex items-center justify-between py-2">
+                        <span class="font-body-md text-on-surface">${item.tipo}</span>
+                        <div class="flex items-center gap-4">
+                            <span class="text-on-surface-variant text-sm">${item.cantidad}</span>
+                            <button onclick="deleteItem('${item.id}')" class="text-outline hover:text-error active:scale-90 transition-transform p-1">
+                                <span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                let fechaStr = '';
+                if (item.fecha) {
+                    const dateObj = new Date(item.fecha);
+                    fechaStr = dateObj.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+                }
+                congeladorHtml += `
+                    <div class="flex items-center justify-between py-2">
+                        <span class="font-body-md text-on-surface flex-1">${item.tipo}</span>
+                        <div class="flex items-center gap-6">
+                            <span class="text-on-surface-variant text-sm">${item.cantidad}</span>
+                            <span class="text-on-surface-variant text-[11px] font-medium uppercase text-blue-600">${fechaStr}</span>
+                            <button onclick="deleteItem('${item.id}')" class="text-outline hover:text-error active:scale-90 transition-transform p-1">
+                                <span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+        
+        materiasContainer.innerHTML = materiasHtml;
+        congeladorContainer.innerHTML = congeladorHtml;
+    }
+
+    async function deleteItem(id) {
+        if(confirm('¿Seguro que deseas eliminar este elemento?')) {
+            await supabase.from('almacen').delete().eq('id', id);
+            renderAlmacen();
+        }
+    }
+
+    async function saveNewItem() {
         const ubicacion = document.getElementById('itemUbicacion').value;
         const tipo = document.getElementById('itemTipo').value.trim();
         const cantidad = document.getElementById('itemCantidad').value.trim();
@@ -302,9 +304,31 @@
             return;
         }
 
-        // Simulación de guardado
-        alert('Elemento añadido:\\n' + tipo + ' (' + cantidad + ')' + (ubicacion === 'congelador' ? ' - Fecha: ' + fecha : ''));
+        const newId = 'alm_' + Date.now();
+        await supabase.from('almacen').insert({
+            id: newId,
+            ubicacion: ubicacion,
+            tipo: tipo,
+            cantidad: cantidad,
+            fecha: ubicacion === 'congelador' ? fecha : null
+        });
+
         closeAddModal();
+        renderAlmacen();
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderAlmacen();
+        
+        // Realtime Sync
+        if (typeof supabase !== 'undefined') {
+            supabase
+                .channel('public:almacen')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'almacen' }, payload => {
+                    renderAlmacen();
+                })
+                .subscribe();
+        }
+    });
 </script>
 </body></html>
