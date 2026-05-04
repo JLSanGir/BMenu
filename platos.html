@@ -159,6 +159,10 @@
             <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
             <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Almacén</span>
         </a>
+        <a href="compra.html" class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-300 transition-colors active:scale-90 duration-300">
+            <span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Compra</span>
+        </a>
     </nav>
 
     <!-- Modal Nuevo Plato -->
@@ -222,7 +226,7 @@
         };
 
         async function fetchCatalogo() {
-            let { data, error } = await supabase.from('platos').select('*');
+            let { data, error } = await supabaseClient.from('platos').select('*');
             let cat = { "Carnes": [], "Pescados": [], "Legumbres": [], "Pastas": [], "Ensaladas": [], "Otros": [] };
             
             if (data && data.length === 0 && !error) {
@@ -233,8 +237,8 @@
                         inserts.push({ id: p.id, nombre: p.nombre, categoria: categoria });
                     });
                 }
-                await supabase.from('platos').insert(inserts);
-                const result = await supabase.from('platos').select('*');
+                await supabaseClient.from('platos').insert(inserts);
+                const result = await supabaseClient.from('platos').select('*');
                 data = result.data || [];
             }
             
@@ -290,7 +294,7 @@
                 const { weekId, slotId } = JSON.parse(slotDataStr);
                 
                 const id = `${weekId}_${slotId}`;
-                await supabase.from('menu').upsert({
+                await supabaseClient.from('menu').upsert({
                     id: id,
                     week_id: weekId,
                     slot_id: slotId,
@@ -307,7 +311,7 @@
         async function deletePlato(e, categoria, id) {
             e.stopPropagation(); // Prevent triggering handlePlatoClick
             if(confirm('¿Seguro que deseas eliminar este plato del catálogo?')) {
-                await supabase.from('platos').delete().eq('id', id);
+                await supabaseClient.from('platos').delete().eq('id', id);
                 renderCatalogo();
             }
         }
@@ -333,7 +337,7 @@
             }
 
             const newId = 'plato_' + Date.now();
-            await supabase.from('platos').insert({ id: newId, nombre: nombre, categoria: categoria });
+            await supabaseClient.from('platos').insert({ id: newId, nombre: nombre, categoria: categoria });
 
             closeModal();
             renderCatalogo();
@@ -344,8 +348,8 @@
             renderCatalogo();
             
             // Realtime Sync
-            if (typeof supabase !== 'undefined') {
-                supabase
+            if (typeof supabaseClient !== 'undefined') {
+                supabaseClient
                     .channel('public:platos')
                     .on('postgres_changes', { event: '*', schema: 'public', table: 'platos' }, payload => {
                         renderCatalogo();

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>BMenu — Lista de la Compra</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@400;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#a5d0b9",
+                      "tertiary-container": "#749d87",
+                      "on-primary-fixed": "#351000",
+                      "secondary-fixed-dim": "#fabd00",
+                      "primary-fixed-dim": "#ffb694",
+                      "surface-container-high": "#e9e8e5",
+                      "on-surface": "#1a1c1a",
+                      "secondary": "#785900",
+                      "on-secondary": "#ffffff",
+                      "surface-variant": "#e3e2e0",
+                      "secondary-fixed": "#ffdf9e",
+                      "on-tertiary-container": "#083323",
+                      "on-primary-container": "#511c00",
+                      "background": "#faf9f6",
+                      "on-secondary-container": "#6c5000",
+                      "tertiary-fixed": "#c1ecd4",
+                      "error": "#ba1a1a",
+                      "primary": "#a14000",
+                      "on-tertiary-fixed": "#002114",
+                      "on-primary-fixed-variant": "#7b2f00",
+                      "on-error": "#ffffff",
+                      "surface-tint": "#a14000",
+                      "on-primary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "surface-container": "#efeeeb",
+                      "surface-container-low": "#f4f3f1",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#dbdad7",
+                      "on-secondary-fixed-variant": "#5b4300",
+                      "surface": "#faf9f6",
+                      "primary-container": "#f26b1d",
+                      "secondary-container": "#fdc003",
+                      "on-tertiary-fixed-variant": "#274e3d",
+                      "inverse-surface": "#2f312f",
+                      "tertiary": "#3f6653",
+                      "outline-variant": "#e0c0b2",
+                      "primary-fixed": "#ffdbcc",
+                      "on-secondary-fixed": "#261a00",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface-variant": "#594237",
+                      "on-background": "#1a1c1a",
+                      "outline": "#8c7166",
+                      "inverse-on-surface": "#f2f1ee",
+                      "inverse-primary": "#ffb694",
+                      "surface-container-highest": "#e3e2e0",
+                      "on-tertiary": "#ffffff",
+                      "surface-bright": "#faf9f6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "md": "16px",
+                      "margin-desktop": "64px",
+                      "sm": "8px",
+                      "margin-mobile": "20px",
+                      "xl": "40px",
+                      "unit": "4px",
+                      "xs": "4px",
+                      "gutter": "16px",
+                      "lg": "24px"
+              },
+              "fontFamily": {
+                      "body-md": ["Be Vietnam Pro"],
+                      "body-lg": ["Be Vietnam Pro"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "label-md": ["Be Vietnam Pro"],
+                      "display-xl": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "display-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen pb-32">
+    <!-- TopAppBar -->
+    <header class="bg-white/90 dark:bg-gray-950/90 backdrop-blur-md docked full-width top-0 z-50 border-b border-orange-100/50 dark:border-gray-800 shadow-[0_4px_20px_-4px_rgba(242,107,29,0.05)] flex items-center justify-between px-6 py-4 w-full sticky">
+        <div class="flex items-center gap-4">
+            <h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-orange-600 dark:text-orange-400">Lista de la Compra</h1>
+        </div>
+        <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-primary-container active:scale-95 transition-transform duration-200 ease-out">
+                <img alt="Usuario" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaPBYv0WQ-z_JYvPEMuieGwZT26ZVMvOIaQMtwGNz1f7Chn18328KYWrjEGeKXTINzNZqGnX0vGhJm_fjNjlFUtgRWU8mzVuJnDh4ysBOQPav3B_zRAKVM02AMvxXIFD7HmB47h8O8s04JMQB4Wi_txVhoycAiDuyzfMsyF3_qdvC4YG8oneo4Psowsbtol6uR8qnYx39UiEOOOatpHHOHnW3kfBI7_qiT8MJHr4052jjmRwBUnaa92RvF4PZQjxNH0Eqo4uBm6zWY"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="px-margin-mobile pt-lg max-w-md mx-auto">
+        
+        <!-- Add Item -->
+        <div class="flex items-center gap-2 mb-lg bg-surface-container-lowest rounded-2xl p-2 shadow-sm border border-outline-variant/30">
+            <input type="text" id="nuevoArticulo" class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface font-body-md placeholder-on-surface-variant/60 p-2" placeholder="Añadir a la lista...">
+            <button onclick="addArticulo()" class="w-10 h-10 flex items-center justify-center bg-primary text-on-primary rounded-xl active:scale-90 transition-transform">
+                <span class="material-symbols-outlined">add</span>
+            </button>
+        </div>
+
+        <!-- List -->
+        <div id="compraContainer" class="flex flex-col gap-2">
+            <!-- Renderizado dinámicamente -->
+        </div>
+
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/95 dark:bg-gray-950/95 backdrop-blur-lg rounded-t-[32px] border-t border-orange-50 dark:border-gray-800 shadow-[0_-10px_40px_-15px_rgba(242,107,29,0.08)]">
+        <a href="index.html" class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-300 transition-colors active:scale-90 duration-300">
+            <span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Menú</span>
+        </a>
+        <a href="platos.html" class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-300 transition-colors active:scale-90 duration-300">
+            <span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Platos</span>
+        </a>
+        <a href="Almacen.html" class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-300 transition-colors active:scale-90 duration-300">
+            <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Almacén</span>
+        </a>
+        <a href="compra.html" class="flex flex-col items-center justify-center text-orange-600 dark:text-orange-400 bg-orange-50/50 dark:bg-orange-950/20 rounded-2xl px-4 py-1 transition-colors active:scale-90 duration-300">
+            <span class="material-symbols-outlined" data-icon="shopping_cart" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Compra</span>
+        </a>
+    </nav>
+
+    <script>
+        // Lógica futura para rellenar a partir de los ingredientes del menú
+        function generarDesdeMenu() {
+            // TODO
+        }
+
+        async function fetchLista() {
+            const { data, error } = await supabaseClient.from('lista_compra').select('*').order('comprado', { ascending: true }).order('id', { ascending: false });
+            return data || [];
+        }
+
+        async function renderCompra() {
+            const container = document.getElementById('compraContainer');
+            
+            // Loading
+            container.innerHTML = '<div class="text-center text-primary py-4"><span class="material-symbols-outlined animate-spin" style="font-variation-settings: \'FILL\' 0, \'wght\' 400, \'GRAD\' 0, \'opsz\' 24;">refresh</span></div>';
+            
+            const data = await fetchLista();
+            container.innerHTML = '';
+
+            if (data.length === 0) {
+                container.innerHTML = '<p class="text-center text-on-surface-variant/70 text-sm py-8 font-body-md">La lista está vacía.</p>';
+                return;
+            }
+
+            data.forEach(item => {
+                const checkedStr = item.comprado ? 'checked' : '';
+                const lineThrough = item.comprado ? 'line-through text-on-surface-variant/50' : 'text-on-surface';
+                
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between bg-surface-container-lowest rounded-xl p-3 border border-surface-variant shadow-sm gap-3 transition-colors hover:bg-surface-container-low';
+                
+                div.innerHTML = `
+                    <label class="flex items-center gap-3 flex-1 cursor-pointer group">
+                        <div class="relative flex items-center justify-center">
+                            <input type="checkbox" onchange="toggleComprado('${item.id}', this.checked)" ${checkedStr} class="peer appearance-none w-6 h-6 border-2 border-primary rounded-full checked:bg-primary checked:border-primary transition-all cursor-pointer">
+                            <span class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[18px]">check</span>
+                        </div>
+                        <span class="font-body-md font-medium leading-tight select-none ${lineThrough} transition-all">${item.articulo}</span>
+                    </label>
+                    <button onclick="deleteArticulo('${item.id}')" class="text-outline hover:text-error active:scale-90 transition-transform p-2 rounded-full hover:bg-error/10 shrink-0">
+                        <span class="material-symbols-outlined" data-icon="delete">delete</span>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        async function addArticulo() {
+            const input = document.getElementById('nuevoArticulo');
+            const valor = input.value.trim();
+            if (!valor) return;
+
+            input.value = ''; // Limpiar rápidamente
+            const newId = 'comp_' + Date.now();
+            await supabaseClient.from('lista_compra').insert({
+                id: newId,
+                articulo: valor,
+                comprado: false
+            });
+            renderCompra();
+        }
+
+        // Permitir añadir con Enter
+        document.getElementById('nuevoArticulo').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addArticulo();
+            }
+        });
+
+        async function toggleComprado(id, isChecked) {
+            await supabaseClient.from('lista_compra').update({ comprado: isChecked }).eq('id', id);
+            // El renderizado se actualizará por realtime
+            renderCompra();
+        }
+
+        async function deleteArticulo(id) {
+            await supabaseClient.from('lista_compra').delete().eq('id', id);
+            renderCompra();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCompra();
+            
+            // Realtime Sync
+            if (typeof supabaseClient !== 'undefined') {
+                supabaseClient
+                    .channel('public:lista_compra')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'lista_compra' }, payload => {
+                        renderCompra();
+                    })
+                    .subscribe();
+            }
+        });
+    </script>
+</body>
+</html>
