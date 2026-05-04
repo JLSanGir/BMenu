@@ -163,9 +163,10 @@
     </nav>
 
     <script>
-        const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+        const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
         const tiposComida = ['COMIDA 1º', 'COMIDA 2º', 'CENA'];
         let weekOffset = 0; // 0 = actual, -1 = anterior, 1 = siguiente
+        let currentWeekData = {};
 
         function getWeekInfo(offset) {
             const today = new Date();
@@ -211,6 +212,27 @@
             window.location.href = 'platos.html';
         }
 
+        async function editPlatoName(weekId, slotId) {
+            const plato = currentWeekData[slotId];
+            if (!plato) return;
+            
+            const newName = prompt('Editar nombre del plato:', plato.nombre);
+            if (newName && newName.trim() !== '' && newName !== plato.nombre) {
+                const id = `${weekId}_${slotId}`;
+                const { error } = await supabase
+                    .from('menu')
+                    .update({ plato_nombre: newName.trim() })
+                    .eq('id', id);
+                    
+                if (error) {
+                    console.error('Error updating:', error);
+                    alert('Error al actualizar el nombre del plato');
+                } else {
+                    renderWeek();
+                }
+            }
+        }
+
         async function renderWeek() {
             const { weekId, dateRange } = getWeekInfo(weekOffset);
             
@@ -237,14 +259,20 @@
                     weekData[row.slot_id] = { nombre: row.plato_nombre };
                 });
             }
+            
+            currentWeekData = weekData;
 
             container.innerHTML = '';
 
             dias.forEach(dia => {
                 const diaCard = document.createElement('div');
-                diaCard.className = 'bg-surface-container-lowest rounded-lg p-2 border border-surface-variant shadow-sm';
+                let cardBgClass = 'bg-surface-container-lowest';
+                if (dia === 'Sábado' || dia === 'Domingo') {
+                    cardBgClass = 'bg-green-100 dark:bg-green-900/20';
+                }
+                diaCard.className = `${cardBgClass} rounded-lg p-2 border border-surface-variant shadow-sm`;
                 
-                let html = `<h3 class="font-headline-md text-primary text-[14px] mb-1 border-b border-outline-variant/30 pb-1">${dia}</h3>`;
+                let html = `<h3 class="font-headline-md font-bold text-primary text-[18px] mb-1 border-b border-outline-variant/30 pb-1">${dia}</h3>`;
                 html += `<div class="flex flex-col gap-1">`;
 
                 tiposComida.forEach(tipo => {
@@ -258,9 +286,14 @@
                                 <span class="text-[10px] font-semibold text-on-surface-variant uppercase w-[75px] shrink-0">${tipo}</span>
                                 <span class="font-body-md text-on-surface font-medium leading-tight">${plato.nombre}</span>
                             </div>
-                            <button onclick="removePlato('${weekId}', '${slotId}')" class="text-error active:scale-90 transition-transform p-1 hover:bg-error/10 rounded-full shrink-0">
-                                <span class="material-symbols-outlined" data-icon="delete">delete</span>
-                            </button>
+                            <div class="flex items-center">
+                                <button onclick="editPlatoName('${weekId}', '${slotId}')" class="text-primary active:scale-90 transition-transform p-1 hover:bg-primary/10 rounded-full shrink-0" title="Editar">
+                                    <span class="material-symbols-outlined" data-icon="edit">edit</span>
+                                </button>
+                                <button onclick="removePlato('${weekId}', '${slotId}')" class="text-error active:scale-90 transition-transform p-1 hover:bg-error/10 rounded-full shrink-0" title="Eliminar">
+                                    <span class="material-symbols-outlined" data-icon="delete">delete</span>
+                                </button>
+                            </div>
                         `;
                     } else {
                         html += `
