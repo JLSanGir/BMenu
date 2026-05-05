@@ -275,9 +275,14 @@
                     html += `
                         <div class="py-0.5 plato-grid gap-1 hover:bg-surface-container-low transition-colors cursor-pointer rounded-lg px-2 -mx-2" onclick='handlePlatoClick(${platoJSON})'>
                             <span class="font-body-md text-on-surface">${plato.nombre}</span>
-                            <button onclick="deletePlato(event, '${categoria}', '${plato.id}')" class="text-error active:scale-90 transition-transform p-1 hover:bg-error/10 rounded-full">
-                                <span class="material-symbols-outlined" data-icon="delete">delete</span>
-                            </button>
+                            <div class="flex items-center gap-1">
+                                <button onclick="goToIngredientes(event, '${plato.id}', '${plato.nombre.replace(/'/g, "\\'")}')" class="text-green-600 dark:text-green-400 active:scale-90 transition-transform p-1 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-full" title="Ingredientes">
+                                    <span class="material-symbols-outlined" data-icon="eco">eco</span>
+                                </button>
+                                <button onclick="deletePlato(event, '${categoria}', '${plato.id}')" class="text-error active:scale-90 transition-transform p-1 hover:bg-error/10 rounded-full" title="Eliminar plato">
+                                    <span class="material-symbols-outlined" data-icon="delete">delete</span>
+                                </button>
+                            </div>
                         </div>
                     `;
                 });
@@ -314,6 +319,12 @@
                 await supabaseClient.from('platos').delete().eq('id', id);
                 renderCatalogo();
             }
+        }
+
+        function goToIngredientes(e, id, nombre) {
+            e.stopPropagation(); // Prevent triggering handlePlatoClick
+            localStorage.setItem('platoActivo', JSON.stringify({ id, nombre }));
+            window.location.href = 'ingredientes.html';
         }
 
         function openModal() {
