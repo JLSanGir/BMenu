@@ -223,7 +223,7 @@
             const newName = prompt('Editar nombre del plato:', plato.nombre);
             if (newName && newName.trim() !== '' && newName !== plato.nombre) {
                 const id = `${weekId}_${slotId}`;
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('menu')
                     .update({ plato_nombre: newName.trim() })
                     .eq('id', id);
@@ -252,7 +252,7 @@
             const container = document.getElementById('weeklyContainer');
             container.innerHTML = '<div class="text-center text-primary py-4"><span class="material-symbols-outlined animate-spin" style="font-variation-settings: \'FILL\' 0, \'wght\' 400, \'GRAD\' 0, \'opsz\' 24;">refresh</span></div>';
 
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('menu')
                 .select('*')
                 .eq('week_id', weekId);
@@ -333,7 +333,7 @@
         async function shareMenuWhatsApp() {
             const { weekId } = getWeekInfo(weekOffset);
             
-            const { data, error } = await supabase
+            const { data, error } = await supabaseClient
                 .from('menu')
                 .select('*')
                 .eq('week_id', weekId);
@@ -397,7 +397,7 @@
 
             // Realtime Sync
             if (typeof supabaseClient !== 'undefined') {
-                supabase
+                supabaseClient
                     .channel('public:menu')
                     .on('postgres_changes', { event: '*', schema: 'public', table: 'menu' }, payload => {
                         renderWeek();
