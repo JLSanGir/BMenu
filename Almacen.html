@@ -194,6 +194,24 @@
 </div>
 
 <script>
+    let isSelectionMode = false;
+
+    function checkSelectionMode() {
+        const slotData = localStorage.getItem('slotSeleccionado');
+        if (slotData) {
+            isSelectionMode = true;
+            document.getElementById('selectionBanner').classList.remove('hidden');
+        } else {
+            isSelectionMode = false;
+            document.getElementById('selectionBanner').classList.add('hidden');
+        }
+    }
+
+    function cancelSelection() {
+        localStorage.removeItem('slotSeleccionado');
+        window.location.href = 'platos.html';
+    }
+
     function openAddModal(defaultUbicacion = 'materias') {
         document.getElementById('itemUbicacion').value = defaultUbicacion;
         toggleFecha();
@@ -268,15 +286,23 @@
                     const dateObj = new Date(item.fecha);
                     fechaStr = dateObj.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
                 }
+
+                const cursorClass = isSelectionMode ? 'cursor-pointer hover:bg-blue-200/50' : '';
+                const clickHandler = isSelectionMode ? `onclick="selectFreezerItem('${item.tipo.replace(/'/g, "\\'")}')"` : '';
+
                 congeladorHtml += `
-                    <div class="flex items-center justify-between py-2">
-                        <span class="font-body-md text-on-surface flex-1">${item.tipo}</span>
+                    <div class="flex items-center justify-between py-2 px-1 rounded-lg transition-colors ${cursorClass}" ${clickHandler}>
+                        <span class="font-body-md text-on-surface flex-1 font-medium">${item.tipo}</span>
                         <div class="flex items-center gap-6">
                             <span class="text-on-surface-variant text-sm">${item.cantidad}</span>
                             <span class="text-on-surface-variant text-[11px] font-medium uppercase text-blue-600">${fechaStr}</span>
-                            <button onclick="deleteItem('${item.id}')" class="text-outline hover:text-error active:scale-90 transition-transform p-1">
+                            ${!isSelectionMode ? `
+                            <button onclick="event.stopPropagation(); deleteItem('${item.id}')" class="text-outline hover:text-error active:scale-90 transition-transform p-1">
                                 <span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
                             </button>
+                            ` : `
+                            <span class="material-symbols-outlined text-blue-600 animate-pulse">add_circle</span>
+                            `}
                         </div>
                     </div>
                 `;
@@ -285,6 +311,27 @@
         
         materiasContainer.innerHTML = materiasHtml;
         congeladorContainer.innerHTML = congeladorHtml;
+    }
+
+    async function selectFreezerItem(nombre) {
+        const slotDataStr = localStorage.getItem('slotSeleccionado');
+        if (!slotDataStr) return;
+
+        const { weekId, slotId } = JSON.parse(slotDataStr);
+        const id = `${weekId}_${slotId}`;
+        
+        // El nombre aparecerá como "CONG: Lentejas..." para diferenciarlo
+        const displayNombre = `❄️ ${nombre}`;
+
+        await supabaseClient.from('menu').upsert({
+            id: id,
+            week_id: weekId,
+            slot_id: slotId,
+            plato_nombre: displayNombre
+        });
+
+        localStorage.removeItem('slotSeleccionado');
+        window.location.href = 'index.html';
     }
 
     async function deleteItem(id) {
@@ -323,6 +370,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+        checkSelectionMode();
         renderAlmacen();
         
         // Realtime Sync

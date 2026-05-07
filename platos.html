@@ -133,12 +133,27 @@
     <main class="px-margin-mobile pt-lg max-w-md mx-auto">
         <div class="flex flex-col gap-sm mb-lg">
             <h2 class="font-headline-lg text-primary text-headline-lg">Seleccionar Platos</h2>
+            
+            <!-- Opción Congelador -->
+            <div id="congeladorLink" class="hidden mt-2">
+                <a href="Almacen.html" class="flex items-center justify-center gap-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 rounded-xl py-3 px-4 hover:bg-blue-100 transition-all active:scale-95 shadow-sm">
+                    <span class="material-symbols-outlined text-[20px]">ac_unit</span>
+                    <span class="font-bold text-sm">¿Usar algo del Congelador?</span>
+                </a>
+            </div>
         </div>
         
         <div id="catalogContainer" class="flex flex-col gap-lg">
             <!-- Categorías renderizadas dinámicamente -->
         </div>
     </main>
+
+    <script>
+        // Mostrar link al congelador si estamos en modo selección
+        if (localStorage.getItem('slotSeleccionado')) {
+            document.getElementById('congeladorLink').classList.remove('hidden');
+        }
+    </script>
 
     <!-- Floating Action Button -->
     <button onclick="openModal()" class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-all duration-300 z-40">
