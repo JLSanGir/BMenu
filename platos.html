@@ -182,12 +182,10 @@
                 <label class="flex flex-col gap-1">
                     <span class="font-label-md text-sm text-on-surface-variant">Categoría</span>
                     <select id="platoCat" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary transition-all text-on-surface">
-                        <option value="Carnes">Carnes</option>
-                        <option value="Pescados">Pescados</option>
-                        <option value="Legumbres">Legumbres</option>
-                        <option value="Pastas">Pastas</option>
-                        <option value="Ensaladas">Ensaladas</option>
-                        <option value="Otros">Otros</option>
+                        <option value="1- Carnes y pescados">1- Carnes y pescados</option>
+                        <option value="2- Pures, sopas y legumbres">2- Pures, sopas y legumbres</option>
+                        <option value="3- Pasta, Arroces">3- Pasta, Arroces</option>
+                        <option value="4- Otros">4- Otros</option>
                     </select>
                 </label>
             </div>
@@ -200,34 +198,44 @@
 
     <script>
         const defaultCatalogo = {
-            "Carnes": [
+            "1- Carnes y pescados": [
                 { id: "c1", nombre: "Solomillo a la brasa" },
-                { id: "c2", nombre: "Pollo al horno con hierbas" }
-            ],
-            "Pescados": [
+                { id: "c2", nombre: "Pollo al horno con hierbas" },
                 { id: "p1", nombre: "Salmón al vapor con eneldo" },
                 { id: "p2", nombre: "Merluza a la plancha" }
             ],
-            "Legumbres": [
+            "2- Pures, sopas y legumbres": [
                 { id: "l1", nombre: "Lentejas estofadas" },
                 { id: "l2", nombre: "Garbanzos con espinacas" }
             ],
-            "Pastas": [
+            "3- Pasta, Arroces": [
                 { id: "pa1", nombre: "Espaguetis con tomate" },
                 { id: "pa2", nombre: "Macarrones gratinados" }
             ],
-            "Ensaladas": [
+            "4- Otros": [
                 { id: "e1", nombre: "Ensalada César" },
-                { id: "e2", nombre: "Ensalada mixta fresca" }
-            ],
-            "Otros": [
+                { id: "e2", nombre: "Ensalada mixta fresca" },
                 { id: "o1", nombre: "Tortilla de patatas" }
             ]
         };
 
+        const categoryMapping = {
+            "Carnes": "1- Carnes y pescados",
+            "Pescados": "1- Carnes y pescados",
+            "Legumbres": "2- Pures, sopas y legumbres",
+            "Pastas": "3- Pasta, Arroces",
+            "Ensaladas": "4- Otros",
+            "Otros": "4- Otros"
+        };
+
         async function fetchCatalogo() {
             let { data, error } = await supabaseClient.from('platos').select('*');
-            let cat = { "Carnes": [], "Pescados": [], "Legumbres": [], "Pastas": [], "Ensaladas": [], "Otros": [] };
+            let cat = { 
+                "1- Carnes y pescados": [], 
+                "2- Pures, sopas y legumbres": [], 
+                "3- Pasta, Arroces": [], 
+                "4- Otros": [] 
+            };
             
             if (data && data.length === 0 && !error) {
                 // Seed default catalogue if empty
@@ -244,8 +252,13 @@
             
             if (data) {
                 data.forEach(p => {
-                    if (!cat[p.categoria]) cat[p.categoria] = [];
-                    cat[p.categoria].push(p);
+                    let finalCat = p.categoria;
+                    // Map old categories to new ones if they exist in the DB
+                    if (categoryMapping[p.categoria]) {
+                        finalCat = categoryMapping[p.categoria];
+                    }
+                    if (!cat[finalCat]) cat[finalCat] = [];
+                    cat[finalCat].push(p);
                 });
             }
             return cat;
@@ -265,22 +278,22 @@
                 sec.className = 'flex flex-col';
                 
                 let html = `
-                    <h3 class="font-headline-md text-primary text-headline-md text-[16px] border-b border-outline-variant pb-xs mb-1">${categoria}</h3>
-                    <div class="flex flex-col divide-y divide-surface-container-high">
+                    <h3 class="font-headline-md text-primary text-[15px] border-b border-outline-variant pb-1 mb-1">${categoria}</h3>
+                    <div class="flex flex-col">
                 `;
 
                 platos.forEach(plato => {
                     // Escape single quotes for the inline onclick handlers
                     const platoJSON = JSON.stringify(plato).replace(/'/g, "\\'");
                     html += `
-                        <div class="py-0.5 plato-grid gap-1 hover:bg-surface-container-low transition-colors cursor-pointer rounded-lg px-2 -mx-2" onclick='handlePlatoClick(${platoJSON})'>
-                            <span class="font-body-md text-on-surface">${plato.nombre}</span>
+                        <div class="py-[1px] plato-grid gap-1 hover:bg-surface-container-low transition-colors cursor-pointer rounded-lg px-2 -mx-2" onclick='handlePlatoClick(${platoJSON})'>
+                            <span class="text-[13px] font-medium text-on-surface">${plato.nombre}</span>
                             <div class="flex items-center gap-1">
-                                <button onclick="goToIngredientes(event, '${plato.id}', '${plato.nombre.replace(/'/g, "\\'")}')" class="text-green-600 dark:text-green-400 active:scale-90 transition-transform p-1 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-full" title="Ingredientes">
-                                    <span class="material-symbols-outlined" data-icon="eco">eco</span>
+                                <button onclick="goToIngredientes(event, '${plato.id}', '${plato.nombre.replace(/'/g, "\\'")}')" class="text-green-600 dark:text-green-400 active:scale-90 transition-transform p-0.5 hover:bg-green-100 dark:hover:bg-green-900/30 rounded-full" title="Ingredientes">
+                                    <span class="material-symbols-outlined text-[18px]" data-icon="eco">eco</span>
                                 </button>
-                                <button onclick="deletePlato(event, '${categoria}', '${plato.id}')" class="text-error active:scale-90 transition-transform p-1 hover:bg-error/10 rounded-full" title="Eliminar plato">
-                                    <span class="material-symbols-outlined" data-icon="delete">delete</span>
+                                <button onclick="deletePlato(event, '${categoria}', '${plato.id}')" class="text-error active:scale-90 transition-transform p-0.5 hover:bg-error/10 rounded-full" title="Eliminar plato">
+                                    <span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
                                 </button>
                             </div>
                         </div>
@@ -335,7 +348,7 @@
             document.getElementById('addModal').classList.add('hidden');
             // Reset fields
             document.getElementById('platoNombre').value = '';
-            document.getElementById('platoCat').value = 'Carnes';
+            document.getElementById('platoCat').value = '1- Carnes y pescados';
         }
 
         async function saveNewPlato() {
