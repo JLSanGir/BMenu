@@ -1,535 +1,349 @@
 <!DOCTYPE html>
-
-<html class="light" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-client.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "surface-container-lowest": "#ffffff",
-                    "surface-container-high": "#e9e8e5",
-                    "secondary": "#785900",
-                    "on-secondary": "#ffffff",
-                    "secondary-fixed": "#ffdf9e",
-                    "tertiary-fixed-dim": "#a5d0b9",
-                    "secondary-container": "#fdc003",
-                    "on-secondary-fixed": "#261a00",
-                    "background": "#faf9f6",
-                    "on-tertiary": "#ffffff",
-                    "surface-dim": "#dbdad7",
-                    "surface-variant": "#e3e2e0",
-                    "outline": "#8c7166",
-                    "error": "#ba1a1a",
-                    "primary": "#a14000",
-                    "on-error": "#ffffff",
-                    "inverse-primary": "#ffb694",
-                    "surface-container-low": "#f4f3f1",
-                    "surface-container": "#efeeeb",
-                    "surface-bright": "#faf9f6",
-                    "on-secondary-container": "#6c5000",
-                    "primary-fixed-dim": "#ffb694",
-                    "on-primary-fixed-variant": "#7b2f00",
-                    "surface": "#faf9f6",
-                    "on-tertiary-container": "#083323",
-                    "on-tertiary-fixed": "#002114",
-                    "on-primary": "#ffffff",
-                    "surface-container-highest": "#e3e2e0",
-                    "tertiary-fixed": "#c1ecd4",
-                    "error-container": "#ffdad6",
-                    "on-tertiary-fixed-variant": "#274e3d",
-                    "on-background": "#1a1c1a",
-                    "on-secondary-fixed-variant": "#5b4300",
-                    "tertiary-container": "#749d87",
-                    "tertiary": "#3f6653",
-                    "outline-variant": "#e0c0b2",
-                    "surface-tint": "#a14000",
-                    "primary-fixed": "#ffdbcc",
-                    "inverse-surface": "#2f312f",
-                    "on-surface-variant": "#594237",
-                    "secondary-fixed-dim": "#fabd00",
-                    "inverse-on-surface": "#f2f1ee",
-                    "primary-container": "#f26b1d",
-                    "on-error-container": "#93000a",
-                    "on-primary-fixed": "#351000",
-                    "on-primary-container": "#511c00",
-                    "on-surface": "#1a1c1a"
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+          tailwind.config = {
+            darkMode: "class",
+            theme: {
+              extend: {
+                "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e9e8e5",
+                        "secondary": "#785900",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed": "#ffdf9e",
+                        "tertiary-fixed-dim": "#a5d0b9",
+                        "secondary-container": "#fdc003",
+                        "on-secondary-fixed": "#261a00",
+                        "background": "#faf9f6",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#dbdad7",
+                        "surface-variant": "#e3e2e0",
+                        "outline": "#8c7166",
+                        "error": "#ba1a1a",
+                        "primary": "#a14000",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#ffb694",
+                        "surface-container-low": "#f4f3f1",
+                        "surface-container": "#efeeeb",
+                        "surface-bright": "#faf9f6",
+                        "on-secondary-container": "#6c5000",
+                        "primary-fixed-dim": "#ffb694",
+                        "on-primary-fixed-variant": "#7b2f00",
+                        "surface": "#faf9f6",
+                        "on-tertiary-container": "#083323",
+                        "on-tertiary-fixed": "#002114",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e3e2e0",
+                        "tertiary-fixed": "#c1ecd4",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#274e3d",
+                        "on-background": "#1a1c1a",
+                        "on-secondary-fixed-variant": "#5b4300",
+                        "tertiary-container": "#749d87",
+                        "tertiary": "#3f6653",
+                        "outline-variant": "#e0c0b2",
+                        "surface-tint": "#a14000",
+                        "primary-fixed": "#ffdbcc",
+                        "inverse-surface": "#2f312f",
+                        "on-surface-variant": "#594237",
+                        "secondary-fixed-dim": "#fabd00",
+                        "inverse-on-surface": "#f2f1ee",
+                        "primary-container": "#f26b1d",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#351000",
+                        "on-primary-container": "#511c00",
+                        "on-surface": "#1a1c1a"
+                },
+                "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                },
+                "spacing": {
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px",
+                        "unit": "4px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "xl": "40px",
+                        "sm": "8px",
+                        "gutter": "16px",
+                        "md": "16px"
+                },
+                "fontFamily": {
+                        "label-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display-xl": ["Plus Jakarta Sans"],
+                        "body-md": ["Be Vietnam Pro"]
+                },
+                "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "22px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "26px", "fontWeight": "400"}],
+                        "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-md": ["22px", {"lineHeight": "30px", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "18px", "fontWeight": "600"}],
+                        "display-xl": ["46px", {"lineHeight": "54px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
+                }
+              },
             },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "spacing": {
-                    "margin-desktop": "64px",
-                    "margin-mobile": "20px",
-                    "unit": "4px",
-                    "xs": "4px",
-                    "lg": "24px",
-                    "xl": "40px",
-                    "sm": "8px",
-                    "gutter": "16px",
-                    "md": "16px"
-            },
-            "fontFamily": {
-                    "label-md": ["Be Vietnam Pro"],
-                    "body-lg": ["Be Vietnam Pro"],
-                    "headline-lg": ["Plus Jakarta Sans"],
-                    "headline-md": ["Plus Jakarta Sans"],
-                    "display-xl": ["Plus Jakarta Sans"],
-                    "body-md": ["Be Vietnam Pro"]
-            },
-            "fontSize": {
-                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
-                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
-                    "display-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
-                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
-            }
-          },
-        },
-      }
+          }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
         body {
-          min-height: 100dvh;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            min-height: 100dvh;
         }
     </style>
 </head>
-<body class="bg-surface font-body-md text-on-surface">
-<!-- TopAppBar -->
-<header class="bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md docked full-width top-0 sticky border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-center px-4 h-16 w-full z-50">
-<h1 class="text-xl font-black tracking-widest text-orange-600 uppercase">DESPENSA</h1>
-</header>
-<main class="max-w-2xl mx-auto px-margin-mobile pt-md pb-32">
-<!-- Section: CONGELADOR -->
-<section class="bg-blue-100/80 dark:bg-blue-900/30 -mx-margin-mobile px-margin-mobile py-lg mb-lg">
-<div class="flex items-center justify-between mb-sm border-b border-blue-200 dark:border-blue-800 pb-xs">
-<h3 class="text-label-md font-bold text-blue-800 dark:text-blue-300 uppercase tracking-wider">CONGELADOR</h3>
-<button onclick="openAddModal('congelador')" class="text-blue-600 dark:text-blue-400 font-label-md text-sm hover:underline">Añadir</button>
-</div>
-<div id="congeladorContainer" class="divide-y divide-blue-100 dark:divide-blue-800/50">
-</div>
-</section>
-<!-- Section: Materias Primas -->
-<section class="mb-lg">
-<div class="flex items-center justify-between mb-sm border-b border-surface-variant pb-xs">
-<h3 class="text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Materias Primas</h3>
-<button onclick="openAddModal('materias')" class="text-primary font-label-md text-sm hover:underline">Añadir</button>
-</div>
-<div id="materiasContainer" class="divide-y divide-surface-variant/50">
-</div>
-</section>
-</main>
-<!-- BottomNavBar -->
-<nav class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-2 pb-safe-offset-2 h-20 border-t border-orange-50 dark:border-orange-900/20 shadow-[0_-4px_20px_rgba(242,107,29,0.05)] rounded-t-[16px]">
-<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:text-[#F26B1D] active:scale-90 transition-transform duration-200 ease-out" href="index.html">
-<span class="material-symbols-outlined">menu_book</span>
-<span class="font-plus-jakarta-sans font-medium text-[11px]">Menú</span>
-</a>
-<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:text-[#F26B1D] active:scale-90 transition-transform duration-200 ease-out" href="platos.html">
-<span class="material-symbols-outlined">restaurant</span>
-<span class="font-plus-jakarta-sans font-medium text-[11px]">Platos</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#F26B1D] bg-orange-50 dark:bg-orange-900/20 rounded-xl px-4 py-1.5 transition-all duration-300 active:scale-90" href="Almacen.html">
-<span class="material-symbols-outlined">inventory_2</span>
-<span class="font-plus-jakarta-sans font-medium text-[11px]">Almacén</span>
-</a>
-<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:text-[#F26B1D] active:scale-90 transition-transform duration-200 ease-out" href="compra.html">
-<span class="material-symbols-outlined">shopping_cart</span>
-<!DOCTYPE html>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+    <!-- TopAppBar -->
+    <header class="bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md docked full-width top-0 sticky border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-center px-4 h-16 w-full z-50">
+        <h1 class="text-xl font-black tracking-widest text-orange-600 uppercase">ALMACÉN</h1>
+    </header>
 
-<html class="light" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-client.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            "colors": {
-                    "surface-container-lowest": "#ffffff",
-                    "surface-container-high": "#e9e8e5",
-                    "secondary": "#785900",
-                    "on-secondary": "#ffffff",
-                    "secondary-fixed": "#ffdf9e",
-                    "tertiary-fixed-dim": "#a5d0b9",
-                    "secondary-container": "#fdc003",
-                    "on-secondary-fixed": "#261a00",
-                    "background": "#faf9f6",
-                    "on-tertiary": "#ffffff",
-                    "surface-dim": "#dbdad7",
-                    "surface-variant": "#e3e2e0",
-                    "outline": "#8c7166",
-                    "error": "#ba1a1a",
-                    "primary": "#a14000",
-                    "on-error": "#ffffff",
-                    "inverse-primary": "#ffb694",
-                    "surface-container-low": "#f4f3f1",
-                    "surface-container": "#efeeeb",
-                    "surface-bright": "#faf9f6",
-                    "on-secondary-container": "#6c5000",
-                    "primary-fixed-dim": "#ffb694",
-                    "on-primary-fixed-variant": "#7b2f00",
-                    "surface": "#faf9f6",
-                    "on-tertiary-container": "#083323",
-                    "on-tertiary-fixed": "#002114",
-                    "on-primary": "#ffffff",
-                    "surface-container-highest": "#e3e2e0",
-                    "tertiary-fixed": "#c1ecd4",
-                    "error-container": "#ffdad6",
-                    "on-tertiary-fixed-variant": "#274e3d",
-                    "on-background": "#1a1c1a",
-                    "on-secondary-fixed-variant": "#5b4300",
-                    "tertiary-container": "#749d87",
-                    "tertiary": "#3f6653",
-                    "outline-variant": "#e0c0b2",
-                    "surface-tint": "#a14000",
-                    "primary-fixed": "#ffdbcc",
-                    "inverse-surface": "#2f312f",
-                    "on-surface-variant": "#594237",
-                    "secondary-fixed-dim": "#fabd00",
-                    "inverse-on-surface": "#f2f1ee",
-                    "primary-container": "#f26b1d",
-                    "on-error-container": "#93000a",
-                    "on-primary-fixed": "#351000",
-                    "on-primary-container": "#511c00",
-                    "on-surface": "#1a1c1a"
-            },
-            "borderRadius": {
-                    "DEFAULT": "0.25rem",
-                    "lg": "0.5rem",
-                    "xl": "0.75rem",
-                    "full": "9999px"
-            },
-            "spacing": {
-                    "margin-desktop": "64px",
-                    "margin-mobile": "20px",
-                    "unit": "4px",
-                    "xs": "4px",
-                    "lg": "24px",
-                    "xl": "40px",
-                    "sm": "8px",
-                    "gutter": "16px",
-                    "md": "16px"
-            },
-            "fontFamily": {
-                    "label-md": ["Be Vietnam Pro"],
-                    "body-lg": ["Be Vietnam Pro"],
-                    "headline-lg": ["Plus Jakarta Sans"],
-                    "headline-md": ["Plus Jakarta Sans"],
-                    "display-xl": ["Plus Jakarta Sans"],
-                    "body-md": ["Be Vietnam Pro"]
-            },
-            "fontSize": {
-                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
-                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
-                    "display-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
-                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
-            }
-          },
-        },
-      }
-    </script>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        body {
-          min-height: 100dvh;
-        }
-    </style>
-</head>
-<body class="bg-surface font-body-md text-on-surface">
-<!-- TopAppBar -->
-<header class="bg-white/90 dark:bg-zinc-950/90 backdrop-blur-md docked full-width top-0 sticky border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-center px-4 h-16 w-full z-50">
-<h1 class="text-xl font-black tracking-widest text-orange-600 uppercase">DESPENSA</h1>
-</header>
-<main class="max-w-2xl mx-auto px-margin-mobile pt-md pb-32">
-<!-- Section: CONGELADOR -->
-<section class="bg-blue-100/80 dark:bg-blue-900/30 -mx-margin-mobile px-margin-mobile py-lg mb-lg">
-<div class="flex items-center justify-between mb-sm border-b border-blue-200 dark:border-blue-800 pb-xs">
-<h3 class="text-label-md font-bold text-blue-800 dark:text-blue-300 uppercase tracking-wider">CONGELADOR</h3>
-<button onclick="openAddModal('congelador')" class="text-blue-600 dark:text-blue-400 font-label-md text-sm hover:underline">Añadir</button>
-</div>
-<div id="congeladorContainer" class="divide-y divide-blue-100 dark:divide-blue-800/50">
-</div>
-</section>
-<!-- Section: Materias Primas -->
-<section class="mb-lg">
-<div class="flex items-center justify-between mb-sm border-b border-surface-variant pb-xs">
-<h3 class="text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Materias Primas</h3>
-<button onclick="openAddModal('materias')" class="text-primary font-label-md text-sm hover:underline">Añadir</button>
-</div>
-<div id="materiasContainer" class="divide-y divide-surface-variant/50">
-</div>
-</section>
-</main>
-<!-- BottomNavBar -->
-<nav class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-2 pb-safe-offset-2 h-20 border-t border-orange-50 dark:border-orange-900/20 shadow-[0_-4px_20px_rgba(242,107,29,0.05)] rounded-t-[16px]">
-<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:text-[#F26B1D] active:scale-90 transition-transform duration-200 ease-out" href="index.html">
-<span class="material-symbols-outlined">menu_book</span>
-<span class="font-plus-jakarta-sans font-medium text-[11px]">Menú</span>
-</a>
-<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:text-[#F26B1D] active:scale-90 transition-transform duration-200 ease-out" href="platos.html">
-<span class="material-symbols-outlined">restaurant</span>
-<span class="font-plus-jakarta-sans font-medium text-[11px]">Platos</span>
-</a>
-<a class="flex flex-col items-center justify-center text-[#F26B1D] bg-orange-50 dark:bg-orange-900/20 rounded-xl px-4 py-1.5 transition-all duration-300 active:scale-90" href="Almacen.html">
-<span class="material-symbols-outlined">inventory_2</span>
-<span class="font-plus-jakarta-sans font-medium text-[11px]">Almacén</span>
-</a>
-<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:text-[#F26B1D] active:scale-90 transition-transform duration-200 ease-out" href="compra.html">
-<span class="material-symbols-outlined">shopping_cart</span>
-<span class="font-plus-jakarta-sans font-medium text-[11px]">Compra</span>
-</a>
-</nav>
-<!-- FAB -->
-<button onclick="openAddModal()" class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center active:scale-95 transition-transform z-40">
-<span class="material-symbols-outlined" data-icon="add" style="font-variation-settings: 'FILL' 1;">add</span>
-</button>
-<!-- Modal Añadir Almacén -->
-<div id="addAlmacenModal" class="hidden fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center px-4 transition-opacity">
-    <div class="bg-surface rounded-2xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col">
-        <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center">
-            <h3 class="font-headline-md text-primary text-lg">Añadir al Almacén</h3>
-            <button onclick="closeAddModal()" class="text-on-surface-variant hover:text-error transition-colors">
-                <span class="material-symbols-outlined">close</span>
-            </button>
-        </div>
-        <div class="p-6 flex flex-col gap-4">
-            <label class="flex flex-col gap-1">
-                <span class="font-label-md text-sm text-on-surface-variant">Ubicación</span>
-                <select id="itemUbicacion" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary transition-all text-on-surface">
-                    <option value="materias">Materias primas</option>
-                    <option value="congelador">Congelador</option>
-                </select>
-            </label>
-            <label class="flex flex-col gap-1">
-                <span class="font-label-md text-sm text-on-surface-variant">Tipo (Producto)</span>
-                <input type="text" id="itemTipo" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary transition-all text-on-surface" placeholder="Ej: Lentejas">
-            </label>
-            <label class="flex flex-col gap-1">
-                <span class="font-label-md text-sm text-on-surface-variant">Cantidad</span>
-                <input type="text" id="itemCantidad" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary transition-all text-on-surface" placeholder="Ej: 2 rac. / 1 kg">
-            </label>
-        </div>
-        <div class="px-6 py-4 bg-surface-container-low flex justify-end gap-3">
-            <button onclick="closeAddModal()" class="px-4 py-2 text-on-surface-variant font-label-md hover:bg-surface-variant rounded-lg transition-colors">Cancelar</button>
-            <button onclick="saveNewItem()" class="px-4 py-2 bg-primary text-on-primary font-label-md rounded-lg shadow hover:bg-primary-container transition-colors active:scale-95">Guardar</button>
+    <main class="max-w-2xl mx-auto px-margin-mobile pt-md pb-32">
+        <!-- Section: CONGELADOR -->
+        <section class="bg-blue-100/80 dark:bg-blue-900/30 -mx-margin-mobile px-margin-mobile py-lg mb-lg">
+            <div class="flex items-center justify-between mb-sm border-b border-blue-200 dark:border-blue-800 pb-xs">
+                <h3 class="text-label-md font-bold text-blue-800 dark:text-blue-300 uppercase tracking-wider">CONGELADOR</h3>
+                <button onclick="openAddModal('congelador')" class="text-blue-600 dark:text-blue-400 font-label-md text-sm hover:underline">Añadir</button>
+            </div>
+            <div id="congeladorContainer" class="divide-y divide-blue-100 dark:divide-blue-800/50">
+                <!-- Se rellena dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Section: Materias Primas -->
+        <section class="mb-lg">
+            <div class="flex items-center justify-between mb-sm border-b border-surface-variant pb-xs">
+                <h3 class="text-label-md font-bold text-on-surface-variant uppercase tracking-wider">Materias Primas</h3>
+                <button onclick="openAddModal('materias')" class="text-primary font-label-md text-sm hover:underline">Añadir</button>
+            </div>
+            <div id="materiasContainer" class="divide-y divide-surface-variant/50">
+                <!-- Se rellena dinámicamente -->
+            </div>
+        </section>
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-2 pb-safe-offset-2 h-20 border-t border-orange-50 dark:border-orange-900/20 shadow-[0_-4px_20px_rgba(242,107,29,0.05)] rounded-t-[16px]">
+        <a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:text-[#F26B1D] active:scale-90 transition-transform duration-200 ease-out" href="index.html">
+            <span class="material-symbols-outlined">menu_book</span>
+            <span class="font-plus-jakarta-sans font-medium text-[11px]">Menú</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:text-[#F26B1D] active:scale-90 transition-transform duration-200 ease-out" href="platos.html">
+            <span class="material-symbols-outlined">restaurant</span>
+            <span class="font-plus-jakarta-sans font-medium text-[11px]">Platos</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-[#F26B1D] bg-orange-50 dark:bg-orange-900/20 rounded-xl px-4 py-1.5 transition-all duration-300 active:scale-90" href="Almacen.html">
+            <span class="material-symbols-outlined">inventory_2</span>
+            <span class="font-plus-jakarta-sans font-medium text-[11px]">Almacén</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 px-4 py-1.5 hover:text-[#F26B1D] active:scale-90 transition-transform duration-200 ease-out" href="compra.html">
+            <span class="material-symbols-outlined">shopping_cart</span>
+            <span class="font-plus-jakarta-sans font-medium text-[11px]">Compra</span>
+        </a>
+    </nav>
+
+    <!-- Modal Añadir Almacén -->
+    <div id="addAlmacenModal" class="hidden fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm flex items-center justify-center px-4 transition-opacity">
+        <div class="bg-surface rounded-2xl shadow-xl w-full max-w-sm overflow-hidden flex flex-col">
+            <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center">
+                <h3 class="font-headline-md text-primary text-lg">Añadir al Almacén</h3>
+                <button onclick="closeAddModal()" class="text-on-surface-variant hover:text-error transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6 flex flex-col gap-4">
+                <label class="flex flex-col gap-1">
+                    <span class="font-label-md text-sm text-on-surface-variant">Ubicación</span>
+                    <select id="itemUbicacion" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary transition-all text-on-surface">
+                        <option value="materias">Materias primas</option>
+                        <option value="congelador">Congelador</option>
+                    </select>
+                </label>
+                <label class="flex flex-col gap-1">
+                    <span class="font-label-md text-sm text-on-surface-variant">Tipo (Producto)</span>
+                    <input type="text" id="itemTipo" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary transition-all text-on-surface" placeholder="Ej: Lentejas">
+                </label>
+                <label class="flex flex-col gap-1">
+                    <span class="font-label-md text-sm text-on-surface-variant">Cantidad</span>
+                    <input type="text" id="itemCantidad" class="rounded-lg border-outline-variant border bg-surface-container-lowest p-2 focus:ring-primary focus:border-primary transition-all text-on-surface" placeholder="Ej: 2 rac. / 1 kg">
+                </label>
+            </div>
+            <div class="px-6 py-4 bg-surface-container-low flex justify-end gap-3">
+                <button onclick="closeAddModal()" class="px-4 py-2 text-on-surface-variant font-label-md hover:bg-surface-variant rounded-lg transition-colors">Cancelar</button>
+                <button onclick="saveNewItem()" class="px-4 py-2 bg-primary text-on-primary font-label-md rounded-lg shadow hover:bg-primary-container transition-colors active:scale-95">Guardar</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    let isSelectionMode = false;
+    <script>
+        let isSelectionMode = false;
 
-    function checkSelectionMode() {
-        const slotData = localStorage.getItem('slotSeleccionado');
-        isSelectionMode = !!slotData;
-        const banner = document.getElementById('selectionBanner');
-        if (banner) {
-            if (isSelectionMode) {
-                banner.classList.remove('hidden');
-            } else {
-                banner.classList.add('hidden');
+        function checkSelectionMode() {
+            const slotData = localStorage.getItem('slotSeleccionado');
+            isSelectionMode = !!slotData;
+        }
+
+        function openAddModal(defaultUbicacion = 'materias') {
+            document.getElementById('itemUbicacion').value = defaultUbicacion;
+            document.getElementById('addAlmacenModal').classList.remove('hidden');
+        }
+
+        function closeAddModal() {
+            document.getElementById('addAlmacenModal').classList.add('hidden');
+            document.getElementById('itemTipo').value = '';
+            document.getElementById('itemCantidad').value = '';
+        }
+
+        async function fetchAlmacen() {
+            if (!window.supabaseClient) return [];
+            let { data, error } = await window.supabaseClient.from('almacen').select('*');
+            if (error) return [];
+            return data || [];
+        }
+
+        async function renderAlmacen() {
+            const materiasContainer = document.getElementById('materiasContainer');
+            const congeladorContainer = document.getElementById('congeladorContainer');
+            if (!materiasContainer || !congeladorContainer) return;
+
+            materiasContainer.innerHTML = '<div class="text-center py-4 text-primary"><span class="material-symbols-outlined animate-spin">refresh</span></div>';
+            congeladorContainer.innerHTML = '<div class="text-center py-4 text-blue-600"><span class="material-symbols-outlined animate-spin">refresh</span></div>';
+            
+            const data = await fetchAlmacen();
+            
+            materiasContainer.innerHTML = '';
+            congeladorContainer.innerHTML = '';
+            
+            let materiasCount = 0;
+            let congeladorCount = 0;
+            
+            data.forEach(item => {
+                const div = document.createElement('div');
+                if (item.ubicacion === 'materias') {
+                    materiasCount++;
+                    div.className = 'flex items-center justify-between py-2';
+                    div.innerHTML = `
+                        <span class="text-[13px] font-medium text-on-surface">${item.tipo}</span>
+                        <div class="flex items-center gap-4">
+                            <span class="text-on-surface-variant text-xs">${item.cantidad}</span>
+                            <button onclick="deleteItem('${item.id}')" class="text-outline hover:text-error active:scale-90 transition-transform p-1">
+                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                            </button>
+                        </div>
+                    `;
+                    materiasContainer.appendChild(div);
+                } else {
+                    congeladorCount++;
+                    const cursorClass = isSelectionMode ? 'cursor-pointer hover:bg-blue-200/50' : '';
+                    const clickHandler = isSelectionMode ? () => selectFreezerItem(item.tipo) : null;
+
+                    div.className = `flex items-center justify-between py-2 px-2 rounded-lg transition-colors ${cursorClass}`;
+                    if (clickHandler) div.onclick = clickHandler;
+
+                    div.innerHTML = `
+                        <span class="text-[13px] font-medium text-on-surface flex-1">${item.tipo}</span>
+                        <div class="flex items-center gap-4">
+                            <span class="text-on-surface-variant text-xs">${item.cantidad}</span>
+                            ${!isSelectionMode ? `
+                            <button onclick="event.stopPropagation(); deleteItem('${item.id}')" class="text-outline hover:text-error active:scale-90 transition-transform p-1 flex items-center justify-center" title="Borrar">
+                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                            </button>
+                            ` : `
+                            <span class="material-symbols-outlined text-blue-600 animate-pulse text-[18px]">add_circle</span>
+                            `}
+                        </div>
+                    `;
+                    congeladorContainer.appendChild(div);
+                }
+            });
+
+            if (materiasCount === 0) materiasContainer.innerHTML = '<p class="text-center text-on-surface-variant text-sm py-4 italic">No hay materias primas</p>';
+            if (congeladorCount === 0) congeladorContainer.innerHTML = '<p class="text-center text-on-surface-variant text-sm py-4 italic">El congelador está vacío</p>';
+        }
+
+        async function selectFreezerItem(nombre) {
+            const slotDataStr = localStorage.getItem('slotSeleccionado');
+            if (!slotDataStr) return;
+
+            const { weekId, slotId } = JSON.parse(slotDataStr);
+            const id = `${weekId}_${slotId}`;
+            const displayNombre = `❄️ ${nombre}`;
+
+            await window.supabaseClient.from('menu').upsert({
+                id: id,
+                week_id: weekId,
+                slot_id: slotId,
+                plato_nombre: displayNombre
+            });
+
+            localStorage.removeItem('slotSeleccionado');
+            window.location.href = 'index.html';
+        }
+
+        async function deleteItem(id) {
+            if(confirm('¿Seguro que deseas eliminar este elemento?')) {
+                await window.supabaseClient.from('almacen').delete().eq('id', id);
+                renderAlmacen();
             }
         }
-    }
 
-    function cancelSelection() {
-        localStorage.removeItem('slotSeleccionado');
-        window.location.href = 'platos.html';
-    }
+        async function saveNewItem() {
+            const ubicacion = document.getElementById('itemUbicacion').value;
+            const tipo = document.getElementById('itemTipo').value.trim();
+            const cantidad = document.getElementById('itemCantidad').value.trim();
 
-    function openAddModal(defaultUbicacion = 'materias') {
-        document.getElementById('itemUbicacion').value = defaultUbicacion;
-        document.getElementById('addAlmacenModal').classList.remove('hidden');
-    }
-
-    function closeAddModal() {
-        document.getElementById('addAlmacenModal').classList.add('hidden');
-        document.getElementById('itemTipo').value = '';
-        document.getElementById('itemCantidad').value = '';
-    }
-
-    async function fetchAlmacen() {
-        if (!window.supabaseClient) {
-            console.error('Supabase client not initialized');
-            return [];
-        }
-        let { data, error } = await window.supabaseClient.from('almacen').select('*');
-        
-        if (error) {
-            console.error('Error fetching data:', error);
-            return [];
-        }
-
-        if (data && data.length === 0) {
-            // Seed default catalogue if empty
-            const inserts = [
-                { id: 'alm_1', ubicacion: 'materias', tipo: 'Arroz', cantidad: '1 kg' },
-                { id: 'alm_2', ubicacion: 'materias', tipo: 'Pasta', cantidad: '2 paquetes' },
-                { id: 'alm_3', ubicacion: 'materias', tipo: 'Huevos', cantidad: '1 docena' },
-                { id: 'alm_4', ubicacion: 'congelador', tipo: 'Lentejas cocinadas', cantidad: '2 rac.' }
-            ];
-            await window.supabaseClient.from('almacen').insert(inserts);
-            const result = await window.supabaseClient.from('almacen').select('*');
-            data = result.data || [];
-        }
-        
-        return data || [];
-    }
-
-    async function renderAlmacen() {
-        const materiasContainer = document.getElementById('materiasContainer');
-        const congeladorContainer = document.getElementById('congeladorContainer');
-        
-        if (!materiasContainer || !congeladorContainer) return;
-
-        // Limpiar contenedores y mostrar carga
-        materiasContainer.innerHTML = '<div class="text-center py-4 text-primary"><span class="material-symbols-outlined animate-spin">refresh</span></div>';
-        congeladorContainer.innerHTML = '<div class="text-center py-4 text-blue-600"><span class="material-symbols-outlined animate-spin">refresh</span></div>';
-        
-        const data = await fetchAlmacen();
-        
-        materiasContainer.innerHTML = '';
-        congeladorContainer.innerHTML = '';
-        
-        let materiasCount = 0;
-        let congeladorCount = 0;
-        
-        data.forEach(item => {
-            const div = document.createElement('div');
-            if (item.ubicacion === 'materias') {
-                materiasCount++;
-                div.className = 'flex items-center justify-between py-2';
-                div.innerHTML = `
-                    <span class="font-body-md text-on-surface">${item.tipo}</span>
-                    <div class="flex items-center gap-4">
-                        <span class="text-on-surface-variant text-sm">${item.cantidad}</span>
-                        <button onclick="deleteItem('${item.id}')" class="text-outline hover:text-error active:scale-90 transition-transform p-1">
-                            <span class="material-symbols-outlined text-sm">delete</span>
-                        </button>
-                    </div>
-                `;
-                materiasContainer.appendChild(div);
-            } else {
-                congeladorCount++;
-                const cursorClass = isSelectionMode ? 'cursor-pointer hover:bg-blue-200/50' : '';
-                const clickHandler = isSelectionMode ? () => selectFreezerItem(item.tipo) : null;
-
-                div.className = `flex items-center justify-between py-2 px-2 rounded-lg transition-colors ${cursorClass}`;
-                if (clickHandler) div.onclick = clickHandler;
-
-                div.innerHTML = `
-                    <span class="font-body-md text-on-surface flex-1 font-medium">${item.tipo}</span>
-                    <div class="flex items-center gap-4">
-                        <span class="text-on-surface-variant text-sm">${item.cantidad}</span>
-                        ${!isSelectionMode ? `
-                        <button onclick="event.stopPropagation(); deleteItem('${item.id}')" class="text-outline hover:text-error active:scale-90 transition-transform p-1 flex items-center justify-center" title="Borrar">
-                            <span class="material-symbols-outlined text-[20px]">delete</span>
-                        </button>
-                        ` : `
-                        <span class="material-symbols-outlined text-blue-600 animate-pulse">add_circle</span>
-                        `}
-                    </div>
-                `;
-                congeladorContainer.appendChild(div);
+            if (!tipo || !cantidad) {
+                alert('Por favor, introduce el tipo y la cantidad.');
+                return;
             }
-        });
 
-        if (materiasCount === 0) materiasContainer.innerHTML = '<p class="text-center text-on-surface-variant text-sm py-4 italic">No hay materias primas</p>';
-        if (congeladorCount === 0) congeladorContainer.innerHTML = '<p class="text-center text-on-surface-variant text-sm py-4 italic">El congelador está vacío</p>';
-    }
+            const newId = 'alm_' + Date.now();
+            await window.supabaseClient.from('almacen').insert({
+                id: newId,
+                ubicacion: ubicacion,
+                tipo: tipo,
+                cantidad: cantidad
+            });
 
-    async function selectFreezerItem(nombre) {
-        const slotDataStr = localStorage.getItem('slotSeleccionado');
-        if (!slotDataStr) return;
-
-        const { weekId, slotId } = JSON.parse(slotDataStr);
-        const id = `${weekId}_${slotId}`;
-        const displayNombre = `❄️ ${nombre}`;
-
-        await window.supabaseClient.from('menu').upsert({
-            id: id,
-            week_id: weekId,
-            slot_id: slotId,
-            plato_nombre: displayNombre
-        });
-
-        localStorage.removeItem('slotSeleccionado');
-        window.location.href = 'index.html';
-    }
-
-    async function deleteItem(id) {
-        if(confirm('¿Seguro que deseas eliminar este elemento?')) {
-            await window.supabaseClient.from('almacen').delete().eq('id', id);
+            closeAddModal();
             renderAlmacen();
         }
-    }
 
-    async function saveNewItem() {
-        const ubicacion = document.getElementById('itemUbicacion').value;
-        const tipo = document.getElementById('itemTipo').value.trim();
-        const cantidad = document.getElementById('itemCantidad').value.trim();
-
-        if (!tipo || !cantidad) {
-            alert('Por favor, introduce el tipo y la cantidad.');
-            return;
+        async function initApp() {
+            checkSelectionMode();
+            await renderAlmacen();
+            if (window.supabaseClient) {
+                window.supabaseClient
+                    .channel('public:almacen')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'almacen' }, () => {
+                        renderAlmacen();
+                    })
+                    .subscribe();
+            }
         }
 
-        const newId = 'alm_' + Date.now();
-        await window.supabaseClient.from('almacen').insert({
-            id: newId,
-            ubicacion: ubicacion,
-            tipo: tipo,
-            cantidad: cantidad
-        });
-
-        closeAddModal();
-        renderAlmacen();
-    }
-
-    // Inicialización robusta para evitar carga fantasma
-    async function initApp() {
-        checkSelectionMode();
-        await renderAlmacen();
-        
-        if (window.supabaseClient) {
-            window.supabaseClient
-                .channel('public:almacen')
-                .on('postgres_changes', { event: '*', schema: 'public', table: 'almacen' }, () => {
-                    renderAlmacen();
-                })
-                .subscribe();
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
         }
-    }
-
-    // Asegurarse de que el script se ejecute cuando todo esté listo
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initApp);
-    } else {
-        initApp();
-    }
-</script>
-</body></html>
+    </script>
+</body>
+</html>
