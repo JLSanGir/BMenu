@@ -197,14 +197,17 @@
             const valor = input.value.trim();
             if (!valor) return;
 
-            input.value = ''; // Limpiar rápidamente
-            const newId = 'basico_' + Date.now();
-            const { error } = await supabaseClient.from('basicos_compra').insert({
-                id: newId,
-                articulo: valor
-            });
-            if (error) console.error("Error adding basico:", error.message);
-            renderBasicos();
+            const { error } = await window.supabaseClient.from('basicos_compra').insert([{ 
+                articulo: valor 
+            }]);
+
+            if (error) {
+                console.error("Error al añadir básico:", error.message);
+                alert("Hubo un error al añadir el artículo: " + error.message);
+            } else {
+                input.value = '';
+                await renderBasicos();
+            }
         }
 
         // Permitir añadir con Enter
