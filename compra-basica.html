@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>BMenu — Lista de la Compra</title>
+    <title>BMenu — Compra Básica Semanal</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -110,16 +110,14 @@
         }
     </script>
 </head>
-<body class="bg-surface text-on-surface antialiased min-h-screen pb-32">
+<body class="bg-surface text-on-surface antialiased min-h-screen pb-40">
     <!-- TopAppBar -->
     <header class="bg-white/90 dark:bg-gray-950/90 backdrop-blur-md docked full-width top-0 z-50 border-b border-orange-100/50 dark:border-gray-800 shadow-[0_4px_20px_-4px_rgba(242,107,29,0.05)] flex items-center justify-between px-6 py-4 w-full sticky">
         <div class="flex items-center gap-4">
-            <h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-orange-600 dark:text-orange-400">Lista de la Compra</h1>
-        </div>
-        <div class="flex items-center gap-3">
-            <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-primary-container active:scale-95 transition-transform duration-200 ease-out">
-                <img alt="Usuario" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaPBYv0WQ-z_JYvPEMuieGwZT26ZVMvOIaQMtwGNz1f7Chn18328KYWrjEGeKXTINzNZqGnX0vGhJm_fjNjlFUtgRWU8mzVuJnDh4ysBOQPav3B_zRAKVM02AMvxXIFD7HmB47h8O8s04JMQB4Wi_txVhoycAiDuyzfMsyF3_qdvC4YG8oneo4Psowsbtol6uR8qnYx39UiEOOOatpHHOHnW3kfBI7_qiT8MJHr4052jjmRwBUnaa92RvF4PZQjxNH0Eqo4uBm6zWY"/>
-            </div>
+            <button onclick="window.location.href='compra.html'" class="h-10 w-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors active:scale-95 text-on-surface-variant">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-orange-600 dark:text-orange-400">Compra Básica Semanal</h1>
         </div>
     </header>
 
@@ -127,84 +125,66 @@
         
         <!-- Add Item -->
         <div class="flex items-center gap-2 mb-lg bg-surface-container-lowest rounded-2xl p-2 shadow-sm border border-outline-variant/30">
-            <input type="text" id="nuevoArticulo" class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface font-body-md placeholder-on-surface-variant/60 p-2" placeholder="Añadir a la lista...">
-            <button onclick="window.location.href='compra-basica.html'" class="h-10 px-3 flex items-center justify-center bg-surface-variant text-on-surface-variant rounded-xl active:scale-90 transition-transform gap-1 font-label-md shrink-0">
-                <span class="material-symbols-outlined text-[20px]">list_alt</span>
-                Básico
-            </button>
-            <button onclick="addArticulo()" class="w-10 h-10 flex items-center justify-center bg-primary text-on-primary rounded-xl active:scale-90 transition-transform shrink-0">
+            <input type="text" id="nuevoBasico" class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface font-body-md placeholder-on-surface-variant/60 p-2" placeholder="Añadir básico (ej: Leche)...">
+            <button onclick="addBasico()" class="w-10 h-10 flex items-center justify-center bg-primary text-on-primary rounded-xl active:scale-90 transition-transform shrink-0">
                 <span class="material-symbols-outlined">add</span>
             </button>
         </div>
 
         <!-- List -->
-        <div id="compraContainer" class="flex flex-col gap-2">
+        <div id="basicosContainer" class="flex flex-col gap-2">
             <!-- Renderizado dinámicamente -->
         </div>
 
     </main>
 
-    <!-- BottomNavBar -->
-    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/95 dark:bg-gray-950/95 backdrop-blur-lg rounded-t-[32px] border-t border-orange-50 dark:border-gray-800 shadow-[0_-10px_40px_-15px_rgba(242,107,29,0.08)]">
-        <a href="index.html" class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-300 transition-colors active:scale-90 duration-300">
-            <span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
-            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Menú</span>
-        </a>
-        <a href="platos.html" class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-300 transition-colors active:scale-90 duration-300">
-            <span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
-            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Platos</span>
-        </a>
-        <a href="Almacen.html" class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-300 transition-colors active:scale-90 duration-300">
-            <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Almacén</span>
-        </a>
-        <a href="compra.html" class="flex flex-col items-center justify-center text-orange-600 dark:text-orange-400 bg-orange-50/50 dark:bg-orange-950/20 rounded-2xl px-4 py-1 transition-colors active:scale-90 duration-300">
-            <span class="material-symbols-outlined" data-icon="shopping_cart" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
-            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Compra</span>
-        </a>
-    </nav>
+    <!-- Bottom Actions -->
+    <div class="fixed bottom-0 left-0 w-full z-50 px-4 py-4 pb-safe bg-white/95 dark:bg-gray-950/95 backdrop-blur-lg rounded-t-[32px] border-t border-orange-50 dark:border-gray-800 shadow-[0_-10px_40px_-15px_rgba(242,107,29,0.08)]">
+        <div class="max-w-md mx-auto flex flex-col gap-3">
+            <button onclick="addToCompra()" id="btnAñadir" class="w-full h-12 bg-primary text-on-primary rounded-full font-label-md flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-md">
+                <span class="material-symbols-outlined text-[20px]">shopping_cart_checkout</span>
+                Añadir a la compra
+            </button>
+            <button onclick="window.location.href='compra.html'" class="w-full h-12 bg-surface-variant text-on-surface-variant rounded-full font-label-md flex items-center justify-center gap-2 active:scale-95 transition-transform">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+                Cancelar
+            </button>
+        </div>
+    </div>
 
     <script>
-        // Lógica futura para rellenar a partir de los ingredientes del menú
-        function generarDesdeMenu() {
-            // TODO
-        }
-
-        async function fetchLista() {
-            const { data, error } = await supabaseClient.from('lista_compra').select('*').order('comprado', { ascending: true }).order('id', { ascending: false });
+        async function fetchBasicos() {
+            const { data, error } = await supabaseClient.from('basicos_compra').select('*').order('id', { ascending: false });
+            if (error) {
+                console.error("Error fetching basicos:", error.message);
+                return [];
+            }
             return data || [];
         }
 
-        async function renderCompra() {
-            const container = document.getElementById('compraContainer');
+        async function renderBasicos() {
+            const container = document.getElementById('basicosContainer');
             
             // Loading
             container.innerHTML = '<div class="text-center text-primary py-4"><span class="material-symbols-outlined animate-spin" style="font-variation-settings: \'FILL\' 0, \'wght\' 400, \'GRAD\' 0, \'opsz\' 24;">refresh</span></div>';
             
-            const data = await fetchLista();
+            const data = await fetchBasicos();
             container.innerHTML = '';
 
             if (data.length === 0) {
-                container.innerHTML = '<p class="text-center text-on-surface-variant/70 text-sm py-8 font-body-md">La lista está vacía.</p>';
+                container.innerHTML = '<p class="text-center text-on-surface-variant/70 text-sm py-8 font-body-md">No tienes artículos básicos definidos.</p>';
                 return;
             }
 
             data.forEach(item => {
-                const checkedStr = item.comprado ? 'checked' : '';
-                const lineThrough = item.comprado ? 'line-through text-on-surface-variant/50' : 'text-on-surface';
-                
                 const div = document.createElement('div');
                 div.className = 'flex items-center justify-between bg-surface-container-lowest rounded-xl p-3 border border-surface-variant shadow-sm gap-3 transition-colors hover:bg-surface-container-low';
                 
                 div.innerHTML = `
-                    <label class="flex items-center gap-3 flex-1 cursor-pointer group">
-                        <div class="relative flex items-center justify-center">
-                            <input type="checkbox" onchange="toggleComprado('${item.id}', this.checked)" ${checkedStr} class="peer appearance-none w-6 h-6 border-2 border-primary rounded-full checked:bg-primary checked:border-primary transition-all cursor-pointer">
-                            <span class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[18px]">check</span>
-                        </div>
-                        <span class="font-body-md font-medium leading-tight select-none ${lineThrough} transition-all">${item.articulo}</span>
-                    </label>
-                    <button onclick="deleteArticulo('${item.id}')" class="text-outline hover:text-error active:scale-90 transition-transform p-2 rounded-full hover:bg-error/10 shrink-0">
+                    <div class="flex items-center gap-3 flex-1">
+                        <span class="font-body-md font-medium leading-tight select-none text-on-surface transition-all">${item.articulo}</span>
+                    </div>
+                    <button onclick="deleteBasico('${item.id}')" class="text-outline hover:text-error active:scale-90 transition-transform p-2 rounded-full hover:bg-error/10 shrink-0">
                         <span class="material-symbols-outlined" data-icon="delete">delete</span>
                     </button>
                 `;
@@ -212,48 +192,71 @@
             });
         }
 
-        async function addArticulo() {
-            const input = document.getElementById('nuevoArticulo');
+        async function addBasico() {
+            const input = document.getElementById('nuevoBasico');
             const valor = input.value.trim();
             if (!valor) return;
 
             input.value = ''; // Limpiar rápidamente
-            const newId = 'comp_' + Date.now();
-            await supabaseClient.from('lista_compra').insert({
+            const newId = 'basico_' + Date.now();
+            const { error } = await supabaseClient.from('basicos_compra').insert({
                 id: newId,
-                articulo: valor,
-                comprado: false
+                articulo: valor
             });
-            renderCompra();
+            if (error) console.error("Error adding basico:", error.message);
+            renderBasicos();
         }
 
         // Permitir añadir con Enter
-        document.getElementById('nuevoArticulo').addEventListener('keypress', function(e) {
+        document.getElementById('nuevoBasico').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                addArticulo();
+                addBasico();
             }
         });
 
-        async function toggleComprado(id, isChecked) {
-            await supabaseClient.from('lista_compra').update({ comprado: isChecked }).eq('id', id);
-            // El renderizado se actualizará por realtime
-            renderCompra();
+        async function deleteBasico(id) {
+            const { error } = await supabaseClient.from('basicos_compra').delete().eq('id', id);
+            if (error) console.error("Error deleting basico:", error.message);
+            renderBasicos();
         }
 
-        async function deleteArticulo(id) {
-            await supabaseClient.from('lista_compra').delete().eq('id', id);
-            renderCompra();
+        async function addToCompra() {
+            const btn = document.getElementById('btnAñadir');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">refresh</span> Procesando...';
+            btn.disabled = true;
+
+            const basicos = await fetchBasicos();
+            if (basicos.length > 0) {
+                const itemsToInsert = basicos.map((item, index) => ({
+                    id: 'comp_' + Date.now() + '_' + index,
+                    articulo: item.articulo,
+                    comprado: false
+                }));
+
+                const { error } = await supabaseClient.from('lista_compra').insert(itemsToInsert);
+                if (error) {
+                    console.error("Error al añadir a la compra:", error.message);
+                    alert("Hubo un error al añadir los artículos.");
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    return;
+                }
+            }
+
+            // Volver a la pantalla de compra
+            window.location.href = 'compra.html';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderCompra();
+            renderBasicos();
             
             // Realtime Sync
-            if (typeof supabaseClient !== 'undefined') {
-                supabaseClient
-                    .channel('public:lista_compra')
-                    .on('postgres_changes', { event: '*', schema: 'public', table: 'lista_compra' }, payload => {
-                        renderCompra();
+            if (typeof window.supabaseClient !== 'undefined') {
+                window.supabaseClient
+                    .channel('public:basicos_compra')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'basicos_compra' }, payload => {
+                        renderBasicos();
                     })
                     .subscribe();
             }
