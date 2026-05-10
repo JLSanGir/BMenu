@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>BMenu — Compra Básica Semanal</title>
+    <title>BMenu — Gestión de Tiendas</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -117,7 +117,7 @@
             <button onclick="window.location.href='compra.html'" class="h-10 w-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors active:scale-95 text-on-surface-variant">
                 <span class="material-symbols-outlined">arrow_back</span>
             </button>
-            <h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-orange-600 dark:text-orange-400">Compra Básica Semanal</h1>
+            <h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-orange-600 dark:text-orange-400">Supermercados</h1>
         </div>
         <div class="flex items-center gap-3">
             <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-primary-container active:scale-95 transition-transform duration-200 ease-out">
@@ -127,149 +127,99 @@
     </header>
 
     <main class="px-margin-mobile pt-lg max-w-md mx-auto">
-        
         <!-- Add Item -->
         <div class="flex items-center gap-1 mb-4 bg-surface-container-lowest rounded-xl p-1.5 shadow-sm border border-outline-variant/30">
-            <input type="text" id="nuevoBasico" class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface text-[14px] placeholder-on-surface-variant/60 py-1 px-2" placeholder="Añadir básico (ej: Leche)...">
-            <button onclick="addBasico()" class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded-lg active:scale-90 transition-transform shrink-0">
+            <input type="text" id="nuevoSupermercado" class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface text-[14px] placeholder-on-surface-variant/60 py-1 px-2" placeholder="Añadir supermercado (ej: Mercadona)...">
+            <button onclick="addSupermercado()" class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded-lg active:scale-90 transition-transform shrink-0">
                 <span class="material-symbols-outlined text-[20px]">add</span>
             </button>
         </div>
 
         <!-- List -->
-        <div id="basicosContainer" class="flex flex-col gap-2">
+        <div id="tiendasContainer" class="flex flex-col gap-2">
             <!-- Renderizado dinámicamente -->
         </div>
-
     </main>
 
-    <!-- Bottom Actions -->
-    <div class="fixed bottom-0 left-0 w-full z-50 px-4 py-4 pb-safe bg-white/95 dark:bg-gray-950/95 backdrop-blur-lg rounded-t-[32px] border-t border-orange-50 dark:border-gray-800 shadow-[0_-10px_40px_-15px_rgba(242,107,29,0.08)]">
-        <div class="max-w-md mx-auto flex flex-col gap-3">
-            <button onclick="addToCompra()" id="btnAñadir" class="w-full h-12 bg-primary text-on-primary rounded-full font-label-md flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-md">
-                <span class="material-symbols-outlined text-[20px]">shopping_cart_checkout</span>
-                Añadir a la compra
-            </button>
-            <button onclick="window.location.href='compra.html'" class="w-full h-12 bg-surface-variant text-on-surface-variant rounded-full font-label-md flex items-center justify-center gap-2 active:scale-95 transition-transform">
-                <span class="material-symbols-outlined text-[20px]">close</span>
-                Cancelar
-            </button>
-        </div>
-    </div>
-
     <script>
-        async function fetchBasicos() {
-            const { data, error } = await supabaseClient.from('basicos_compra').select('*').order('id', { ascending: false });
+        async function fetchSupermercados() {
+            const { data, error } = await window.supabaseClient.from('supermercados').select('*').order('id', { ascending: true });
             if (error) {
-                console.error("Error fetching basicos:", error.message);
+                console.error("Error fetching supermercados:", error.message);
                 return [];
             }
             return data || [];
         }
 
-        async function renderBasicos() {
-            const container = document.getElementById('basicosContainer');
-            
-            // Loading
+        async function renderSupermercados() {
+            const container = document.getElementById('tiendasContainer');
             container.innerHTML = '<div class="text-center text-primary py-4"><span class="material-symbols-outlined animate-spin" style="font-variation-settings: \'FILL\' 0, \'wght\' 400, \'GRAD\' 0, \'opsz\' 24;">refresh</span></div>';
             
-            const data = await fetchBasicos();
+            const data = await fetchSupermercados();
             container.innerHTML = '';
 
             if (data.length === 0) {
-                container.innerHTML = '<p class="text-center text-on-surface-variant/70 text-sm py-8 font-body-md">No tienes artículos básicos definidos.</p>';
+                container.innerHTML = '<p class="text-center text-on-surface-variant/70 text-sm py-8 font-body-md">No tienes supermercados definidos.</p>';
                 return;
             }
 
             data.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'py-[2px] flex items-center justify-between hover:bg-surface-container-low transition-colors rounded-lg px-2 -mx-2 gap-2';
+                div.className = 'py-[2px] flex items-center justify-between hover:bg-surface-container-low transition-colors rounded-lg px-2 -mx-2 gap-2 bg-surface-container-lowest border border-outline-variant/30 shadow-sm p-2 mb-1';
                 
                 div.innerHTML = `
                     <div class="flex items-center gap-2 flex-1">
-                        <span class="text-[13px] font-medium leading-tight select-none text-on-surface transition-all">${item.articulo}</span>
+                        <span class="material-symbols-outlined text-on-surface-variant/60 text-[18px]">store</span>
+                        <span class="text-[14px] font-medium leading-tight select-none text-on-surface transition-all">${item.nombre}</span>
                     </div>
-                    <button onclick="deleteBasico('${item.id}')" class="text-error active:scale-90 transition-transform p-0.5 hover:bg-error/10 rounded-full shrink-0">
-                        <span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+                    <button onclick="deleteSupermercado('${item.id}')" class="text-error active:scale-90 transition-transform p-1 hover:bg-error/10 rounded-full shrink-0">
+                        <span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
                     </button>
                 `;
                 container.appendChild(div);
             });
         }
 
-        async function addBasico() {
-            const input = document.getElementById('nuevoBasico');
+        async function addSupermercado() {
+            const input = document.getElementById('nuevoSupermercado');
             const valor = input.value.trim();
             if (!valor) return;
 
-            const { error } = await window.supabaseClient.from('basicos_compra').insert([{ 
-                articulo: valor 
+            const { error } = await window.supabaseClient.from('supermercados').insert([{ 
+                nombre: valor 
             }]);
 
             if (error) {
-                console.error("Error al añadir básico:", error.message);
-                alert("Hubo un error al añadir el artículo: " + error.message);
+                console.error("Error al añadir supermercado:", error.message);
+                alert("Hubo un error al añadir el supermercado: " + error.message);
             } else {
                 input.value = '';
-                await renderBasicos();
+                await renderSupermercados();
             }
         }
 
-        // Permitir añadir con Enter
-        document.getElementById('nuevoBasico').addEventListener('keypress', function(e) {
+        document.getElementById('nuevoSupermercado').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                addBasico();
+                addSupermercado();
             }
         });
 
-        async function deleteBasico(id) {
-            const { error } = await supabaseClient.from('basicos_compra').delete().eq('id', id);
-            if (error) console.error("Error deleting basico:", error.message);
-            renderBasicos();
-        }
-
-        async function addToCompra() {
-            const btn = document.getElementById('btnAñadir');
-            const originalContent = btn.innerHTML;
-            btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">refresh</span> Procesando...';
-            btn.disabled = true;
-
-            const basicos = await fetchBasicos();
-            if (basicos.length > 0) {
-                // Obtener el primer supermercado (el más antiguo por ID)
-                const { data: supers } = await window.supabaseClient.from('supermercados').select('*').order('id', { ascending: true }).limit(1);
-                const superName = (supers && supers.length > 0) ? supers[0].nombre : 'Sin Supermercado';
-
-                const itemsToInsert = basicos.map((item, index) => ({
-                    id: 'comp_' + Date.now() + '_' + index,
-                    articulo: item.articulo,
-                    comprado: false,
-                    supermercado_nombre: superName
-                }));
-
-                const { error } = await window.supabaseClient.from('lista_compra').insert(itemsToInsert);
-                if (error) {
-                    console.error("Error al añadir a la compra:", error.message);
-                    alert("Hubo un error al añadir los artículos.");
-                    btn.innerHTML = originalContent;
-                    btn.disabled = false;
-                    return;
-                }
+        async function deleteSupermercado(id) {
+            if (confirm('¿Borrar este supermercado?')) {
+                const { error } = await window.supabaseClient.from('supermercados').delete().eq('id', id);
+                if (error) console.error("Error deleting supermercado:", error.message);
+                renderSupermercados();
             }
-
-            // Volver a la pantalla de compra
-            window.location.href = 'compra.html';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderBasicos();
+            renderSupermercados();
             
-            // Realtime Sync
             if (typeof window.supabaseClient !== 'undefined') {
                 window.supabaseClient
-                    .channel('public:basicos_compra')
-                    .on('postgres_changes', { event: '*', schema: 'public', table: 'basicos_compra' }, payload => {
-                        renderBasicos();
+                    .channel('public:supermercados')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'supermercados' }, payload => {
+                        renderSupermercados();
                     })
                     .subscribe();
             }
