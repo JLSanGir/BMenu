@@ -2,7 +2,7 @@
   "name": "BMenu - Planificador de Menú",
   "short_name": "BMenu",
   "description": "Planifica tu menú semanal, gestiona platos y controla tu despensa.",
-  "start_url": "./index.html",
+  "start_url": "./compra.html",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#F26B1D",

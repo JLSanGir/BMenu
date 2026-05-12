@@ -1,6 +1,7 @@
-const CACHE_NAME = 'bmenu-v1';
+const CACHE_NAME = 'bmenu-v2';
 const ASSETS_TO_CACHE = [
   './',
+  './compra.html',
   './index.html',
   './platos.html',
   './Almacen.html',
