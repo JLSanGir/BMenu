@@ -219,13 +219,19 @@
                 (a.articulo || '').localeCompare(b.articulo || '', 'es', { sensitivity: 'base' })
             );
 
-            // Group by supermercado
             const groups = {};
             sortedData.forEach(item => {
                 const superm = item.supermercado_nombre || 'Sin Supermercado';
                 if (!groups[superm]) groups[superm] = [];
                 groups[superm].push(item);
             });
+
+            for (const superm in groups) {
+                groups[superm].sort((a, b) => {
+                    if (a.comprado !== b.comprado) return a.comprado ? 1 : -1;
+                    return (a.articulo || '').localeCompare(b.articulo || '', 'es', { sensitivity: 'base' });
+                });
+            }
 
             for (const [supermercado, items] of Object.entries(groups).sort(([a], [b]) =>
                 a.localeCompare(b, 'es', { sensitivity: 'base' })
