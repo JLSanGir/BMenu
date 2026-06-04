@@ -215,15 +215,21 @@
                 return;
             }
 
+            const sortedData = [...data].sort((a, b) =>
+                (a.articulo || '').localeCompare(b.articulo || '', 'es', { sensitivity: 'base' })
+            );
+
             // Group by supermercado
             const groups = {};
-            data.forEach(item => {
+            sortedData.forEach(item => {
                 const superm = item.supermercado_nombre || 'Sin Supermercado';
                 if (!groups[superm]) groups[superm] = [];
                 groups[superm].push(item);
             });
 
-            for (const [supermercado, items] of Object.entries(groups)) {
+            for (const [supermercado, items] of Object.entries(groups).sort(([a], [b]) =>
+                a.localeCompare(b, 'es', { sensitivity: 'base' })
+            )) {
                 // Accordion Header
                 const acc = document.createElement('div');
                 acc.className = 'mb-3 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden';
