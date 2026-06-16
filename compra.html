@@ -126,23 +126,23 @@
         </div>
     </header>
 
-    <main class="px-margin-mobile pt-lg max-w-md mx-auto">
+    <main class="px-margin-mobile pt-lg max-w-md mx-auto pb-4">
         
-        <!-- Add Item -->
+        <!-- Supermarket Tabs Grid -->
+        <div id="supermercadoTabs" class="grid grid-cols-3 gap-2 mb-4">
+            <!-- Renderizado dinámicamente -->
+        </div>
+
+        <!-- Add Item Input -->
         <div class="flex items-center gap-1 mb-4 bg-surface-container-lowest rounded-xl p-1.5 shadow-sm border border-outline-variant/30">
-            <div class="flex-1 flex flex-col gap-1 px-1">
-                <select id="supermercadoSelect" class="bg-transparent border-none focus:ring-0 text-on-surface-variant text-[12px] py-0 px-1 font-bold">
-                    <option value="Sin Supermercado">Sin Supermercado</option>
-                </select>
-                <input type="text" id="nuevoArticulo" class="w-full bg-transparent border-none focus:ring-0 text-on-surface text-[14px] placeholder-on-surface-variant/60 py-1 px-1" placeholder="Añadir a la lista...">
-            </div>
+            <input type="text" id="nuevoArticulo" class="w-full bg-transparent border-none focus:ring-0 text-on-surface text-[14px] placeholder-on-surface-variant/60 py-1 px-1" placeholder="Añadir a la lista...">
             <button onclick="addArticulo()" class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded-lg active:scale-90 transition-transform shrink-0">
                 <span class="material-symbols-outlined text-[20px]">add</span>
             </button>
         </div>
 
-        <!-- List -->
-        <div id="compraContainer" class="flex flex-col gap-2">
+        <!-- Items List -->
+        <div id="compraContainer" class="flex flex-col gap-1">
             <!-- Renderizado dinámicamente -->
         </div>
 
@@ -169,10 +169,8 @@
     </nav>
 
     <script>
-        // Lógica futura para rellenar a partir de los ingredientes del menú
-        function generarDesdeMenu() {
-            // TODO
-        }
+        let activeSupermercado = null;
+        let allSupermercados = [];
 
         async function fetchSupermercados() {
             const { data, error } = await window.supabaseClient.from('supermercados').select('*').order('id', { ascending: true });
@@ -180,24 +178,47 @@
         }
 
         async function loadSupermercados() {
-            const supers = await fetchSupermercados();
-            const select = document.getElementById('supermercadoSelect');
-            if (!select) return;
-            select.innerHTML = '';
-            if (supers.length === 0) {
-                select.innerHTML = '<option value="Sin Supermercado">Sin Supermercado</option>';
-            } else {
-                supers.forEach(s => {
-                    const opt = document.createElement('option');
-                    opt.value = s.nombre;
-                    opt.textContent = s.nombre;
-                    select.appendChild(opt);
-                });
+            allSupermercados = await fetchSupermercados();
+            
+            // Si no hay supermercados, añadir "Sin Supermercado"
+            if (allSupermercados.length === 0) {
+                allSupermercados = [{ id: 'default', nombre: 'Sin Supermercado' }];
             }
+            
+            // Establecer el primero como activo
+            activeSupermercado = allSupermercados[0].nombre;
+            
+            renderTabs();
+            renderCompra();
+        }
+
+        function renderTabs() {
+            const tabsContainer = document.getElementById('supermercadoTabs');
+            tabsContainer.innerHTML = '';
+            
+            allSupermercados.forEach(super_ => {
+                const btn = document.createElement('button');
+                const nombre = super_.nombre;
+                const isActive = activeSupermercado === nombre;
+                
+                btn.className = `py-2 px-2 rounded-lg font-semibold text-xs uppercase tracking-wide transition-all active:scale-95 text-center ${
+                    isActive 
+                        ? 'bg-primary text-on-primary shadow-sm' 
+                        : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-low'
+                }`;
+                btn.textContent = nombre;
+                btn.onclick = () => {
+                    activeSupermercado = nombre;
+                    renderTabs();
+                    renderCompra();
+                };
+                
+                tabsContainer.appendChild(btn);
+            });
         }
 
         async function fetchLista() {
-            const { data, error } = await supabaseClient.from('lista_compra').select('*').order('comprado', { ascending: true }).order('id', { ascending: false });
+            const { data, error } = await supabaseClient.from('lista_compra').select('*');
             return data || [];
         }
 
@@ -207,127 +228,77 @@
             // Loading
             container.innerHTML = '<div class="text-center text-primary py-4"><span class="material-symbols-outlined animate-spin" style="font-variation-settings: \'FILL\' 0, \'wght\' 400, \'GRAD\' 0, \'opsz\' 24;">refresh</span></div>';
             
-            const data = await fetchLista();
+            const allData = await fetchLista();
             container.innerHTML = '';
 
-            if (data.length === 0) {
-                container.innerHTML = '<p class="text-center text-on-surface-variant/70 text-sm py-8 font-body-md">La lista está vacía.</p>';
+            // Filtrar por supermercado activo
+            const filteredData = allData.filter(item => 
+                (item.supermercado_nombre || 'Sin Supermercado') === activeSupermercado
+            );
+
+            if (filteredData.length === 0) {
+                container.innerHTML = '<p class="text-center text-on-surface-variant/70 text-sm py-8 font-body-md">No hay elementos en este supermercado.</p>';
                 return;
             }
 
-            const sortedData = [...data].sort((a, b) =>
-                (a.articulo || '').localeCompare(b.articulo || '', 'es', { sensitivity: 'base' })
-            );
-
-            const groups = {};
-            sortedData.forEach(item => {
-                const superm = item.supermercado_nombre || 'Sin Supermercado';
-                if (!groups[superm]) groups[superm] = [];
-                groups[superm].push(item);
+            // Ordenar: primero sin marcar (alfabéticamente), luego marcados (alfabéticamente)
+            filteredData.sort((a, b) => {
+                if (a.comprado !== b.comprado) return a.comprado ? 1 : -1;
+                return (a.articulo || '').localeCompare(b.articulo || '', 'es', { sensitivity: 'base' });
             });
 
-            for (const superm in groups) {
-                groups[superm].sort((a, b) => {
-                    if (a.comprado !== b.comprado) return a.comprado ? 1 : -1;
-                    return (a.articulo || '').localeCompare(b.articulo || '', 'es', { sensitivity: 'base' });
-                });
-            }
-
-            for (const [supermercado, items] of Object.entries(groups).sort(([a], [b]) =>
-                a.localeCompare(b, 'es', { sensitivity: 'base' })
-            )) {
-                // Accordion Header
-                const acc = document.createElement('div');
-                acc.className = 'mb-3 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden';
+            // Renderizar items
+            filteredData.forEach(item => {
+                const checkedStr = item.comprado ? 'checked' : '';
+                const lineThrough = item.comprado ? 'line-through text-on-surface-variant/50' : 'text-on-surface';
                 
-                const headerId = 'acc_header_' + supermercado.replace(/\s+/g, '_');
-                const listId = 'acc_list_' + supermercado.replace(/\s+/g, '_');
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'py-2 flex items-center justify-between hover:bg-surface-container-low transition-colors rounded-lg px-2 -mx-2 gap-2';
                 
-                let html = `
-                    <button onclick="toggleAccordion('${listId}', '${headerId}')" class="w-full flex items-center justify-between px-3 py-2 bg-orange-50 dark:bg-orange-900/10 hover:bg-orange-100 dark:hover:bg-orange-900/20 transition-colors">
-                        <span class="font-bold text-sm text-orange-800 dark:text-orange-300 uppercase tracking-wider">${supermercado}</span>
-                        <span id="${headerId}" class="material-symbols-outlined text-orange-600 dark:text-orange-400 transition-transform duration-300">expand_more</span>
-                    </button>
-                    <div id="${listId}" class="flex flex-col gap-0 p-2 transition-all">
-                `;
-
-                items.forEach(item => {
-                    const checkedStr = item.comprado ? 'checked' : '';
-                    const lineThrough = item.comprado ? 'line-through text-on-surface-variant/50' : 'text-on-surface';
-                    
-                    html += `
-                        <div class="py-[2px] flex items-center justify-between hover:bg-surface-container-low transition-colors rounded-lg px-2 -mx-2 gap-2">
-                            <label class="flex items-center gap-2 flex-1 cursor-pointer group">
-                                <div class="relative flex items-center justify-center">
-                                    <input type="checkbox" onchange="toggleComprado('${item.id}', this.checked)" ${checkedStr} class="peer appearance-none w-5 h-5 border-[1.5px] border-primary rounded-full checked:bg-primary checked:border-primary transition-all cursor-pointer">
-                                    <span class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[16px]">check</span>
-                                </div>
-                                <span class="text-[13px] font-medium leading-tight select-none ${lineThrough} transition-all">${item.articulo}</span>
-                            </label>
-                            <button onclick="deleteArticulo('${item.id}')" class="text-error active:scale-90 transition-transform p-0.5 hover:bg-error/10 rounded-full shrink-0">
-                                <span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
-                            </button>
+                itemDiv.innerHTML = `
+                    <label class="flex items-center gap-2 flex-1 cursor-pointer">
+                        <div class="relative flex items-center justify-center">
+                            <input type="checkbox" onchange="toggleComprado('${item.id}', this.checked)" ${checkedStr} class="peer appearance-none w-5 h-5 border-[1.5px] border-primary rounded-full checked:bg-primary checked:border-primary transition-all cursor-pointer">
+                            <span class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[16px]">check</span>
                         </div>
-                    `;
-                });
+                        <span class="text-[13px] font-medium leading-tight select-none ${lineThrough} transition-all">${item.articulo}</span>
+                    </label>
+                    <button onclick="deleteArticulo('${item.id}')" class="text-error active:scale-90 transition-transform p-0.5 hover:bg-error/10 rounded-full shrink-0">
+                        <span class="material-symbols-outlined text-[18px]">delete</span>
+                    </button>
+                `;
                 
-                html += `</div>`;
-                acc.innerHTML = html;
-                container.appendChild(acc);
-            }
-        }
-
-        function toggleAccordion(listId, iconId) {
-            const list = document.getElementById(listId);
-            const icon = document.getElementById(iconId);
-            if (list.style.display === 'none') {
-                list.style.display = 'flex';
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                list.style.display = 'none';
-                icon.style.transform = 'rotate(-90deg)';
-            }
+                container.appendChild(itemDiv);
+            });
         }
 
         async function addArticulo() {
             const input = document.getElementById('nuevoArticulo');
-            const select = document.getElementById('supermercadoSelect');
             const valor = input.value.trim();
-            const superm = select ? select.value : 'Sin Supermercado';
             if (!valor) return;
 
-            input.value = ''; // Limpiar rápidamente
+            input.value = '';
             const newId = 'comp_' + Date.now();
             await window.supabaseClient.from('lista_compra').insert({
                 id: newId,
                 articulo: valor,
                 comprado: false,
-                supermercado_nombre: superm
+                supermercado_nombre: activeSupermercado
             });
             renderCompra();
         }
 
-        // Permitir añadir con Enter
-        document.getElementById('nuevoArticulo').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                addArticulo();
-            }
-        });
-
-        async function toggleComprado(id, isChecked) {
-            await supabaseClient.from('lista_compra').update({ comprado: isChecked }).eq('id', id);
-            // El renderizado se actualizará por realtime
-            renderCompra();
-        }
-
-        async function deleteArticulo(id) {
-            await supabaseClient.from('lista_compra').delete().eq('id', id);
-            renderCompra();
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
+            const inputEl = document.getElementById('nuevoArticulo');
+            if (inputEl) {
+                inputEl.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        addArticulo();
+                    }
+                });
+            }
+            
             loadSupermercados();
-            renderCompra();
             
             // Realtime Sync
             if (typeof supabaseClient !== 'undefined') {
@@ -339,6 +310,16 @@
                     .subscribe();
             }
         });
+
+        async function toggleComprado(id, isChecked) {
+            await supabaseClient.from('lista_compra').update({ comprado: isChecked }).eq('id', id);
+            renderCompra();
+        }
+
+        async function deleteArticulo(id) {
+            await supabaseClient.from('lista_compra').delete().eq('id', id);
+            renderCompra();
+        }
     </script>
 </body>
 </html>
