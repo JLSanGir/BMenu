@@ -129,20 +129,21 @@
     <main class="px-margin-mobile pt-lg max-w-md mx-auto pb-4">
         
         <!-- Supermarket Tabs Grid -->
-        <div id="supermercadoTabs" class="grid grid-cols-3 gap-2 mb-4">
+        <div id="supermercadoTabs" class="grid grid-cols-3 gap-1 mb-3">
             <!-- Renderizado dinámicamente -->
         </div>
 
         <!-- Add Item Input -->
-        <div class="flex items-center gap-1 mb-4 bg-surface-container-lowest rounded-xl p-1.5 shadow-sm border border-outline-variant/30">
-            <input type="text" id="nuevoArticulo" class="w-full bg-transparent border-none focus:ring-0 text-on-surface text-[14px] placeholder-on-surface-variant/60 py-1 px-1" placeholder="Añadir a la lista...">
+        <div class="flex items-center gap-1 mb-1 bg-surface-container-lowest rounded-xl p-1 shadow-sm border border-outline-variant/30">
+            <input type="text" id="nuevoArticulo" class="w-full bg-transparent border-none focus:ring-0 text-on-surface text-[13px] placeholder-on-surface-variant/60 py-1 px-2" placeholder="Añadir a la lista...">
             <button onclick="addArticulo()" class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded-lg active:scale-90 transition-transform shrink-0">
-                <span class="material-symbols-outlined text-[20px]">add</span>
+                <span class="material-symbols-outlined text-[18px]">add</span>
             </button>
         </div>
+        <div id="inputHint" class="mb-3 min-h-[18px] text-[11px] text-on-surface-variant"></div>
 
         <!-- Items List -->
-        <div id="compraContainer" class="flex flex-col gap-1">
+        <div id="compraContainer" class="flex flex-col gap-0">
             <!-- Renderizado dinámicamente -->
         </div>
 
@@ -171,6 +172,85 @@
     <script>
         let activeSupermercado = null;
         let allSupermercados = [];
+        let currentAllData = [];
+
+        function normalizeArticulo(text) {
+            return (text || '').trim().toLowerCase();
+        }
+
+        function setInputHint(message, tone = 'neutral') {
+            const hint = document.getElementById('inputHint');
+            if (!hint) return;
+            hint.textContent = message || '';
+            hint.className = `mb-3 min-h-[18px] text-[11px] ${
+                tone === 'error' ? 'text-error' : 'text-on-surface-variant'
+            }`;
+        }
+
+        function findAutocompleteSuggestion(prefix) {
+            const normalizedPrefix = normalizeArticulo(prefix);
+            if (!normalizedPrefix) return null;
+
+            const candidates = Array.from(new Set(currentAllData
+                .map(item => item.articulo || '')
+                .filter(Boolean)
+            ));
+
+            candidates.sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
+
+            return candidates.find(name => {
+                const normalizedName = normalizeArticulo(name);
+                return normalizedName.startsWith(normalizedPrefix) && normalizedName !== normalizedPrefix;
+            }) || null;
+        }
+
+        function itemExistsInActiveSupermercado(text) {
+            const normalizedText = normalizeArticulo(text);
+            return currentAllData.some(item =>
+                (item.supermercado_nombre || 'Sin Supermercado') === activeSupermercado &&
+                normalizeArticulo(item.articulo) === normalizedText
+            );
+        }
+
+        function updateAutocomplete() {
+            const input = document.getElementById('nuevoArticulo');
+            if (!input) return;
+
+            const value = input.value;
+            const selectionStart = input.selectionStart;
+            const selectionEnd = input.selectionEnd;
+            const normalizedValue = normalizeArticulo(value);
+
+            if (!normalizedValue) {
+                setInputHint('');
+                return;
+            }
+
+            if (itemExistsInActiveSupermercado(value)) {
+                setInputHint('Ya existe en esta lista.', 'error');
+                return;
+            }
+
+            const suggestion = findAutocompleteSuggestion(value);
+            if (!suggestion) {
+                setInputHint('');
+                return;
+            }
+
+            if (selectionStart !== selectionEnd || selectionStart !== value.length) {
+                setInputHint(`Sugerencia: ${suggestion}`);
+                return;
+            }
+
+            if (suggestion.toLowerCase() === value.toLowerCase()) {
+                setInputHint('');
+                return;
+            }
+
+            input.value = suggestion;
+            input.setSelectionRange(value.length, suggestion.length);
+            setInputHint(`Sugerencia: ${suggestion}`);
+        }
 
         async function fetchSupermercados() {
             const { data, error } = await window.supabaseClient.from('supermercados').select('*').order('id', { ascending: true });
@@ -218,7 +298,7 @@
         }
 
         async function fetchLista() {
-            const { data, error } = await supabaseClient.from('lista_compra').select('*');
+            const { data, error } = await supabaseClient.from('lista_compra').select('*').order('comprado', { ascending: true }).order('articulo', { ascending: true });
             return data || [];
         }
 
@@ -229,6 +309,8 @@
             container.innerHTML = '<div class="text-center text-primary py-4"><span class="material-symbols-outlined animate-spin" style="font-variation-settings: \'FILL\' 0, \'wght\' 400, \'GRAD\' 0, \'opsz\' 24;">refresh</span></div>';
             
             const allData = await fetchLista();
+            currentAllData = allData;
+            setInputHint('');
             container.innerHTML = '';
 
             // Filtrar por supermercado activo
@@ -253,15 +335,15 @@
                 const lineThrough = item.comprado ? 'line-through text-on-surface-variant/50' : 'text-on-surface';
                 
                 const itemDiv = document.createElement('div');
-                itemDiv.className = 'py-2 flex items-center justify-between hover:bg-surface-container-low transition-colors rounded-lg px-2 -mx-2 gap-2';
+                itemDiv.className = 'py-1 flex items-center justify-between hover:bg-surface-container-low transition-colors rounded-xl px-1 -mx-1 gap-1';
                 
                 itemDiv.innerHTML = `
                     <label class="flex items-center gap-2 flex-1 cursor-pointer">
                         <div class="relative flex items-center justify-center">
-                            <input type="checkbox" onchange="toggleComprado('${item.id}', this.checked)" ${checkedStr} class="peer appearance-none w-5 h-5 border-[1.5px] border-primary rounded-full checked:bg-primary checked:border-primary transition-all cursor-pointer">
-                            <span class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[16px]">check</span>
+                            <input type="checkbox" onchange="toggleComprado('${item.id}', this.checked)" ${checkedStr} class="peer appearance-none w-4 h-4 border-[1.5px] border-primary rounded-full checked:bg-primary checked:border-primary transition-all cursor-pointer">
+                            <span class="material-symbols-outlined absolute text-white opacity-0 peer-checked:opacity-100 pointer-events-none text-[14px]">check</span>
                         </div>
-                        <span class="text-[13px] font-medium leading-tight select-none ${lineThrough} transition-all">${item.articulo}</span>
+                        <span class="text-[12px] font-medium leading-none select-none ${lineThrough} transition-all">${item.articulo}</span>
                     </label>
                     <button onclick="deleteArticulo('${item.id}')" class="text-error active:scale-90 transition-transform p-0.5 hover:bg-error/10 rounded-full shrink-0">
                         <span class="material-symbols-outlined text-[18px]">delete</span>
@@ -277,7 +359,13 @@
             const valor = input.value.trim();
             if (!valor) return;
 
+            if (itemExistsInActiveSupermercado(valor)) {
+                setInputHint('Ya existe en esta lista.', 'error');
+                return;
+            }
+
             input.value = '';
+            setInputHint('');
             const newId = 'comp_' + Date.now();
             await window.supabaseClient.from('lista_compra').insert({
                 id: newId,
@@ -293,7 +381,18 @@
             if (inputEl) {
                 inputEl.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
+                        e.preventDefault();
                         addArticulo();
+                    }
+                });
+                inputEl.addEventListener('input', updateAutocomplete);
+                inputEl.addEventListener('keydown', function(e) {
+                    if (e.key === 'Tab') {
+                        const value = inputEl.value;
+                        if (value && inputEl.selectionStart !== inputEl.selectionEnd) {
+                            e.preventDefault();
+                            inputEl.setSelectionRange(inputEl.value.length, inputEl.value.length);
+                        }
                     }
                 });
             }
