@@ -173,6 +173,17 @@
         let activeSupermercado = null;
         let allSupermercados = [];
         let currentAllData = [];
+        let autocompleteSuspended = false;
+        let lastInputValue = '';
+
+        function suspendAutocomplete() {
+            autocompleteSuspended = true;
+            setInputHint('');
+        }
+
+        function resumeAutocomplete() {
+            autocompleteSuspended = false;
+        }
 
         function normalizeArticulo(text) {
             return (text || '').trim().toLowerCase();
@@ -212,11 +223,28 @@
             );
         }
 
-        function updateAutocomplete() {
+        function updateAutocomplete(event) {
             const input = document.getElementById('nuevoArticulo');
             if (!input) return;
 
-            const value = input.value;
+            const inputType = event && event.inputType ? event.inputType : '';
+            const currentValue = input.value;
+            const valueShrank = currentValue.length < lastInputValue.length;
+            const isDelete = inputType.startsWith('delete') || autocompleteSuspended || valueShrank;
+
+            if (inputType.startsWith('insert')) {
+                resumeAutocomplete();
+            }
+
+            if (isDelete) {
+                lastInputValue = currentValue;
+                if (input.selectionStart !== input.selectionEnd) {
+                    input.setSelectionRange(currentValue.length, currentValue.length);
+                }
+                return;
+            }
+
+            const value = currentValue;
             const selectionStart = input.selectionStart;
             const selectionEnd = input.selectionEnd;
             const normalizedValue = normalizeArticulo(value);
@@ -248,8 +276,17 @@
             }
 
             input.value = suggestion;
+            resumeAutocomplete();
             input.setSelectionRange(value.length, suggestion.length);
+            lastInputValue = input.value;
             setInputHint(`Sugerencia: ${suggestion}`);
+            return;
+        }
+
+        function syncAutocompleteValue() {
+            const input = document.getElementById('nuevoArticulo');
+            if (!input) return;
+            lastInputValue = input.value;
         }
 
         async function fetchSupermercados() {
@@ -366,6 +403,7 @@
 
             input.value = '';
             setInputHint('');
+            lastInputValue = '';
             const newId = 'comp_' + Date.now();
             await window.supabaseClient.from('lista_compra').insert({
                 id: newId,
@@ -379,22 +417,46 @@
         document.addEventListener('DOMContentLoaded', () => {
             const inputEl = document.getElementById('nuevoArticulo');
             if (inputEl) {
+                inputEl.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' || e.key === 'Delete') {
+                        const selectionStart = inputEl.selectionStart || 0;
+                        const selectionEnd = inputEl.selectionEnd || 0;
+                        const hasSuggestionSelection = selectionStart !== selectionEnd && selectionEnd === inputEl.value.length;
+
+                        if (hasSuggestionSelection) {
+                            e.preventDefault();
+                            inputEl.value = inputEl.value.slice(0, selectionStart);
+                            inputEl.setSelectionRange(selectionStart, selectionStart);
+                            lastInputValue = inputEl.value;
+                        }
+
+                        suspendAutocomplete();
+                        return;
+                    }
+
+                    if (e.key.length === 1) {
+                        resumeAutocomplete();
+                    }
+                });
+
                 inputEl.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
                         e.preventDefault();
                         addArticulo();
                     }
                 });
-                inputEl.addEventListener('input', updateAutocomplete);
-                inputEl.addEventListener('keydown', function(e) {
-                    if (e.key === 'Tab') {
-                        const value = inputEl.value;
-                        if (value && inputEl.selectionStart !== inputEl.selectionEnd) {
-                            e.preventDefault();
-                            inputEl.setSelectionRange(inputEl.value.length, inputEl.value.length);
-                        }
+                inputEl.addEventListener('beforeinput', function(e) {
+                    if (e.inputType && e.inputType.startsWith('delete')) {
+                        suspendAutocomplete();
+                    }
+
+                    if (e.inputType && e.inputType.startsWith('insert')) {
+                        resumeAutocomplete();
                     }
                 });
+                inputEl.addEventListener('input', updateAutocomplete);
+                inputEl.addEventListener('focus', syncAutocompleteValue);
+                inputEl.addEventListener('blur', syncAutocompleteValue);
             }
             
             loadSupermercados();
