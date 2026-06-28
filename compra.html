@@ -100,77 +100,280 @@
               "fontSize": {
                       "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
                       "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
-                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "display-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}]
               }
-            }
-          }
-        );
+            },
+          },
+        }
     </script>
 </head>
-<body class="bg-background text-on-surface overflow-x-hidden">
-    <!-- Contenido HTML simplificado para el ejemplo, mantén tu estructura de UI -->
-    <div id="app" class="max-w-md mx-auto p-4">
-        <div class="flex flex-col gap-4">
-            <input id="nuevoArticulo" type="text" placeholder="Añadir artículo..." class="p-2 border rounded">
-            <div id="inputHint" class="text-sm"></div>
-            <div id="listaCompraContainer" class="flex flex-col gap-2"></div>
+<body class="bg-surface text-on-surface antialiased min-h-screen pb-32">
+    <!-- TopAppBar -->
+    <header class="bg-white/90 dark:bg-gray-950/90 backdrop-blur-md docked full-width top-0 z-50 border-b border-orange-100/50 dark:border-gray-800 shadow-[0_4px_20px_-4px_rgba(242,107,29,0.05)] flex items-center justify-between px-6 py-4 w-full sticky">
+        <div class="flex items-center gap-4">
+            <h1 class="font-['Plus_Jakarta_Sans'] font-bold text-lg tracking-tight text-orange-600 dark:text-orange-400">Lista de la Compra</h1>
         </div>
-    </div>
+        <div class="flex items-center gap-3">
+            <button onclick="window.location.href='gestion-tiendas.html'" class="text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-950/30 p-2 rounded-full transition-colors active:scale-90 flex items-center justify-center" aria-label="Gestionar tiendas">
+                <span class="material-symbols-outlined" data-icon="store">store</span>
+            </button>
+            <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-primary-container active:scale-95 transition-transform duration-200 ease-out">
+                <img alt="Usuario" src="MiFoto.jpg" class="w-full h-full object-cover"/>
+            </div>
+        </div>
+    </header>
+
+    <main class="px-margin-mobile pt-lg max-w-md mx-auto pb-4">
+        
+        <!-- Supermarket Tabs Grid -->
+        <div id="supermercadoTabs" class="grid grid-cols-3 gap-1 mb-3">
+            <!-- Renderizado dinámicamente -->
+        </div>
+
+        <!-- Add Item Input -->
+        <div class="flex items-center gap-1 mb-1 bg-surface-container-lowest rounded-xl p-1 shadow-sm border border-outline-variant/30">
+            <input type="text" id="nuevoArticulo" class="w-full bg-transparent border-none focus:ring-0 text-on-surface text-[13px] placeholder-on-surface-variant/60 py-1 px-2" placeholder="Añadir a la lista...">
+            <button onclick="addArticulo()" class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded-lg active:scale-90 transition-transform shrink-0">
+                <span class="material-symbols-outlined text-[18px]">add</span>
+            </button>
+        </div>
+        <div id="inputHint" class="mb-3 min-h-[18px] text-[11px] text-on-surface-variant"></div>
+
+        <!-- Items List -->
+        <div id="compraContainer" class="flex flex-col gap-0">
+            <!-- Renderizado dinámicamente -->
+        </div>
+
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white/95 dark:bg-gray-950/95 backdrop-blur-lg rounded-t-[32px] border-t border-orange-50 dark:border-gray-800 shadow-[0_-10px_40px_-15px_rgba(242,107,29,0.08)]">
+        <a href="index.html" class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-300 transition-colors active:scale-90 duration-300">
+            <span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Menú</span>
+        </a>
+        <a href="platos.html" class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-300 transition-colors active:scale-90 duration-300">
+            <span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Platos</span>
+        </a>
+        <a href="Almacen.html" class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 hover:text-orange-300 transition-colors active:scale-90 duration-300">
+            <span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Almacén</span>
+        </a>
+        <a href="compra.html" class="flex flex-col items-center justify-center text-orange-600 dark:text-orange-400 bg-orange-50/50 dark:bg-orange-950/20 rounded-2xl px-4 py-1 transition-colors active:scale-90 duration-300">
+            <span class="material-symbols-outlined" data-icon="shopping_cart" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+            <span class="font-['Plus_Jakarta_Sans'] text-[11px] font-semibold uppercase tracking-wider">Compra</span>
+        </a>
+    </nav>
 
     <script>
-        // Variables de estado global
-        let activeSupermercado = 'General'; 
-        let currentAllData = []; 
+        let activeSupermercado = null;
+        let allSupermercados = [];
+        let currentAllData = [];
+        let autocompleteSuspended = false;
         let lastInputValue = '';
 
-        // Helper para normalizar texto y evitar duplicados por mayúsculas/espacios
+        function suspendAutocomplete() {
+            autocompleteSuspended = true;
+            setInputHint('');
+        }
+
+        function resumeAutocomplete() {
+            autocompleteSuspended = false;
+        }
+
         function normalizeArticulo(text) {
-            return text.trim().toLowerCase();
+            return (text || '').trim().toLowerCase();
         }
 
-        function setInputHint(text, type = 'info') {
-            const hintEl = document.getElementById('inputHint');
-            if (!hintEl) return;
-            hintEl.innerText = text;
-            hintEl.className = type === 'error' ? 'text-error text-sm' : 'text-on-surface-variant text-sm';
+        function setInputHint(message, tone = 'neutral') {
+            const hint = document.getElementById('inputHint');
+            if (!hint) return;
+            hint.textContent = message || '';
+            hint.className = `mb-3 min-h-[18px] text-[11px] ${
+                tone === 'error' ? 'text-error' : 'text-on-surface-variant'
+            }`;
         }
 
-        // MODIFICACIÓN: Ahora devuelve el objeto del ítem en lugar de un booleano
-        function findExistingItemInActiveSupermercado(text) {
+        function findAutocompleteSuggestion(prefix) {
+            const normalizedPrefix = normalizeArticulo(prefix);
+            if (!normalizedPrefix) return null;
+
+            const candidates = Array.from(new Set(currentAllData
+                .map(item => item.articulo || '')
+                .filter(Boolean)
+            ));
+
+            candidates.sort((a, b) => a.localeCompare(b, 'es', { sensitivity: 'base' }));
+
+            return candidates.find(name => {
+                const normalizedName = normalizeArticulo(name);
+                return normalizedName.startsWith(normalizedPrefix) && normalizedName !== normalizedPrefix;
+            }) || null;
+        }
+
+        function itemExistsInActiveSupermercado(text) {
             const normalizedText = normalizeArticulo(text);
-            return currentAllData.find(item =>
+            return currentAllData.some(item =>
                 (item.supermercado_nombre || 'Sin Supermercado') === activeSupermercado &&
                 normalizeArticulo(item.articulo) === normalizedText
             );
         }
 
-        async function renderCompra() {
-            const container = document.getElementById('listaCompraContainer');
-            if (!container) return;
+        function updateAutocomplete(event) {
+            const input = document.getElementById('nuevoArticulo');
+            if (!input) return;
 
-            // Consulta a Supabase con ordenación: No comprados primero, luego los más recientes
-            const { data, error } = await supabaseClient
-                .from('lista_compra')
-                .select('*')
-                .eq('supermercado_nombre', activeSupermercado)
-                .order('comprado', { ascending: true }) 
-                .order('created_at', { ascending: false });
+            const inputType = event && event.inputType ? event.inputType : '';
+            const currentValue = input.value;
+            const valueShrank = currentValue.length < lastInputValue.length;
+            const isDelete = inputType.startsWith('delete') || autocompleteSuspended || valueShrank;
 
-            if (error) {
-                console.error('Error cargando lista:', error);
+            if (inputType.startsWith('insert')) {
+                resumeAutocomplete();
+            }
+
+            if (isDelete) {
+                lastInputValue = currentValue;
+                if (input.selectionStart !== input.selectionEnd) {
+                    input.setSelectionRange(currentValue.length, currentValue.length);
+                }
                 return;
             }
 
-            currentAllData = data;
+            const value = currentValue;
+            const selectionStart = input.selectionStart;
+            const selectionEnd = input.selectionEnd;
+            const normalizedValue = normalizeArticulo(value);
+
+            if (!normalizedValue) {
+                setInputHint('');
+                return;
+            }
+
+            if (itemExistsInActiveSupermercado(value)) {
+                setInputHint('Ya existe en esta lista.', 'error');
+                return;
+            }
+
+            const suggestion = findAutocompleteSuggestion(value);
+            if (!suggestion) {
+                setInputHint('');
+                return;
+            }
+
+            if (selectionStart !== selectionEnd || selectionStart !== value.length) {
+                setInputHint(`Sugerencia: ${suggestion}`);
+                return;
+            }
+
+            if (suggestion.toLowerCase() === value.toLowerCase()) {
+                setInputHint('');
+                return;
+            }
+
+            input.value = suggestion;
+            resumeAutocomplete();
+            input.setSelectionRange(value.length, suggestion.length);
+            lastInputValue = input.value;
+            setInputHint(`Sugerencia: ${suggestion}`);
+            return;
+        }
+
+        function syncAutocompleteValue() {
+            const input = document.getElementById('nuevoArticulo');
+            if (!input) return;
+            lastInputValue = input.value;
+        }
+
+        async function fetchSupermercados() {
+            const { data, error } = await window.supabaseClient.from('supermercados').select('*').order('id', { ascending: true });
+            return data || [];
+        }
+
+        async function loadSupermercados() {
+            allSupermercados = await fetchSupermercados();
+            
+            // Si no hay supermercados, añadir "Sin Supermercado"
+            if (allSupermercados.length === 0) {
+                allSupermercados = [{ id: 'default', nombre: 'Sin Supermercado' }];
+            }
+            
+            // Establecer el primero como activo
+            activeSupermercado = allSupermercados[0].nombre;
+            
+            renderTabs();
+            renderCompra();
+        }
+
+        function renderTabs() {
+            const tabsContainer = document.getElementById('supermercadoTabs');
+            tabsContainer.innerHTML = '';
+            
+            allSupermercados.forEach(super_ => {
+                const btn = document.createElement('button');
+                const nombre = super_.nombre;
+                const isActive = activeSupermercado === nombre;
+                
+                btn.className = `py-2 px-2 rounded-lg font-semibold text-xs uppercase tracking-wide transition-all active:scale-95 text-center ${
+                    isActive 
+                        ? 'bg-primary text-on-primary shadow-sm' 
+                        : 'bg-surface-container text-on-surface-variant hover:bg-surface-container-low'
+                }`;
+                btn.textContent = nombre;
+                btn.onclick = () => {
+                    activeSupermercado = nombre;
+                    renderTabs();
+                    renderCompra();
+                };
+                
+                tabsContainer.appendChild(btn);
+            });
+        }
+
+        async function fetchLista() {
+            const { data, error } = await supabaseClient.from('lista_compra').select('*').order('comprado', { ascending: true }).order('articulo', { ascending: true });
+            return data || [];
+        }
+
+        async function renderCompra() {
+            const container = document.getElementById('compraContainer');
+            
+            // Loading
+            container.innerHTML = '<div class="text-center text-primary py-4"><span class="material-symbols-outlined animate-spin" style="font-variation-settings: \'FILL\' 0, \'wght\' 400, \'GRAD\' 0, \'opsz\' 24;">refresh</span></div>';
+            
+            const allData = await fetchLista();
+            currentAllData = allData;
+            setInputHint('');
             container.innerHTML = '';
 
-            data.forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'flex items-center justify-between p-2 bg-surface-container rounded-lg';
-                const checkedStr = item.comprado ? 'checked' : '';
-                const lineThrough = item.comprado ? 'line-through opacity-50' : '';
+            // Filtrar por supermercado activo
+            const filteredData = allData.filter(item => 
+                (item.supermercado_nombre || 'Sin Supermercado') === activeSupermercado
+            );
 
+            if (filteredData.length === 0) {
+                container.innerHTML = '<p class="text-center text-on-surface-variant/70 text-sm py-8 font-body-md">No hay elementos en este supermercado.</p>';
+                return;
+            }
+
+            // Ordenar: primero sin marcar (alfabéticamente), luego marcados (alfabéticamente)
+            filteredData.sort((a, b) => {
+                if (a.comprado !== b.comprado) return a.comprado ? 1 : -1;
+                return (a.articulo || '').localeCompare(b.articulo || '', 'es', { sensitivity: 'base' });
+            });
+
+            // Renderizar items
+            filteredData.forEach(item => {
+                const checkedStr = item.comprado ? 'checked' : '';
+                const lineThrough = item.comprado ? 'line-through text-on-surface-variant/50' : 'text-on-surface';
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'py-1 flex items-center justify-between hover:bg-surface-container-low transition-colors rounded-xl px-1 -mx-1 gap-1';
+                
                 itemDiv.innerHTML = `
                     <label class="flex items-center gap-2 flex-1 cursor-pointer">
                         <div class="relative flex items-center justify-center">
@@ -183,73 +386,80 @@
                         <span class="material-symbols-outlined text-[18px]">delete</span>
                     </button>
                 `;
+                
                 container.appendChild(itemDiv);
             });
         }
 
-        // MODIFICACIÓN: Nueva lógica de inserción y reactivación de artículos
         async function addArticulo() {
             const input = document.getElementById('nuevoArticulo');
             const valor = input.value.trim();
             if (!valor) return;
 
-            // 1. Detectar duplicado
-            const existingItem = findExistingItemInActiveSupermercado(valor);
-
-            if (existingItem) {
-                // 2. Evaluar estado
-                if (existingItem.comprado) {
-                    // Caso A: Si ya está marcado como comprado -> DESMARCARLO
-                    await supabaseClient
-                        .from('lista_compra')
-                        .update({ comprado: false })
-                        .eq('id', existingItem.id);
-                    
-                    // Limpiamos el input y el feedback ya que la acción fue exitosa
-                    input.value = '';
-                    setInputHint('');
-                    
-                    // Forzamos renderizado para moverlo arriba inmediatamente
-                    renderCompra(); 
-                    return;
-                } else {
-                    // Caso B: Ya está activo y no comprado -> Mantener alerta de error
-                    setInputHint('Ya existe en esta lista.', 'error');
-                    return;
-                }
+            if (itemExistsInActiveSupermercado(valor)) {
+                setInputHint('Ya existe en esta lista.', 'error');
+                return;
             }
 
-            // Flujo normal: No es duplicado -> Insertar nuevo
             input.value = '';
             setInputHint('');
             lastInputValue = '';
             const newId = 'comp_' + Date.now();
-            
             await window.supabaseClient.from('lista_compra').insert({
                 id: newId,
                 articulo: valor,
                 comprado: false,
                 supermercado_nombre: activeSupermercado
             });
-            
             renderCompra();
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             const inputEl = document.getElementById('nuevoArticulo');
             if (inputEl) {
+                inputEl.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' || e.key === 'Delete') {
+                        const selectionStart = inputEl.selectionStart || 0;
+                        const selectionEnd = inputEl.selectionEnd || 0;
+                        const hasSuggestionSelection = selectionStart !== selectionEnd && selectionEnd === inputEl.value.length;
+
+                        if (hasSuggestionSelection) {
+                            e.preventDefault();
+                            inputEl.value = inputEl.value.slice(0, selectionStart);
+                            inputEl.setSelectionRange(selectionStart, selectionStart);
+                            lastInputValue = inputEl.value;
+                        }
+
+                        suspendAutocomplete();
+                        return;
+                    }
+
+                    if (e.key.length === 1) {
+                        resumeAutocomplete();
+                    }
+                });
+
                 inputEl.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
                         e.preventDefault();
                         addArticulo();
                     }
                 });
-                inputEl.addEventListener('input', () => {
-                    // Aquí iría la lógica de updateAutocomplete
+                inputEl.addEventListener('beforeinput', function(e) {
+                    if (e.inputType && e.inputType.startsWith('delete')) {
+                        suspendAutocomplete();
+                    }
+
+                    if (e.inputType && e.inputType.startsWith('insert')) {
+                        resumeAutocomplete();
+                    }
                 });
+                inputEl.addEventListener('input', updateAutocomplete);
+                inputEl.addEventListener('focus', syncAutocompleteValue);
+                inputEl.addEventListener('blur', syncAutocompleteValue);
             }
             
-            renderCompra();
+            loadSupermercados();
             
             // Realtime Sync
             if (typeof supabaseClient !== 'undefined') {
